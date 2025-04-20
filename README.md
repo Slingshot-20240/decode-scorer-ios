@@ -1,15 +1,13 @@
-<h1 align="center">
-🏜️ DECODE™ Scorer 🔎
-</h1>
+<h1 align="center">🏜️ DECODE™ Scorer 🔎</h1>
+
+<h6 align="center">for iOS & iPadOS</h6>
 
 <p align="center">
-The ultimate scorer, 
-<b>
-redefined.
-</b>
-<br />
-presented by 20240 Slingshot
+  The ultimate scorer, <b>redefined.</b>
+  <br />
+  presented by 20240 Slingshot
 </p>
+
 
 > ### 🚧 This project is in early development. Please check back for more information.
 
