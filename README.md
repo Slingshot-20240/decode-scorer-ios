@@ -41,6 +41,8 @@ Rename [`ExampleConfig.xcconfig`](./ExampleConfig.xcconfig) to `Config.xcconfig`
 
 In the left sidebar, navigate to `DECODE (top-level .xcodeproj) > Targets > DECODE > Build Settings > All > Development Team`, single click (select) the line, and press `delete` (`backspace`) on your keyboard. Repeat for key `Product Bundle Identifier`
 
+> ‼️ **NEVER** update your development team or bundle identifier in the Xcode GUI, **only** use the `Config.xcconfig` file to avoid pushing your project-specific configuration to GitHub. 
+
 You're done! Head to the `Signing & Capabilities` section on the DECODE target page to make sure your development team and bundle identifier have been set correctly.
 
 ## Legal

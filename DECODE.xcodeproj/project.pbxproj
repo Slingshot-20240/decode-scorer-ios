@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E42224DF2DB57B380014F0E9 /* FullScreenPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42224DE2DB57B380014F0E9 /* FullScreenPadding.swift */; };
+		E42224E22DB57B7A0014F0E9 /* SafeArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42224E12DB57B7A0014F0E9 /* SafeArea.swift */; };
+		E42224E62DB57BD50014F0E9 /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42224E52DB57BD50014F0E9 /* UIDevice.swift */; };
+		E42224E82DB57C050014F0E9 /* CGFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42224E72DB57C050014F0E9 /* CGFloat.swift */; };
+		E42224EA2DB57C1C0014F0E9 /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42224E92DB57C1C0014F0E9 /* UIApplication.swift */; };
 		E4DD88942DB5512A009E5758 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DD88902DB5512A009E5758 /* ContentView.swift */; };
 		E4DD88952DB5512A009E5758 /* DECODEApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DD88912DB5512A009E5758 /* DECODEApp.swift */; };
 		E4DD88962DB5512A009E5758 /* SwiftData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DD88922DB5512A009E5758 /* SwiftData.swift */; };
@@ -38,6 +43,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E42224DC2DB56E9B0014F0E9 /* DECODE.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DECODE.entitlements; sourceTree = "<group>"; };
+		E42224DE2DB57B380014F0E9 /* FullScreenPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenPadding.swift; sourceTree = "<group>"; };
+		E42224E12DB57B7A0014F0E9 /* SafeArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeArea.swift; sourceTree = "<group>"; };
+		E42224E52DB57BD50014F0E9 /* UIDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDevice.swift; sourceTree = "<group>"; };
+		E42224E72DB57C050014F0E9 /* CGFloat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGFloat.swift; sourceTree = "<group>"; };
+		E42224E92DB57C1C0014F0E9 /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
 		E4950D4A2DB556A800D0B123 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		E4DD88632DB55123009E5758 /* DECODE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DECODE.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4DD88722DB55124009E5758 /* DECODETests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DECODETests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -81,6 +92,34 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		E42224DD2DB57B270014F0E9 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				E42224E02DB57B700014F0E9 /* View */,
+				E42224E42DB57BBF0014F0E9 /* Misc */,
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
+		E42224E02DB57B700014F0E9 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E42224E12DB57B7A0014F0E9 /* SafeArea.swift */,
+				E42224DE2DB57B380014F0E9 /* FullScreenPadding.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		E42224E42DB57BBF0014F0E9 /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				E42224E92DB57C1C0014F0E9 /* UIApplication.swift */,
+				E42224E52DB57BD50014F0E9 /* UIDevice.swift */,
+				E42224E72DB57C050014F0E9 /* CGFloat.swift */,
+			);
+			path = Misc;
+			sourceTree = "<group>";
+		};
 		E4DD885A2DB55123009E5758 = {
 			isa = PBXGroup;
 			children = (
@@ -106,9 +145,11 @@
 		E4DD88932DB5512A009E5758 /* DECODE */ = {
 			isa = PBXGroup;
 			children = (
+				E42224DC2DB56E9B0014F0E9 /* DECODE.entitlements */,
 				E4DD88912DB5512A009E5758 /* DECODEApp.swift */,
 				E4DD88902DB5512A009E5758 /* ContentView.swift */,
 				E4DD88922DB5512A009E5758 /* SwiftData.swift */,
+				E42224DD2DB57B270014F0E9 /* Helpers */,
 				E4DD888F2DB5512A009E5758 /* Assets.xcassets */,
 				E4DD88A02DB551B1009E5758 /* Info.plist */,
 			);
@@ -285,9 +326,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E42224EA2DB57C1C0014F0E9 /* UIApplication.swift in Sources */,
+				E42224DF2DB57B380014F0E9 /* FullScreenPadding.swift in Sources */,
+				E42224E62DB57BD50014F0E9 /* UIDevice.swift in Sources */,
+				E42224E82DB57C050014F0E9 /* CGFloat.swift in Sources */,
 				E4DD88942DB5512A009E5758 /* ContentView.swift in Sources */,
 				E4DD88952DB5512A009E5758 /* DECODEApp.swift in Sources */,
 				E4DD88962DB5512A009E5758 /* SwiftData.swift in Sources */,
+				E42224E22DB57B7A0014F0E9 /* SafeArea.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -455,6 +501,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = DECODE/DECODE.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;
@@ -485,6 +532,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = DECODE/DECODE.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_PREVIEWS = YES;

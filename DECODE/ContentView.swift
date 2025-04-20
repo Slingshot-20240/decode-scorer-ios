@@ -14,10 +14,14 @@ struct ContentView: View {
 
     var body: some View {
         GeometryReader { proxy in
-            Label("DECODE™", systemImage: "rectangle.and.text.magnifyingglass")
-                .font(.title)
-                .fontWeight(.bold)
-                .foregroundStyle(.accent)
+            HStack(spacing: 8) {
+                Label("DECODE™ Scorer", systemImage: "rectangle.and.text.magnifyingglass")
+                    .font(.title)
+                    .fontWeight(.semibold)
+                    .foregroundStyle(.accent)
+            }
+            .fullScreenPadding()
+            .frame(width: proxy.size.width, height: proxy.size.height)
         }
     }
 }
