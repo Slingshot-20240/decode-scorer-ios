@@ -9,9 +9,11 @@
 </p>
 
 
-> ### 🚧 This project is in early development. Please check back for more information.
+> [!NOTE]
+> 🚧 This project is in early development. Please check back for more information.
 
-> ⚠️ This is the **development** branch. Please ensure you are on the right branch.
+> [!WARNING]
+> This is the **development** branch. Please ensure you are on the right branch.
 
 ## Development
 
@@ -32,7 +34,7 @@ To get started, clone this repository, but **DO NOT** open it in Xcode yet.
 
 In order to accomodate code-signing requirements, this project uses an [Xcode Configuration Settings File](https://developer.apple.com/documentation/xcode/adding-a-build-configuration-file-to-your-project) for setting the target development team and product bundle identifier.
 
-Using a text editor or IDE that is **NOT Xcode**, open [`ExampleConfig.xcconfig`](./ExampleConfig.xcconfig) and change the placeholder values for each of the two keys with your project-specific values.
+Using a text editor or IDE that is **NOT Xcode**, open [`ExampleConfig.xcconfig`](./ExampleConfig.xcconfig) and add the required project-specific values for each of the two keys.
 
 - `DEVELOPMENT_TEAM` refers to your Apple Developer Program Team ID, which you can find [here](https://developer.apple.com/account#MembershipDetailsCard).
 - `PRODUCT_BUNDLE_IDENTIFIER` is a unique identifier used by the system for the application. Replace with the standard convention of a reversed domain (e.g. `decode.scorer.slingshot.example.com` ➡️ `com.example.slingshot.scorer.decode`). This should be unique to your project, avoid using `app.ftcscoring.decode` unless you know what you are doing.
@@ -41,7 +43,8 @@ Rename [`ExampleConfig.xcconfig`](./ExampleConfig.xcconfig) to `Config.xcconfig`
 
 In the left sidebar, navigate to `DECODE (top-level .xcodeproj) > Targets > DECODE > Build Settings > All > Development Team`, single click (select) the line, and press `delete` (`backspace`) on your keyboard. Repeat for key `Product Bundle Identifier`
 
-> ‼️ **NEVER** update your development team or bundle identifier in the Xcode GUI, **only** use the `Config.xcconfig` file to avoid pushing your project-specific configuration to GitHub. 
+> [!CAUTION]
+> **NEVER** update your development team or bundle identifier in the Xcode GUI, **only** use the `Config.xcconfig` file to avoid pushing your project-specific configuration to GitHub. 
 
 You're done! Head to the `Signing & Capabilities` section on the DECODE target page to make sure your development team and bundle identifier have been set correctly.
 
