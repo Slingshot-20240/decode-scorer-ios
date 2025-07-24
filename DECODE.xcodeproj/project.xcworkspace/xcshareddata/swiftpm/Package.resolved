@@ -1,5 +1,5 @@
 {
-  "originHash" : "79351697498e42713b607cba8ae7a6174ebf02d8bbdc43c90de82cbf3e73d5ea",
+  "originHash" : "35211820755c4c20cabc537b12b8a80427858f8bdec55f56e63277dc2ccdd279",
   "pins" : [
     {
       "identity" : "aptabase-swift",
@@ -35,15 +35,6 @@
       "state" : {
         "branch" : "master",
         "revision" : "6fee7617cfa910fbac7035276e295ba967adbbb4"
-      }
-    },
-    {
-      "identity" : "simplekeychain",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/auth0/SimpleKeychain.git",
-      "state" : {
-        "revision" : "776c4a6db74d5c6c143974be91c383680d468630",
-        "version" : "1.3.0"
       }
     }
   ],

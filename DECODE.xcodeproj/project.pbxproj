@@ -7,14 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E42224DF2DB57B380014F0E9 /* FullScreenPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42224DE2DB57B380014F0E9 /* FullScreenPadding.swift */; };
-		E42224E22DB57B7A0014F0E9 /* SafeArea.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42224E12DB57B7A0014F0E9 /* SafeArea.swift */; };
-		E42224E62DB57BD50014F0E9 /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42224E52DB57BD50014F0E9 /* UIDevice.swift */; };
-		E42224E82DB57C050014F0E9 /* CGFloat.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42224E72DB57C050014F0E9 /* CGFloat.swift */; };
-		E42224EA2DB57C1C0014F0E9 /* UIApplication.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42224E92DB57C1C0014F0E9 /* UIApplication.swift */; };
+		E41FE8F22E31C462004C69F6 /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41FE8F12E31C462004C69F6 /* TimerView.swift */; };
+		E44333052E2C461A009019CD /* GameScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44333042E2C461A009019CD /* GameScoreView.swift */; };
+		E48F416E2E2FF3E200B01564 /* GameTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48F416D2E2FF3E200B01564 /* GameTimer.swift */; };
 		E4DD88942DB5512A009E5758 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DD88902DB5512A009E5758 /* ContentView.swift */; };
 		E4DD88952DB5512A009E5758 /* DECODEApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DD88912DB5512A009E5758 /* DECODEApp.swift */; };
-		E4DD88962DB5512A009E5758 /* SwiftData.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DD88922DB5512A009E5758 /* SwiftData.swift */; };
+		E4DD88962DB5512A009E5758 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DD88922DB5512A009E5758 /* Data.swift */; };
 		E4DD88972DB5512A009E5758 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4DD888F2DB5512A009E5758 /* Assets.xcassets */; };
 		E4DD889A2DB55133009E5758 /* DECODETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DD88982DB55133009E5758 /* DECODETests.swift */; };
 		E4DD889E2DB55136009E5758 /* DECODEUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DD889B2DB55136009E5758 /* DECODEUITests.swift */; };
@@ -22,7 +20,6 @@
 		E4DD88A72DB554A9009E5758 /* NumPy-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = E4DD88A62DB554A9009E5758 /* NumPy-iOS */; };
 		E4DD88A92DB554A9009E5758 /* PythonKit in Frameworks */ = {isa = PBXBuildFile; productRef = E4DD88A82DB554A9009E5758 /* PythonKit */; };
 		E4DD88AB2DB554A9009E5758 /* Aptabase in Frameworks */ = {isa = PBXBuildFile; productRef = E4DD88AA2DB554A9009E5758 /* Aptabase */; };
-		E4DD88AD2DB554A9009E5758 /* SimpleKeychain in Frameworks */ = {isa = PBXBuildFile; productRef = E4DD88AC2DB554A9009E5758 /* SimpleKeychain */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,12 +40,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E41FE8F12E31C462004C69F6 /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
 		E42224DC2DB56E9B0014F0E9 /* DECODE.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DECODE.entitlements; sourceTree = "<group>"; };
-		E42224DE2DB57B380014F0E9 /* FullScreenPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FullScreenPadding.swift; sourceTree = "<group>"; };
-		E42224E12DB57B7A0014F0E9 /* SafeArea.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeArea.swift; sourceTree = "<group>"; };
-		E42224E52DB57BD50014F0E9 /* UIDevice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDevice.swift; sourceTree = "<group>"; };
-		E42224E72DB57C050014F0E9 /* CGFloat.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGFloat.swift; sourceTree = "<group>"; };
-		E42224E92DB57C1C0014F0E9 /* UIApplication.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIApplication.swift; sourceTree = "<group>"; };
+		E44333042E2C461A009019CD /* GameScoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScoreView.swift; sourceTree = "<group>"; };
+		E48F416D2E2FF3E200B01564 /* GameTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTimer.swift; sourceTree = "<group>"; };
 		E4950D4A2DB556A800D0B123 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		E4DD88632DB55123009E5758 /* DECODE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DECODE.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4DD88722DB55124009E5758 /* DECODETests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DECODETests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -56,19 +51,36 @@
 		E4DD888F2DB5512A009E5758 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E4DD88902DB5512A009E5758 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E4DD88912DB5512A009E5758 /* DECODEApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DECODEApp.swift; sourceTree = "<group>"; };
-		E4DD88922DB5512A009E5758 /* SwiftData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftData.swift; sourceTree = "<group>"; };
+		E4DD88922DB5512A009E5758 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		E4DD88982DB55133009E5758 /* DECODETests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DECODETests.swift; sourceTree = "<group>"; };
 		E4DD889B2DB55136009E5758 /* DECODEUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DECODEUITests.swift; sourceTree = "<group>"; };
 		E4DD889C2DB55136009E5758 /* DECODEUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DECODEUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		E4DD88A02DB551B1009E5758 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		E41FE8E82E31B45B004C69F6 /* Timer Audio */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Timer Audio";
+			sourceTree = "<group>";
+		};
+		E44333132E2EF7E2009019CD /* View */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = View;
+			sourceTree = "<group>";
+		};
+		E443331D2E2EF7EA009019CD /* Misc */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Misc;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
 /* Begin PBXFrameworksBuildPhase section */
 		E4DD88602DB55123009E5758 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E4DD88AD2DB554A9009E5758 /* SimpleKeychain in Frameworks */,
 				E4DD88A72DB554A9009E5758 /* NumPy-iOS in Frameworks */,
 				E4DD88A92DB554A9009E5758 /* PythonKit in Frameworks */,
 				E4DD88AB2DB554A9009E5758 /* Aptabase in Frameworks */,
@@ -95,29 +107,10 @@
 		E42224DD2DB57B270014F0E9 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
-				E42224E02DB57B700014F0E9 /* View */,
-				E42224E42DB57BBF0014F0E9 /* Misc */,
+				E44333132E2EF7E2009019CD /* View */,
+				E443331D2E2EF7EA009019CD /* Misc */,
 			);
 			path = Helpers;
-			sourceTree = "<group>";
-		};
-		E42224E02DB57B700014F0E9 /* View */ = {
-			isa = PBXGroup;
-			children = (
-				E42224E12DB57B7A0014F0E9 /* SafeArea.swift */,
-				E42224DE2DB57B380014F0E9 /* FullScreenPadding.swift */,
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		E42224E42DB57BBF0014F0E9 /* Misc */ = {
-			isa = PBXGroup;
-			children = (
-				E42224E92DB57C1C0014F0E9 /* UIApplication.swift */,
-				E42224E52DB57BD50014F0E9 /* UIDevice.swift */,
-				E42224E72DB57C050014F0E9 /* CGFloat.swift */,
-			);
-			path = Misc;
 			sourceTree = "<group>";
 		};
 		E4DD885A2DB55123009E5758 = {
@@ -145,13 +138,17 @@
 		E4DD88932DB5512A009E5758 /* DECODE */ = {
 			isa = PBXGroup;
 			children = (
-				E42224DC2DB56E9B0014F0E9 /* DECODE.entitlements */,
 				E4DD88912DB5512A009E5758 /* DECODEApp.swift */,
 				E4DD88902DB5512A009E5758 /* ContentView.swift */,
-				E4DD88922DB5512A009E5758 /* SwiftData.swift */,
+				E44333042E2C461A009019CD /* GameScoreView.swift */,
+				E41FE8F12E31C462004C69F6 /* TimerView.swift */,
+				E4DD88922DB5512A009E5758 /* Data.swift */,
+				E48F416D2E2FF3E200B01564 /* GameTimer.swift */,
 				E42224DD2DB57B270014F0E9 /* Helpers */,
 				E4DD888F2DB5512A009E5758 /* Assets.xcassets */,
 				E4DD88A02DB551B1009E5758 /* Info.plist */,
+				E42224DC2DB56E9B0014F0E9 /* DECODE.entitlements */,
+				E41FE8E82E31B45B004C69F6 /* Timer Audio */,
 			);
 			path = DECODE;
 			sourceTree = "<group>";
@@ -195,12 +192,16 @@
 			);
 			dependencies = (
 			);
+			fileSystemSynchronizedGroups = (
+				E41FE8E82E31B45B004C69F6 /* Timer Audio */,
+				E44333132E2EF7E2009019CD /* View */,
+				E443331D2E2EF7EA009019CD /* Misc */,
+			);
 			name = DECODE;
 			packageProductDependencies = (
 				E4DD88A62DB554A9009E5758 /* NumPy-iOS */,
 				E4DD88A82DB554A9009E5758 /* PythonKit */,
 				E4DD88AA2DB554A9009E5758 /* Aptabase */,
-				E4DD88AC2DB554A9009E5758 /* SimpleKeychain */,
 			);
 			productName = DECODE;
 			productReference = E4DD88632DB55123009E5758 /* DECODE.app */;
@@ -254,7 +255,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1630;
-				LastUpgradeCheck = 1630;
+				LastUpgradeCheck = 2600;
 				TargetAttributes = {
 					E4DD88622DB55123009E5758 = {
 						CreatedOnToolsVersion = 16.3;
@@ -282,7 +283,6 @@
 				E4DD88A12DB5538F009E5758 /* XCRemoteSwiftPackageReference "NumPy-iOS" */,
 				E4DD88A22DB553B7009E5758 /* XCRemoteSwiftPackageReference "PythonKit" */,
 				E4DD88A32DB55463009E5758 /* XCRemoteSwiftPackageReference "aptabase-swift" */,
-				E4DD88A42DB5547C009E5758 /* XCRemoteSwiftPackageReference "SimpleKeychain" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = E4DD88642DB55123009E5758 /* Products */;
@@ -326,14 +326,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E42224EA2DB57C1C0014F0E9 /* UIApplication.swift in Sources */,
-				E42224DF2DB57B380014F0E9 /* FullScreenPadding.swift in Sources */,
-				E42224E62DB57BD50014F0E9 /* UIDevice.swift in Sources */,
-				E42224E82DB57C050014F0E9 /* CGFloat.swift in Sources */,
+				E44333052E2C461A009019CD /* GameScoreView.swift in Sources */,
+				E41FE8F22E31C462004C69F6 /* TimerView.swift in Sources */,
 				E4DD88942DB5512A009E5758 /* ContentView.swift in Sources */,
+				E48F416E2E2FF3E200B01564 /* GameTimer.swift in Sources */,
 				E4DD88952DB5512A009E5758 /* DECODEApp.swift in Sources */,
-				E4DD88962DB5512A009E5758 /* SwiftData.swift in Sources */,
-				E42224E22DB57B7A0014F0E9 /* SafeArea.swift in Sources */,
+				E4DD88962DB5512A009E5758 /* Data.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -430,7 +428,9 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 6.0;
 			};
@@ -489,6 +489,8 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_VERSION = 6.0;
 				VALIDATE_PRODUCT = YES;
@@ -513,7 +515,9 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -544,7 +548,9 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -695,14 +701,6 @@
 				minimumVersion = 0.3.11;
 			};
 		};
-		E4DD88A42DB5547C009E5758 /* XCRemoteSwiftPackageReference "SimpleKeychain" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/auth0/SimpleKeychain.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.3.0;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -720,11 +718,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E4DD88A32DB55463009E5758 /* XCRemoteSwiftPackageReference "aptabase-swift" */;
 			productName = Aptabase;
-		};
-		E4DD88AC2DB554A9009E5758 /* SimpleKeychain */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E4DD88A42DB5547C009E5758 /* XCRemoteSwiftPackageReference "SimpleKeychain" */;
-			productName = SimpleKeychain;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
