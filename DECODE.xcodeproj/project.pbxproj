@@ -9,10 +9,8 @@
 /* Begin PBXBuildFile section */
 		E41FE8F22E31C462004C69F6 /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41FE8F12E31C462004C69F6 /* TimerView.swift */; };
 		E44333052E2C461A009019CD /* GameScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44333042E2C461A009019CD /* GameScoreView.swift */; };
-		E48F416E2E2FF3E200B01564 /* GameTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48F416D2E2FF3E200B01564 /* GameTimer.swift */; };
 		E4DD88942DB5512A009E5758 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DD88902DB5512A009E5758 /* ContentView.swift */; };
 		E4DD88952DB5512A009E5758 /* DECODEApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DD88912DB5512A009E5758 /* DECODEApp.swift */; };
-		E4DD88962DB5512A009E5758 /* Data.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DD88922DB5512A009E5758 /* Data.swift */; };
 		E4DD88972DB5512A009E5758 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4DD888F2DB5512A009E5758 /* Assets.xcassets */; };
 		E4DD889A2DB55133009E5758 /* DECODETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DD88982DB55133009E5758 /* DECODETests.swift */; };
 		E4DD889E2DB55136009E5758 /* DECODEUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DD889B2DB55136009E5758 /* DECODEUITests.swift */; };
@@ -20,6 +18,7 @@
 		E4DD88A72DB554A9009E5758 /* NumPy-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = E4DD88A62DB554A9009E5758 /* NumPy-iOS */; };
 		E4DD88A92DB554A9009E5758 /* PythonKit in Frameworks */ = {isa = PBXBuildFile; productRef = E4DD88A82DB554A9009E5758 /* PythonKit */; };
 		E4DD88AB2DB554A9009E5758 /* Aptabase in Frameworks */ = {isa = PBXBuildFile; productRef = E4DD88AA2DB554A9009E5758 /* Aptabase */; };
+		E4E6254C2E41E1AD00238D39 /* SwiFTC in Frameworks */ = {isa = PBXBuildFile; productRef = E4E6254B2E41E1AD00238D39 /* SwiFTC */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,7 +42,6 @@
 		E41FE8F12E31C462004C69F6 /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
 		E42224DC2DB56E9B0014F0E9 /* DECODE.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DECODE.entitlements; sourceTree = "<group>"; };
 		E44333042E2C461A009019CD /* GameScoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScoreView.swift; sourceTree = "<group>"; };
-		E48F416D2E2FF3E200B01564 /* GameTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameTimer.swift; sourceTree = "<group>"; };
 		E4950D4A2DB556A800D0B123 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		E4DD88632DB55123009E5758 /* DECODE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DECODE.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4DD88722DB55124009E5758 /* DECODETests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DECODETests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -51,7 +49,6 @@
 		E4DD888F2DB5512A009E5758 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E4DD88902DB5512A009E5758 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E4DD88912DB5512A009E5758 /* DECODEApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DECODEApp.swift; sourceTree = "<group>"; };
-		E4DD88922DB5512A009E5758 /* Data.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Data.swift; sourceTree = "<group>"; };
 		E4DD88982DB55133009E5758 /* DECODETests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DECODETests.swift; sourceTree = "<group>"; };
 		E4DD889B2DB55136009E5758 /* DECODEUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DECODEUITests.swift; sourceTree = "<group>"; };
 		E4DD889C2DB55136009E5758 /* DECODEUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DECODEUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -59,11 +56,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		E41FE8E82E31B45B004C69F6 /* Timer Audio */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = "Timer Audio";
-			sourceTree = "<group>";
-		};
 		E44333132E2EF7E2009019CD /* View */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = View;
@@ -83,6 +75,7 @@
 			files = (
 				E4DD88A72DB554A9009E5758 /* NumPy-iOS in Frameworks */,
 				E4DD88A92DB554A9009E5758 /* PythonKit in Frameworks */,
+				E4E6254C2E41E1AD00238D39 /* SwiFTC in Frameworks */,
 				E4DD88AB2DB554A9009E5758 /* Aptabase in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -142,13 +135,10 @@
 				E4DD88902DB5512A009E5758 /* ContentView.swift */,
 				E44333042E2C461A009019CD /* GameScoreView.swift */,
 				E41FE8F12E31C462004C69F6 /* TimerView.swift */,
-				E4DD88922DB5512A009E5758 /* Data.swift */,
-				E48F416D2E2FF3E200B01564 /* GameTimer.swift */,
 				E42224DD2DB57B270014F0E9 /* Helpers */,
 				E4DD888F2DB5512A009E5758 /* Assets.xcassets */,
 				E4DD88A02DB551B1009E5758 /* Info.plist */,
 				E42224DC2DB56E9B0014F0E9 /* DECODE.entitlements */,
-				E41FE8E82E31B45B004C69F6 /* Timer Audio */,
 			);
 			path = DECODE;
 			sourceTree = "<group>";
@@ -193,7 +183,6 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				E41FE8E82E31B45B004C69F6 /* Timer Audio */,
 				E44333132E2EF7E2009019CD /* View */,
 				E443331D2E2EF7EA009019CD /* Misc */,
 			);
@@ -202,6 +191,7 @@
 				E4DD88A62DB554A9009E5758 /* NumPy-iOS */,
 				E4DD88A82DB554A9009E5758 /* PythonKit */,
 				E4DD88AA2DB554A9009E5758 /* Aptabase */,
+				E4E6254B2E41E1AD00238D39 /* SwiFTC */,
 			);
 			productName = DECODE;
 			productReference = E4DD88632DB55123009E5758 /* DECODE.app */;
@@ -283,6 +273,7 @@
 				E4DD88A12DB5538F009E5758 /* XCRemoteSwiftPackageReference "NumPy-iOS" */,
 				E4DD88A22DB553B7009E5758 /* XCRemoteSwiftPackageReference "PythonKit" */,
 				E4DD88A32DB55463009E5758 /* XCRemoteSwiftPackageReference "aptabase-swift" */,
+				E4E6254A2E41E19800238D39 /* XCRemoteSwiftPackageReference "swiftc" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = E4DD88642DB55123009E5758 /* Products */;
@@ -329,9 +320,7 @@
 				E44333052E2C461A009019CD /* GameScoreView.swift in Sources */,
 				E41FE8F22E31C462004C69F6 /* TimerView.swift in Sources */,
 				E4DD88942DB5512A009E5758 /* ContentView.swift in Sources */,
-				E48F416E2E2FF3E200B01564 /* GameTimer.swift in Sources */,
 				E4DD88952DB5512A009E5758 /* DECODEApp.swift in Sources */,
-				E4DD88962DB5512A009E5758 /* Data.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -505,7 +494,8 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = DECODE/DECODE.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DECODE/Info.plist;
@@ -522,7 +512,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.1;
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -538,7 +529,8 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = DECODE/DECODE.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
+				DEVELOPMENT_TEAM = "";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DECODE/Info.plist;
@@ -555,7 +547,8 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.1;
+				MARKETING_VERSION = 0.1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -701,6 +694,15 @@
 				minimumVersion = 0.3.11;
 			};
 		};
+		E4E6254A2E41E19800238D39 /* XCRemoteSwiftPackageReference "swiftc" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/Slingshot-20240/swiftc";
+			requirement = {
+				kind = versionRange;
+				maximumVersion = 2.0.0;
+				minimumVersion = 0.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -718,6 +720,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E4DD88A32DB55463009E5758 /* XCRemoteSwiftPackageReference "aptabase-swift" */;
 			productName = Aptabase;
+		};
+		E4E6254B2E41E1AD00238D39 /* SwiFTC */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E4E6254A2E41E19800238D39 /* XCRemoteSwiftPackageReference "swiftc" */;
+			productName = SwiFTC;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
