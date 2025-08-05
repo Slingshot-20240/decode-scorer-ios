@@ -1,13 +1,7 @@
-<h1 align="center">🏜️ DECODE™ Scorer 🔎</h1>
+# 🏜️ iOS DECODE™ Scorer 🔎
 
-<h6 align="center">for iOS & iPadOS</h6>
-
-<p align="center">
-  The ultimate scorer, <b>redefined.</b>
-  <br />
-  presented by 20240 Slingshot
-</p>
-
+The ultimate scorer, **redefined**.  
+presented by **20240 Slingshot**
 
 > [!NOTE]
 > 🚧 This project is in early development. Please check back for more information.
@@ -68,7 +62,9 @@ All names, brands, and content referenced are the intellectual property of their
 
 [pvieito/PythonKit](https://github.com/pvieito/PythonKit) ([Apache License 2.0](https://github.com/pvieito/PythonKit/blob/master/LICENSE.txt))
 
-[auth0/SimpleKeychain](https://github.com/auth0/SimpleKeychain) ([MIT License](https://github.com/auth0/SimpleKeychain/blob/master/LICENSE))
+#### Slingshot Open Source Software
+
+[Slingshot-20240/swiftc](https://github.com/Slingshot-20240/swiftc) ([MIT License](https://github.com/Slingshot-20240/swiftc/blob/dev/LICENSE))
 
 #### DECODE™ Scorer presented by 20240 Slingshot
 

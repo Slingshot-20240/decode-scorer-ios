@@ -5,12 +5,13 @@
 //  Created by Jining Liu on 4/20/25.
 //
 
+import SwiFTC
 import SwiftData
 import SwiftUI
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
-    @Query private var wrappedGames: [Game]
+    @Query private var wrappedGames: [IntoTheDeepGameModel]
 
     @State private var showTimerView: Bool = false
     @State private var showGameScoreView: Bool = false
@@ -240,5 +241,5 @@ struct ContentView: View {
 
 #Preview {
     ContentView()
-        .modelContainer(for: Game.self, inMemory: true)
+        .modelContainer(for: IntoTheDeepGameModel.self, inMemory: true)
 }

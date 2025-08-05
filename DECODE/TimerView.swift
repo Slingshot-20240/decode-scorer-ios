@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import SwiFTC
 
 struct TimerView: View {
     @Environment(\.dismiss) var dismiss
 
-    @StateObject private var timer: GameTimer = .shared
-    @State private var startFrom: ScoringStage = .auto
+    @StateObject private var timer: GameTimerV1 = .init()
+    @State private var startFrom: GameScoringStageV1 = .auto
 
     var body: some View {
         GeometryReader { proxy in
@@ -74,7 +75,7 @@ struct TimerView: View {
                             Picker(
                                 selection: $startFrom
                             ) {
-                                ForEach(ScoringStage.allCases, id: \.rawValue) {
+                                ForEach(GameScoringStageV1.allCases, id: \.rawValue) {
                                     stage in
                                     Text(stage.rawValue)
                                         .tag(stage)

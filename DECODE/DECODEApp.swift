@@ -5,6 +5,7 @@
 //  Created by Jining Liu on 4/20/25.
 //
 
+import SwiFTC
 import SwiftData
 import SwiftUI
 
@@ -12,7 +13,7 @@ import SwiftUI
 struct DECODEApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            Game.self
+            IntoTheDeepGameModel.self
         ])
         let modelConfiguration = ModelConfiguration(
             schema: schema,

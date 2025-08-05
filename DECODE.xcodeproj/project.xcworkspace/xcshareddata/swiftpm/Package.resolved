@@ -1,5 +1,5 @@
 {
-  "originHash" : "35211820755c4c20cabc537b12b8a80427858f8bdec55f56e63277dc2ccdd279",
+  "originHash" : "a453c3740c108a07ac03f64322c34a97906e3b71412d05df97c3c66636495733",
   "pins" : [
     {
       "identity" : "aptabase-swift",
@@ -34,7 +34,16 @@
       "location" : "https://github.com/pvieito/PythonKit.git",
       "state" : {
         "branch" : "master",
-        "revision" : "6fee7617cfa910fbac7035276e295ba967adbbb4"
+        "revision" : "d5ba1b3b4834e8c47e0cdf0989f458bc59ab0b45"
+      }
+    },
+    {
+      "identity" : "swiftc",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/Slingshot-20240/swiftc",
+      "state" : {
+        "revision" : "6b96a6d833ae2ecc3afc65c01fcf094f1b1cbc7d",
+        "version" : "0.1.3"
       }
     }
   ],

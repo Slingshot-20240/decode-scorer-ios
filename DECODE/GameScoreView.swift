@@ -6,14 +6,15 @@
 //
 
 import SwiftUI
+import SwiFTC
 
 struct GameScoreView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
 
-    @StateObject private var timer: GameTimer
-    @State private var scoringStage: ScoringStage = .auto
-    @State private var scores: GameScores
+    @StateObject private var timer: GameTimerV1
+    @State private var scoringStage: GameScoringStageV1 = .auto
+    @State private var scores: IntoTheDeepGameScores
 
     @State private var batteryPercent: Float
     @State private var batteryIsCharging: Bool
@@ -149,7 +150,7 @@ struct GameScoreView: View {
                 )
 
                 Picker(selection: $scoringStage) {
-                    ForEach(ScoringStage.allCases, id: \.rawValue) { stage in
+                    ForEach(GameScoringStageV1.allCases, id: \.rawValue) { stage in
                         Text(stage.rawValue)
                             .tag(stage)
                     }
@@ -871,12 +872,12 @@ struct GameScoreView: View {
     }
 
     func blueLocationBinding() -> Binding<
-        GameScores.AllianceScores.StageScores.Location
+        IntoTheDeepGameScores.AllianceScores.StageScores.Location
     > {
         func scoringStageBindingsSelector(
-            _ auto: Binding<GameScores.AllianceScores.StageScores.Location>,
-            _ teleop: Binding<GameScores.AllianceScores.StageScores.Location>,
-        ) -> Binding<GameScores.AllianceScores.StageScores.Location> {
+            _ auto: Binding<IntoTheDeepGameScores.AllianceScores.StageScores.Location>,
+            _ teleop: Binding<IntoTheDeepGameScores.AllianceScores.StageScores.Location>,
+        ) -> Binding<IntoTheDeepGameScores.AllianceScores.StageScores.Location> {
             switch scoringStage {
             case .auto:
                 return auto
@@ -886,7 +887,7 @@ struct GameScoreView: View {
         }
 
         var locationBindings:
-            Binding<GameScores.AllianceScores.StageScores.Location>
+            Binding<IntoTheDeepGameScores.AllianceScores.StageScores.Location>
         {
             switch selectedBlueTeam {
             case .one:
@@ -906,12 +907,12 @@ struct GameScoreView: View {
     }
 
     func redLocationBinding() -> Binding<
-        GameScores.AllianceScores.StageScores.Location
+        IntoTheDeepGameScores.AllianceScores.StageScores.Location
     > {
         func scoringStageBindingsSelector(
-            _ auto: Binding<GameScores.AllianceScores.StageScores.Location>,
-            _ teleop: Binding<GameScores.AllianceScores.StageScores.Location>,
-        ) -> Binding<GameScores.AllianceScores.StageScores.Location> {
+            _ auto: Binding<IntoTheDeepGameScores.AllianceScores.StageScores.Location>,
+            _ teleop: Binding<IntoTheDeepGameScores.AllianceScores.StageScores.Location>,
+        ) -> Binding<IntoTheDeepGameScores.AllianceScores.StageScores.Location> {
             switch scoringStage {
             case .auto:
                 return auto
@@ -921,7 +922,7 @@ struct GameScoreView: View {
         }
 
         var locationBindings:
-            Binding<GameScores.AllianceScores.StageScores.Location>
+            Binding<IntoTheDeepGameScores.AllianceScores.StageScores.Location>
         {
             switch selectedRedTeam {
             case .one:
@@ -1066,13 +1067,13 @@ struct ScoreButtons: View {
 }
 
 struct LocationButtons: View {
-    @Binding var binding: GameScores.AllianceScores.StageScores.Location
-    let scoringStage: ScoringStage
+    @Binding var binding: IntoTheDeepGameScores.AllianceScores.StageScores.Location
+    let scoringStage: GameScoringStageV1
 
     var body: some View { EmptyView() }
 
     var none: some View {
-        let location = GameScores.AllianceScores.StageScores.Location.none
+        let location = IntoTheDeepGameScores.AllianceScores.StageScores.Location.none
         let locationSelected = binding == location
 
         return Button {
@@ -1105,7 +1106,7 @@ struct LocationButtons: View {
     }
 
     var oZone: some View {
-        let location = GameScores.AllianceScores.StageScores.Location.oZone
+        let location = IntoTheDeepGameScores.AllianceScores.StageScores.Location.oZone
         let locationSelected = binding == location
 
         return Button {
@@ -1140,7 +1141,7 @@ struct LocationButtons: View {
     }
 
     var aZone: some View {
-        let location = GameScores.AllianceScores.StageScores.Location.aZone
+        let location = IntoTheDeepGameScores.AllianceScores.StageScores.Location.aZone
         let locationSelected = binding == location
 
         return Button {
@@ -1175,7 +1176,7 @@ struct LocationButtons: View {
     }
 
     var l2: some View {
-        let location = GameScores.AllianceScores.StageScores.Location.l2
+        let location = IntoTheDeepGameScores.AllianceScores.StageScores.Location.l2
         let locationSelected = binding == location
 
         return Button {
@@ -1212,7 +1213,7 @@ struct LocationButtons: View {
     }
 
     var l3: some View {
-        let location = GameScores.AllianceScores.StageScores.Location.l3
+        let location = IntoTheDeepGameScores.AllianceScores.StageScores.Location.l3
         let locationSelected = binding == location
 
         return Button {
