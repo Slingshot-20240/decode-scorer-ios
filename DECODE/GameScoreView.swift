@@ -5,8 +5,8 @@
 //  Created by Jining Liu on 7/19/25.
 //
 
-import SwiftUI
 import SwiFTC
+import SwiftUI
 
 struct GameScoreView: View {
     @Environment(\.modelContext) private var modelContext
@@ -14,7 +14,7 @@ struct GameScoreView: View {
 
     @StateObject private var timer: GameTimerV1
     @State private var scoringStage: GameScoringStageV1 = .auto
-    @State private var scores: IntoTheDeepGameScores
+    @State private var scores: DecodeGameScores
 
     @State private var batteryPercent: Float
     @State private var batteryIsCharging: Bool
@@ -65,16 +65,6 @@ struct GameScoreView: View {
         }
         .fullScreenPadding()
         .onChange(of: timer.scoringStage) { _, stage in
-            if stage == .teleop {
-                scores.blue.teleop = scores.blue.auto
-                scores.blue.teleop.team1Location = .none
-                scores.blue.teleop.team2Location = .none
-
-                scores.red.teleop = scores.red.auto
-                scores.red.teleop.team1Location = .none
-                scores.red.teleop.team2Location = .none
-            }
-
             scoringStage = stage
         }
         .onReceive(
@@ -150,7 +140,8 @@ struct GameScoreView: View {
                 )
 
                 Picker(selection: $scoringStage) {
-                    ForEach(GameScoringStageV1.allCases, id: \.rawValue) { stage in
+                    ForEach(GameScoringStageV1.allCases, id: \.rawValue) {
+                        stage in
                         Text(stage.rawValue)
                             .tag(stage)
                     }
@@ -225,40 +216,123 @@ struct GameScoreView: View {
         .padding(.trailing, SafeArea.shared.rectangularTrailing - 8)
     }
 
-    @State private var scoringElement: ScoringElement = .netZone
+    @State private var scoringElement: ScoringElement = .classified
 
     var selector: some View {
         FractionalStack(
             .horizontal,
-            divisions: 8,
+            divisions: 7,
             elements: 3,
             spacing: 8
         ) { fd in
             VStack(spacing: 8) {
                 SelectorItem(
-                    icon: "chevron.up",
-                    name: "High Basket",
-                    element: .highBasket,
+                    icon: "tray.full",
+                    name: "Classified",
+                    element: .classified,
                     scoringElement: $scoringElement
                 )
 
                 SelectorItem(
-                    icon: "chevron.down",
-                    name: "Low Basket",
-                    element: .lowBasket,
+                    icon: "arrowshape.bounce.forward",
+                    name: "Overflown",
+                    element: .overflown,
                     scoringElement: $scoringElement
                 )
 
-                SelectorItem(
-                    icon: "righttriangle",
-                    name: "Net Zone",
-                    element: .netZone,
-                    scoringElement: $scoringElement
-                )
+                if scoringStage == .teleop {
+                    SelectorItem(
+                        icon: "righttriangle",
+                        name: "Depot",
+                        element: .depot,
+                        scoringElement: $scoringElement
+                    )
+                }
             }
             .frame(width: fd.divs(3))
 
+            Button {
+                Haptics.play(.light)
+
+                withAnimation(.none) {
+                    if let randomization = scores.randomization {
+                        switch randomization {
+                        case .gpp:
+                            scores.randomization = .pgp
+                        case .pgp:
+                            scores.randomization = .ppg
+                        case .ppg:
+                            scores.randomization = nil
+                        }
+                    } else {
+                        scores.randomization = .gpp
+                    }
+                }
+            } label: {
+                VStack(spacing: 8) {
+                    if let randomization = scores.randomization {
+                        Image("AprilTags/\(randomization.rawValue)")
+                            .interpolation(.none)
+                            .resizable()
+                            .scaledToFit()
+
+                        HStack(spacing: 8) {
+                            Circle()
+                                .fill(
+                                    randomization == .gpp
+                                        ? .artifactGreen : .artifactPurple
+                                )
+                            Circle()
+                                .fill(
+                                    randomization == .pgp
+                                        ? .artifactGreen : .artifactPurple
+                                )
+                            Circle()
+                                .fill(
+                                    randomization == .ppg
+                                        ? .artifactGreen : .artifactPurple
+                                )
+                        }
+                    } else {
+                        Image(.DECODE)
+                            .resizable()
+                            .scaledToFit()
+
+                        Divider()
+
+                        HStack(spacing: 8) {
+                            ForEach(0..<3) { _ in
+                                Circle()
+                                    .fill(Color.secondary)
+                            }
+                        }
+                    }
+                }
+                .padding(12)
+                .frame(width: fd.divs(1))
+                .frame(maxHeight: .infinity)
+                .background(Color.secondary.opacity(0.1))
+                .background(Color.primary.opacity(0.9).colorInvert())
+                .background(Color.secondary.opacity(0.5))
+                .radius(12)
+                .contextMenu {
+                    Button("Randomize", systemImage: "dice") {
+                        Haptics.play(.light)
+                        scores.randomization = .init(
+                            rawValue: Int.random(in: 21..<24)
+                        )
+                    }
+                }
+            }
+
             VStack(spacing: 8) {
+                SelectorItem(
+                    icon: "swatchpalette",
+                    name: "Motifs",
+                    element: .motifs,
+                    scoringElement: $scoringElement
+                )
+
                 SelectorItem(
                     icon: "location.fill.viewfinder",
                     name: "Location",
@@ -270,23 +344,6 @@ struct GameScoreView: View {
                     icon: "flag",
                     name: "Fouls",
                     element: .fouls,
-                    scoringElement: $scoringElement
-                )
-            }
-            .frame(width: fd.divs(2))
-
-            VStack(spacing: 8) {
-                SelectorItem(
-                    icon: "arrow.up.to.line.compact",
-                    name: "High Chamber",
-                    element: .highChamber,
-                    scoringElement: $scoringElement
-                )
-
-                SelectorItem(
-                    icon: "arrow.down.to.line.compact",
-                    name: "Low Chamber",
-                    element: .lowChamber,
                     scoringElement: $scoringElement
                 )
             }
@@ -371,38 +428,51 @@ struct GameScoreView: View {
                     case .location:
                         FractionalStack(
                             .horizontal,
-                            divisions: 11,
+                            divisions: 3,
                             elements: 2,
                             spacing: 8
                         ) { fd in
-                            let locationButtons = LocationButtons(
-                                binding: blueLocationBinding(),
-                                scoringStage: scoringStage
-                            )
-
-                            locationButtons.none
-                                .frame(width: fd.divs(3))
-                                .useDeviceCornerRadius(
-                                    [.bottomLeading],
-                                    min: 24,
-                                    fallback: 8,
-                                    subtract: 16
+                            switch scoringStage {
+                            case .auto:
+                                let locationButtons = AutoLocationButtons(
+                                    binding: blueAutoLocationBinding(),
+                                    scoringStage: scoringStage
                                 )
 
-                            HStack(spacing: 8) {
-                                VStack(spacing: 8) {
-                                    locationButtons.oZone
-                                    locationButtons.aZone
-                                }
+                                locationButtons.none
+                                    .frame(width: fd.divs(1))
+                                    .useDeviceCornerRadius(
+                                        [.bottomLeading],
+                                        min: 24,
+                                        fallback: 8,
+                                        subtract: 16
+                                    )
 
-                                if scoringStage == .teleop {
+                                locationButtons.left
+                                    .frame(width: fd.divs(2))
+                            case .teleop:
+                                let locationButtons = TeleopLocationButtons(
+                                    binding: blueTeleopLocationBinding(),
+                                    scoringStage: scoringStage
+                                )
+
+                                locationButtons.none
+                                    .frame(width: fd.divs(1))
+                                    .useDeviceCornerRadius(
+                                        [.bottomLeading],
+                                        min: 24,
+                                        fallback: 8,
+                                        subtract: 16
+                                    )
+
+                                HStack(spacing: 8) {
                                     VStack(spacing: 8) {
-                                        locationButtons.l2
-                                        locationButtons.l3
+                                        locationButtons.partial
+                                        locationButtons.full
                                     }
                                 }
+                                .frame(width: fd.divs(2))
                             }
-                            .frame(width: fd.divs(8))
                         }
                         .padding(8)
                     case .fouls:
@@ -430,8 +500,11 @@ struct GameScoreView: View {
 
                         Spacer()
                     default:
-                        WheelPicker(value: scoringElementBindings().blue)
-                            .padding(.leading, 8)
+                        WheelPicker(
+                            value: scoringElementBindings().blue,
+                            max: scoringElement == .motifs ? 9 : 60
+                        )
+                        .padding(.leading, 8)
 
                         ScoreButtons(
                             value: scoringElementBindings().blue,
@@ -718,38 +791,51 @@ struct GameScoreView: View {
                     case .location:
                         FractionalStack(
                             .horizontal,
-                            divisions: 11,
+                            divisions: 3,
                             elements: 2,
                             spacing: 8
                         ) { fd in
-                            let locationButtons = LocationButtons(
-                                binding: redLocationBinding(),
-                                scoringStage: scoringStage
-                            )
+                            switch scoringStage {
+                            case .auto:
+                                let locationButtons = AutoLocationButtons(
+                                    binding: redAutoLocationBinding(),
+                                    scoringStage: scoringStage
+                                )
 
-                            HStack(spacing: 8) {
-                                if scoringStage == .teleop {
+                                locationButtons.left
+                                    .frame(width: fd.divs(2))
+
+                                locationButtons.none
+                                    .frame(width: fd.divs(1))
+                                    .useDeviceCornerRadius(
+                                        [.bottomTrailing],
+                                        min: 24,
+                                        fallback: 8,
+                                        subtract: 16
+                                    )
+                            case .teleop:
+                                let locationButtons = TeleopLocationButtons(
+                                    binding: redTeleopLocationBinding(),
+                                    scoringStage: scoringStage
+                                )
+
+                                HStack(spacing: 8) {
                                     VStack(spacing: 8) {
-                                        locationButtons.l2
-                                        locationButtons.l3
+                                        locationButtons.partial
+                                        locationButtons.full
                                     }
                                 }
+                                .frame(width: fd.divs(2))
 
-                                VStack(spacing: 8) {
-                                    locationButtons.oZone
-                                    locationButtons.aZone
-                                }
+                                locationButtons.none
+                                    .frame(width: fd.divs(1))
+                                    .useDeviceCornerRadius(
+                                        [.bottomTrailing],
+                                        min: 24,
+                                        fallback: 8,
+                                        subtract: 16
+                                    )
                             }
-                            .frame(width: fd.divs(8))
-
-                            locationButtons.none
-                                .frame(width: fd.divs(3))
-                                .useDeviceCornerRadius(
-                                    [.bottomTrailing],
-                                    min: 24,
-                                    fallback: 8,
-                                    subtract: 16
-                                )
                         }
                         .padding(8)
                     case .fouls:
@@ -783,8 +869,11 @@ struct GameScoreView: View {
                         )
                         .padding([.vertical, .leading], 8)
 
-                        WheelPicker(value: scoringElementBindings().red)
-                            .padding(.trailing, 8)
+                        WheelPicker(
+                            value: scoringElementBindings().red,
+                            max: scoringElement == .motifs ? 9 : 60
+                        )
+                        .padding(.trailing, 8)
                     }
                 }
                 .maxArea()
@@ -828,40 +917,33 @@ struct GameScoreView: View {
 
         var scoringElementBindings: (Binding<Int>, Binding<Int>) {
             switch scoringElement {
-            case .netZone:
+            case .classified:
                 return scoringStageBindingsSelector(
-                    $scores.blue.auto.samplesNet,
-                    $scores.blue.teleop.samplesNet,
-                    $scores.red.auto.samplesNet,
-                    $scores.red.teleop.samplesNet
+                    $scores.blue.auto.classfied,
+                    $scores.blue.teleop.classfied,
+                    $scores.red.auto.classfied,
+                    $scores.red.teleop.classfied
                 )
-            case .lowBasket:
+            case .overflown:
                 return scoringStageBindingsSelector(
-                    $scores.blue.auto.samplesLow,
-                    $scores.blue.teleop.samplesLow,
-                    $scores.red.auto.samplesLow,
-                    $scores.red.teleop.samplesLow
+                    $scores.blue.auto.overflown,
+                    $scores.blue.teleop.overflown,
+                    $scores.red.auto.overflown,
+                    $scores.red.teleop.overflown
                 )
-            case .highBasket:
+            case .depot:
                 return scoringStageBindingsSelector(
-                    $scores.blue.auto.samplesHigh,
-                    $scores.blue.teleop.samplesHigh,
-                    $scores.red.auto.samplesHigh,
-                    $scores.red.teleop.samplesHigh
+                    .constant(0),
+                    $scores.blue.teleop.depot,
+                    .constant(0),
+                    $scores.red.teleop.depot
                 )
-            case .lowChamber:
+            case .motifs:
                 return scoringStageBindingsSelector(
-                    $scores.blue.auto.specimenLow,
-                    $scores.blue.teleop.specimenLow,
-                    $scores.red.auto.specimenLow,
-                    $scores.red.teleop.specimenLow
-                )
-            case .highChamber:
-                return scoringStageBindingsSelector(
-                    $scores.blue.auto.specimenHigh,
-                    $scores.blue.teleop.specimenHigh,
-                    $scores.red.auto.specimenHigh,
-                    $scores.red.teleop.specimenHigh
+                    $scores.blue.auto.matchingMotifs,
+                    $scores.blue.teleop.matchingMotifs,
+                    $scores.red.auto.matchingMotifs,
+                    $scores.red.teleop.matchingMotifs
                 )
             default:
                 return (.constant(0), .constant(0))
@@ -871,80 +953,53 @@ struct GameScoreView: View {
         return scoringElementBindings
     }
 
-    func blueLocationBinding() -> Binding<
-        IntoTheDeepGameScores.AllianceScores.StageScores.Location
+    func blueAutoLocationBinding() -> Binding<
+        DecodeGameScores.AllianceScores.AutoScores.Location
     > {
-        func scoringStageBindingsSelector(
-            _ auto: Binding<IntoTheDeepGameScores.AllianceScores.StageScores.Location>,
-            _ teleop: Binding<IntoTheDeepGameScores.AllianceScores.StageScores.Location>,
-        ) -> Binding<IntoTheDeepGameScores.AllianceScores.StageScores.Location> {
-            switch scoringStage {
-            case .auto:
-                return auto
-            case .teleop:
-                return teleop
-            }
+        switch selectedBlueTeam {
+        case .one:
+            return $scores.blue.auto.team1Location
+        case .two:
+            return $scores.blue.auto.team2Location
         }
-
-        var locationBindings:
-            Binding<IntoTheDeepGameScores.AllianceScores.StageScores.Location>
-        {
-            switch selectedBlueTeam {
-            case .one:
-                return scoringStageBindingsSelector(
-                    $scores.blue.auto.team1Location,
-                    $scores.blue.teleop.team1Location
-                )
-            case .two:
-                return scoringStageBindingsSelector(
-                    $scores.blue.auto.team2Location,
-                    $scores.blue.teleop.team2Location
-                )
-            }
-        }
-
-        return locationBindings
     }
 
-    func redLocationBinding() -> Binding<
-        IntoTheDeepGameScores.AllianceScores.StageScores.Location
+    func redAutoLocationBinding() -> Binding<
+        DecodeGameScores.AllianceScores.AutoScores.Location
     > {
-        func scoringStageBindingsSelector(
-            _ auto: Binding<IntoTheDeepGameScores.AllianceScores.StageScores.Location>,
-            _ teleop: Binding<IntoTheDeepGameScores.AllianceScores.StageScores.Location>,
-        ) -> Binding<IntoTheDeepGameScores.AllianceScores.StageScores.Location> {
-            switch scoringStage {
-            case .auto:
-                return auto
-            case .teleop:
-                return teleop
-            }
+        switch selectedRedTeam {
+        case .one:
+            return $scores.red.auto.team1Location
+        case .two:
+            return $scores.red.auto.team2Location
         }
+    }
 
-        var locationBindings:
-            Binding<IntoTheDeepGameScores.AllianceScores.StageScores.Location>
-        {
-            switch selectedRedTeam {
-            case .one:
-                return scoringStageBindingsSelector(
-                    $scores.red.auto.team1Location,
-                    $scores.red.teleop.team1Location
-                )
-            case .two:
-                return scoringStageBindingsSelector(
-                    $scores.red.auto.team2Location,
-                    $scores.red.teleop.team2Location
-                )
-            }
+    func blueTeleopLocationBinding() -> Binding<
+        DecodeGameScores.AllianceScores.TeleopScores.Location
+    > {
+        switch selectedBlueTeam {
+        case .one:
+            return $scores.blue.teleop.team1Location
+        case .two:
+            return $scores.blue.teleop.team2Location
         }
+    }
 
-        return locationBindings
+    func redTeleopLocationBinding() -> Binding<
+        DecodeGameScores.AllianceScores.TeleopScores.Location
+    > {
+        switch selectedRedTeam {
+        case .one:
+            return $scores.red.teleop.team1Location
+        case .two:
+            return $scores.red.teleop.team2Location
+        }
     }
 }
 
 enum ScoringElement {
-    case netZone, lowBasket, highBasket, lowChamber, highChamber, location,
-        fouls
+    case classified, overflown, depot, motifs, location, fouls
 }
 
 enum TeamSelection {
@@ -963,6 +1018,7 @@ struct SelectorItem: View {
         HStack {
             Image(systemName: icon)
                 .font(.title2)
+                .rotationEffect(.degrees(icon == "righttriangle" ? 180 : 0))
 
             Spacer()
 
@@ -993,10 +1049,11 @@ struct SelectorItem: View {
 
 struct WheelPicker: View {
     @Binding var value: Int
-
+    let max: Int
+    
     var body: some View {
         Picker(selection: $value) {
-            ForEach(0..<41) { i in
+            ForEach(0..<(max + 1), id: \.self) { i in
                 Text("\(i)")
                     .tag(i)
             }
@@ -1066,14 +1123,14 @@ struct ScoreButtons: View {
     }
 }
 
-struct LocationButtons: View {
-    @Binding var binding: IntoTheDeepGameScores.AllianceScores.StageScores.Location
+struct AutoLocationButtons: View {
+    @Binding var binding: DecodeGameScores.AllianceScores.AutoScores.Location
     let scoringStage: GameScoringStageV1
 
     var body: some View { EmptyView() }
 
     var none: some View {
-        let location = IntoTheDeepGameScores.AllianceScores.StageScores.Location.none
+        let location = DecodeGameScores.AllianceScores.AutoScores.Location.none
         let locationSelected = binding == location
 
         return Button {
@@ -1082,7 +1139,7 @@ struct LocationButtons: View {
         } label: {
             VStack(spacing: 4) {
                 Image(systemName: location.icon)
-                Text(location.description(scoringStage))
+                Text(location.description)
             }
             .font(.caption)
             .minimumScaleFactor(0.6)
@@ -1105,8 +1162,8 @@ struct LocationButtons: View {
         .tint(.primary)
     }
 
-    var oZone: some View {
-        let location = IntoTheDeepGameScores.AllianceScores.StageScores.Location.oZone
+    var left: some View {
+        let location = DecodeGameScores.AllianceScores.AutoScores.Location.left
         let locationSelected = binding == location
 
         return Button {
@@ -1115,7 +1172,84 @@ struct LocationButtons: View {
         } label: {
             VStack(spacing: 4) {
                 Image(systemName: location.icon)
-                Text(location.description(scoringStage))
+                Text(location.description)
+            }
+            .font(.caption)
+            .minimumScaleFactor(0.6)
+            .padding(4)
+            .frame(
+                maxWidth: .infinity,
+                maxHeight: .infinity
+            )
+            .background(
+                Rectangle().fill(
+                    (locationSelected
+                        ? Color.primary
+                        : .clear).gradient
+                ).colorInvert()
+            )
+            .colorInvert(locationSelected)
+            .background(
+                Color.secondary.opacity(0.15)
+            )
+            .radius(8)
+        }
+        .tint(.primary)
+    }
+}
+
+struct TeleopLocationButtons: View {
+    @Binding var binding: DecodeGameScores.AllianceScores.TeleopScores.Location
+    let scoringStage: GameScoringStageV1
+
+    var body: some View { EmptyView() }
+
+    var none: some View {
+        let location = DecodeGameScores.AllianceScores.TeleopScores.Location
+            .none
+        let locationSelected = binding == location
+
+        return Button {
+            Haptics.play(.light)
+            binding = location
+        } label: {
+            VStack(spacing: 4) {
+                Image(systemName: location.icon)
+                Text(location.description)
+            }
+            .font(.caption)
+            .minimumScaleFactor(0.6)
+            .padding(4)
+            .frame(
+                maxWidth: .infinity,
+                maxHeight: .infinity
+            )
+            .background(
+                Rectangle().fill(
+                    (locationSelected
+                        ? Color.primary
+                        : .clear).gradient
+                ).colorInvert()
+            )
+            .colorInvert(locationSelected)
+            .background(Color.secondary.opacity(0.15))
+            .radius(8)
+        }
+        .tint(.primary)
+    }
+
+    var partial: some View {
+        let location = DecodeGameScores.AllianceScores.TeleopScores.Location
+            .partial
+        let locationSelected = binding == location
+
+        return Button {
+            Haptics.play(.light)
+            binding = location
+        } label: {
+            VStack(spacing: 4) {
+                Image(systemName: location.icon)
+                Text(location.description)
             }
             .font(.caption)
             .minimumScaleFactor(0.6)
@@ -1140,8 +1274,9 @@ struct LocationButtons: View {
         .tint(.primary)
     }
 
-    var aZone: some View {
-        let location = IntoTheDeepGameScores.AllianceScores.StageScores.Location.aZone
+    var full: some View {
+        let location = DecodeGameScores.AllianceScores.TeleopScores.Location
+            .full
         let locationSelected = binding == location
 
         return Button {
@@ -1150,79 +1285,7 @@ struct LocationButtons: View {
         } label: {
             VStack(spacing: 4) {
                 Image(systemName: location.icon)
-                Text(location.description(scoringStage))
-            }
-            .font(.caption)
-            .minimumScaleFactor(0.6)
-            .padding(4)
-            .frame(
-                maxWidth: .infinity,
-                maxHeight: .infinity
-            )
-            .background(
-                Rectangle().fill(
-                    (locationSelected
-                        ? Color.primary
-                        : .clear).gradient
-                ).colorInvert()
-            )
-            .colorInvert(locationSelected)
-            .background(
-                Color.secondary.opacity(0.15)
-            )
-            .radius(8)
-        }
-        .tint(.primary)
-    }
-
-    var l2: some View {
-        let location = IntoTheDeepGameScores.AllianceScores.StageScores.Location.l2
-        let locationSelected = binding == location
-
-        return Button {
-            Haptics.play(.light)
-            binding = location
-        } label: {
-            VStack(spacing: 4) {
-                Image(systemName: location.icon)
-                Text(
-                    location.description(scoringStage)
-                )
-            }
-            .font(.caption)
-            .minimumScaleFactor(0.6)
-            .padding(4)
-            .frame(
-                maxWidth: .infinity,
-                maxHeight: .infinity
-            )
-            .background(
-                Rectangle().fill(
-                    (locationSelected
-                        ? Color.primary
-                        : .clear).gradient
-                ).colorInvert()
-            )
-            .colorInvert(locationSelected)
-            .background(
-                Color.secondary.opacity(0.15)
-            )
-            .radius(8)
-        }
-        .tint(.primary)
-    }
-
-    var l3: some View {
-        let location = IntoTheDeepGameScores.AllianceScores.StageScores.Location.l3
-        let locationSelected = binding == location
-
-        return Button {
-            Haptics.play(.light)
-            binding = location
-        } label: {
-            VStack(spacing: 4) {
-                Image(systemName: location.icon)
-                Text(location.description(scoringStage))
+                Text(location.description)
             }
             .font(.caption)
             .minimumScaleFactor(0.6)
@@ -1268,9 +1331,10 @@ struct FoulButtons: View {
                         .font(.title)
                         .contentTransition(.numericText())
                 }
+                .minimumScaleFactor(0.8)
                 .padding(8)
                 .maxArea()
-                .background(Color.secondary.opacity(0.15))
+                .background(color.opacity(0.1))
                 .radius(8)
             }
             .tint(.primary)
@@ -1282,7 +1346,7 @@ struct FoulButtons: View {
                 Image(systemName: "minus")
                     .padding(12)
                     .frame(maxWidth: .infinity)
-                    .background(Color.secondary.opacity(0.15))
+                    .background(Color.secondary.opacity(0.1))
                     .radius(8)
             }
             .tint(.primary)
@@ -1295,3 +1359,4 @@ struct FoulButtons: View {
 #Preview {
     GameScoreView()
 }
+

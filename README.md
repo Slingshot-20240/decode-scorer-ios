@@ -46,9 +46,7 @@ You're done! Head to the `Signing & Capabilities` section on the DECODE target p
 
 ### Disclaimer
 
-This application is an independent project developed by FTC Team 20240 Slingshot and open-source contributors. It is not affiliated with, endorsed by, or officially connected to *FIRST*® (For Inspiration and Recognition of Science and Technology), the *FIRST*® Tech Challenge (FTC), Qualcomm, RTX (Raytheon Technologies), or any other sponsors, partners, or affiliates of these organizations.
-
-All names, brands, and content referenced are the intellectual property of their respective owners. Their use in this application is solely for identification purposes and does not imply endorsement.
+***FIRST®, FIRST® Tech Challenge, FTC®, FIRST® DIVE℠, INTO THE DEEP℠, FIRST® AGE™, DECODE™, and all accompanying logos as they are created, are trademarks of For Inspiration and Recognition of Science and Technology (FIRST®) (www.firstinspires.org). These trademarks are used by special permission of FIRST which is not overseeing, involved with, or responsible for this activity, product, or service. © 2025 FIRST®. Used by special permission. All rights reserved.***
 
 ### Licenses
 
