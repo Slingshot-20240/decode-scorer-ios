@@ -16,8 +16,16 @@ struct GameScoreView: View {
     @State private var scoringStage: GameScoringStageV1 = .auto
     @State private var scores: DecodeGameScores
 
+    @State private var assignTeamFor: AssignTeamFor? = nil
+    @State private var redTeam1: String? = nil
+    @State private var redTeam2: String? = nil
+    @State private var blueTeam1: String? = nil
+    @State private var blueTeam2: String? = nil
+
     @State private var batteryPercent: Float
     @State private var batteryIsCharging: Bool
+
+    @State private var showDetails: Bool = false
 
     init() {
         _timer = StateObject(wrappedValue: .shared)
@@ -64,8 +72,47 @@ struct GameScoreView: View {
             .padding(-6)
         }
         .fullScreenPadding()
+        .sheet(isPresented: .constant(assignTeamFor != nil)) {
+            assignTeamFor = nil
+        } content: {
+            TeamAssignmentsView(
+                assignFor: $assignTeamFor,
+                redTeam1: $redTeam1,
+                redTeam2: $redTeam2,
+                blueTeam1: $blueTeam1,
+                blueTeam2: $blueTeam2
+            )
+        }
+        .sheet(isPresented: $showDetails) {
+            NavigationStack {
+                ScrollView {
+                    ScoreDetailsView(scores: scores)
+                }
+                .navigationTitle("Details")
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button {
+                            showDetails = false
+                        } label: {
+                            if #available(iOS 26.0, *) {
+                                Image(systemName: "xmark")
+                            } else {
+                                Image(systemName: "xmark.circle.fill")
+                                    .font(.title3)
+                                    .foregroundStyle(Color.secondary)
+                            }
+                        }
+                    }
+                }
+            }
+        }
         .onChange(of: timer.scoringStage) { _, stage in
             scoringStage = stage
+        }
+        .onChange(of: scoringStage) { _, stage in
+            if stage == .auto && scoringElement == .depot {
+                scoringElement = .classified
+            }
         }
         .onReceive(
             NotificationCenter.default.publisher(
@@ -240,88 +287,81 @@ struct GameScoreView: View {
                     scoringElement: $scoringElement
                 )
 
-                if scoringStage == .teleop {
-                    SelectorItem(
-                        icon: "righttriangle",
-                        name: "Depot",
-                        element: .depot,
-                        scoringElement: $scoringElement
-                    )
-                }
+                SelectorItem(
+                    icon: "righttriangle",
+                    name: "Depot",
+                    element: .depot,
+                    scoringElement: $scoringElement
+                )
+                .foregroundStyle(scoringStage == .auto ? .secondary : .primary)
+                .opacity(scoringStage == .auto ? 0.4 : 1)
+                .disabled(scoringStage == .auto)
             }
             .frame(width: fd.divs(3))
 
-            Button {
+            VStack(spacing: 8) {
+                if let motif = scores.motif {
+                    Image("AprilTags/\(motif.rawValue)")
+                        .interpolation(.none)
+                        .resizable()
+                        .scaledToFit()
+
+                    Divider()
+
+                    HStack(spacing: 8) {
+                        Circle()
+                            .fill(
+                                motif == .gpp
+                                    ? .artifactGreen : .artifactPurple
+                            )
+                        Circle()
+                            .fill(
+                                motif == .pgp
+                                    ? .artifactGreen : .artifactPurple
+                            )
+                        Circle()
+                            .fill(
+                                motif == .ppg
+                                    ? .artifactGreen : .artifactPurple
+                            )
+                    }
+                } else {
+                    Image(.DECODE)
+                        .resizable()
+                        .scaledToFit()
+                }
+            }
+            .padding(12)
+            .frame(width: fd.divs(1))
+            .frame(maxHeight: .infinity)
+            .background(Color.secondary.opacity(0.1))
+            .background(Color.primary.opacity(0.9).colorInvert())
+            .background(Color.secondary.opacity(0.5))
+            .radius(12)
+            .onTapGesture {
                 Haptics.play(.light)
 
                 withAnimation(.none) {
-                    if let randomization = scores.randomization {
-                        switch randomization {
+                    if let motif = scores.motif {
+                        switch motif {
                         case .gpp:
-                            scores.randomization = .pgp
+                            scores.motif = .pgp
                         case .pgp:
-                            scores.randomization = .ppg
+                            scores.motif = .ppg
                         case .ppg:
-                            scores.randomization = nil
+                            scores.motif = nil
                         }
                     } else {
-                        scores.randomization = .gpp
+                        scores.motif = .gpp
                     }
                 }
-            } label: {
-                VStack(spacing: 8) {
-                    if let randomization = scores.randomization {
-                        Image("AprilTags/\(randomization.rawValue)")
-                            .interpolation(.none)
-                            .resizable()
-                            .scaledToFit()
-
-                        HStack(spacing: 8) {
-                            Circle()
-                                .fill(
-                                    randomization == .gpp
-                                        ? .artifactGreen : .artifactPurple
-                                )
-                            Circle()
-                                .fill(
-                                    randomization == .pgp
-                                        ? .artifactGreen : .artifactPurple
-                                )
-                            Circle()
-                                .fill(
-                                    randomization == .ppg
-                                        ? .artifactGreen : .artifactPurple
-                                )
-                        }
-                    } else {
-                        Image(.DECODE)
-                            .resizable()
-                            .scaledToFit()
-
-                        Divider()
-
-                        HStack(spacing: 8) {
-                            ForEach(0..<3) { _ in
-                                Circle()
-                                    .fill(Color.secondary)
-                            }
-                        }
-                    }
-                }
-                .padding(12)
-                .frame(width: fd.divs(1))
-                .frame(maxHeight: .infinity)
-                .background(Color.secondary.opacity(0.1))
-                .background(Color.primary.opacity(0.9).colorInvert())
-                .background(Color.secondary.opacity(0.5))
-                .radius(12)
-                .contextMenu {
-                    Button("Randomize", systemImage: "dice") {
-                        Haptics.play(.light)
-                        scores.randomization = .init(
-                            rawValue: Int.random(in: 21..<24)
-                        )
-                    }
+            }
+            .contextMenu {
+                Button("Randomize", systemImage: "dice") {
+                    Haptics.play(.light)
+                    scores.motif = .init(
+                        rawValue: Int.random(in: 21..<24)
+                    )
                 }
             }
 
@@ -351,24 +391,23 @@ struct GameScoreView: View {
         }
     }
 
-    @State private var selectedBlueTeam: TeamSelection = .one
     @State private var selectedRedTeam: TeamSelection = .one
+    @State private var selectedBlueTeam: TeamSelection = .one
 
     var scoreControls: some View {
         FractionalStack(.horizontal, divisions: 13, elements: 3, spacing: 8) {
             fd in
             VStack(spacing: 8) {
                 HStack(spacing: 8) {
-                    let team1Selected = selectedBlueTeam == .one
+                    let team1Selected = selectedRedTeam == .one
 
                     Button {
                         Haptics.play(.light)
-                        if scoringElement == .location {
-                            selectedBlueTeam = .one
-                        }
+                        selectedRedTeam = .one
                     } label: {
-                        Text("Team 1")
+                        Text(redTeam1 ?? "Team 1")
                             .font(.subheadline)
+                            .foregroundStyle(.primary)
                             .padding(.horizontal, 12)
                             .padding(.vertical, 6)
                             .frame(maxWidth: .infinity)
@@ -390,15 +429,24 @@ struct GameScoreView: View {
                             .background(Color.secondary.opacity(0.5))
                             .clipShape(Capsule())
                     }
+                    .disabled(scoringElement != .location)
+                    .contextMenu {
+                        Button(
+                            "\(redTeam1 == nil ? "Assign" : "Change") Team",
+                            systemImage: "person.3.fill"
+                        ) {
+                            Haptics.play(.light)
+                            assignTeamFor = .red1
+                        }
+                    }
 
                     Button {
                         Haptics.play(.light)
-                        if scoringElement == .location {
-                            selectedBlueTeam = .two
-                        }
+                        selectedRedTeam = .two
                     } label: {
-                        Text("Team 2")
+                        Text(redTeam2 ?? "Team 2")
                             .font(.subheadline)
+                            .foregroundStyle(.primary)
                             .padding(.horizontal, 12)
                             .padding(.vertical, 6)
                             .frame(maxWidth: .infinity)
@@ -420,6 +468,16 @@ struct GameScoreView: View {
                             .background(Color.secondary.opacity(0.5))
                             .clipShape(Capsule())
                     }
+                    .disabled(scoringElement != .location)
+                    .contextMenu {
+                        Button(
+                            "\(redTeam2 == nil ? "Assign" : "Change") Team",
+                            systemImage: "person.3.fill"
+                        ) {
+                            Haptics.play(.light)
+                            assignTeamFor = .red2
+                        }
+                    }
                 }
                 .tint(.primary)
 
@@ -435,7 +493,7 @@ struct GameScoreView: View {
                             switch scoringStage {
                             case .auto:
                                 let locationButtons = AutoLocationButtons(
-                                    binding: blueAutoLocationBinding(),
+                                    binding: redAutoLocationBinding(),
                                     scoringStage: scoringStage
                                 )
 
@@ -452,7 +510,7 @@ struct GameScoreView: View {
                                     .frame(width: fd.divs(2))
                             case .teleop:
                                 let locationButtons = TeleopLocationButtons(
-                                    binding: blueTeleopLocationBinding(),
+                                    binding: redTeleopLocationBinding(),
                                     scoringStage: scoringStage
                                 )
 
@@ -482,7 +540,7 @@ struct GameScoreView: View {
                             icon: "exclamationmark.3",
                             color: .red,
                             width: fd.divs(1),
-                            fouls: $scores.red
+                            fouls: $scores.blue
                                 .majorFoulsFromOtherAllianceAwarded
                         )
                         .padding([.vertical, .leading], 8)
@@ -493,7 +551,7 @@ struct GameScoreView: View {
                             icon: "exclamationmark",
                             color: .yellow,
                             width: fd.divs(1),
-                            fouls: $scores.red
+                            fouls: $scores.blue
                                 .minorFoulsFromOtherAllianceAwarded
                         )
                         .padding([.vertical, .trailing], 8)
@@ -501,13 +559,13 @@ struct GameScoreView: View {
                         Spacer()
                     default:
                         WheelPicker(
-                            value: scoringElementBindings().blue,
+                            value: scoringElementBindings().red,
                             max: scoringElement == .motifs ? 9 : 60
                         )
                         .padding(.leading, 8)
 
                         ScoreButtons(
-                            value: scoringElementBindings().blue,
+                            value: scoringElementBindings().red,
                             width: fd.divs(1)
                         )
                         .padding([.vertical, .trailing], 8)
@@ -519,10 +577,10 @@ struct GameScoreView: View {
                 .background(Color.secondary.opacity(0.5))
                 .background(
                     LinearGradient(
-                        colors: [.firstBlue, .clear, .clear],
+                        colors: [.firstRed, .clear, .clear],
                         startPoint: .bottomTrailing,
                         endPoint: .leading
-                    )
+                    ).opacity(0.7)
                 )
                 .radius(16)
                 .useDeviceCornerRadius(
@@ -610,7 +668,28 @@ struct GameScoreView: View {
                         .aspectRatio(1, contentMode: .fit)
                     case .finished:
                         Button {
+                            var teams = GameTeamsV1()
+                            teams.red.one = redTeam1
+                            teams.red.two = redTeam2
+                            teams.blue.one = blueTeam1
+                            teams.blue.two = blueTeam2
 
+                            modelContext.insert(
+                                DecodeGameModel(scores: scores, teams: teams)
+                            )
+                            
+                            do {
+                                try modelContext.save()
+                            } catch {
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                    try? modelContext.save()
+                                }
+                            }
+
+                            Haptics.notify(.success)
+
+                            timer.reset()
+                            scores = .init()
                         } label: {
                             Label(
                                 "Save",
@@ -631,10 +710,12 @@ struct GameScoreView: View {
                             .colorInvert()
                             .radius(8)
                         }
+                        .disabled(scores.total <= 0)
+                        .opacity(scores.total > 0 ? 1 : 0.6)
 
                         Button {
                             Haptics.play(.light)
-                            // TODO: details
+                            showDetails = true
                         } label: {
                             Label("Details", systemImage: "list.dash")
                                 .font(.title2)
@@ -652,6 +733,8 @@ struct GameScoreView: View {
                                 .colorInvert()
                                 .radius(8)
                         }
+                        .disabled(scores.total <= 0)
+                        .opacity(scores.total > 0 ? 1 : 0.6)
                     default:
                         Text(
                             "\(timer.countdown / 60):\(timer.countdown % 60, specifier: "%02d")"
@@ -686,24 +769,6 @@ struct GameScoreView: View {
                         .minimumScaleFactor(0.6)
                         .foregroundStyle(.clear)
                         .overlay {
-                            Text(String(scores.blue.total))
-                                .font(.system(size: 60, weight: .bold))
-                                .minimumScaleFactor(0.6)
-                                .contentTransition(.numericText())
-                                .foregroundStyle(.white)
-                        }
-                        .padding(.horizontal, 12)
-                        .padding(.vertical, 6)
-                        .maxArea()
-                        .background(.firstBlue.gradient)
-                        .radius(16)
-
-                    Text("000")
-                        .font(.system(size: 60, weight: .bold))
-                        .monospacedDigit()
-                        .minimumScaleFactor(0.6)
-                        .foregroundStyle(.clear)
-                        .overlay {
                             Text(String(scores.red.total))
                                 .font(.system(size: 60, weight: .bold))
                                 .minimumScaleFactor(0.6)
@@ -715,6 +780,24 @@ struct GameScoreView: View {
                         .maxArea()
                         .background(.firstRed.gradient)
                         .radius(16)
+
+                    Text("000")
+                        .font(.system(size: 60, weight: .bold))
+                        .monospacedDigit()
+                        .minimumScaleFactor(0.6)
+                        .foregroundStyle(.clear)
+                        .overlay {
+                            Text(String(scores.blue.total))
+                                .font(.system(size: 60, weight: .bold))
+                                .minimumScaleFactor(0.6)
+                                .contentTransition(.numericText())
+                                .foregroundStyle(.white)
+                        }
+                        .padding(.horizontal, 12)
+                        .padding(.vertical, 6)
+                        .maxArea()
+                        .background(.firstBlue.gradient)
+                        .radius(16)
                 }
                 .frame(height: fd.divs(6))
             }
@@ -722,16 +805,15 @@ struct GameScoreView: View {
 
             VStack(spacing: 8) {
                 HStack(spacing: 8) {
-                    let team1Selected = selectedRedTeam == .one
+                    let team1Selected = selectedBlueTeam == .one
 
                     Button {
                         Haptics.play(.light)
-                        if scoringElement == .location {
-                            selectedRedTeam = .one
-                        }
+                        selectedBlueTeam = .one
                     } label: {
-                        Text("Team 1")
+                        Text(blueTeam1 ?? "Team 1")
                             .font(.subheadline)
+                            .foregroundStyle(.primary)
                             .padding(.horizontal, 12)
                             .padding(.vertical, 6)
                             .frame(maxWidth: .infinity)
@@ -753,15 +835,24 @@ struct GameScoreView: View {
                             .background(Color.secondary.opacity(0.5))
                             .clipShape(Capsule())
                     }
+                    .disabled(scoringElement != .location)
+                    .contextMenu {
+                        Button(
+                            "\(blueTeam1 == nil ? "Assign" : "Change") Team",
+                            systemImage: "person.3.fill"
+                        ) {
+                            Haptics.play(.light)
+                            assignTeamFor = .blue1
+                        }
+                    }
 
                     Button {
                         Haptics.play(.light)
-                        if scoringElement == .location {
-                            selectedRedTeam = .two
-                        }
+                        selectedBlueTeam = .two
                     } label: {
-                        Text("Team 2")
+                        Text(blueTeam2 ?? "Team 2")
                             .font(.subheadline)
+                            .foregroundStyle(.primary)
                             .padding(.horizontal, 12)
                             .padding(.vertical, 6)
                             .frame(maxWidth: .infinity)
@@ -783,6 +874,16 @@ struct GameScoreView: View {
                             .background(Color.secondary.opacity(0.5))
                             .clipShape(Capsule())
                     }
+                    .disabled(scoringElement != .location)
+                    .contextMenu {
+                        Button(
+                            "\(blueTeam2 == nil ? "Assign" : "Change") Team",
+                            systemImage: "person.3.fill"
+                        ) {
+                            Haptics.play(.light)
+                            assignTeamFor = .blue2
+                        }
+                    }
                 }
                 .tint(.primary)
 
@@ -798,7 +899,7 @@ struct GameScoreView: View {
                             switch scoringStage {
                             case .auto:
                                 let locationButtons = AutoLocationButtons(
-                                    binding: redAutoLocationBinding(),
+                                    binding: blueAutoLocationBinding(),
                                     scoringStage: scoringStage
                                 )
 
@@ -815,7 +916,7 @@ struct GameScoreView: View {
                                     )
                             case .teleop:
                                 let locationButtons = TeleopLocationButtons(
-                                    binding: redTeleopLocationBinding(),
+                                    binding: blueTeleopLocationBinding(),
                                     scoringStage: scoringStage
                                 )
 
@@ -845,7 +946,7 @@ struct GameScoreView: View {
                             icon: "exclamationmark",
                             color: .yellow,
                             width: fd.divs(1),
-                            fouls: $scores.blue
+                            fouls: $scores.red
                                 .minorFoulsFromOtherAllianceAwarded
                         )
                         .padding([.vertical, .leading], 8)
@@ -856,7 +957,7 @@ struct GameScoreView: View {
                             icon: "exclamationmark.3",
                             color: .red,
                             width: fd.divs(1),
-                            fouls: $scores.blue
+                            fouls: $scores.red
                                 .majorFoulsFromOtherAllianceAwarded
                         )
                         .padding([.vertical, .trailing], 8)
@@ -864,13 +965,13 @@ struct GameScoreView: View {
                         Spacer()
                     default:
                         ScoreButtons(
-                            value: scoringElementBindings().red,
+                            value: scoringElementBindings().blue,
                             width: fd.divs(1)
                         )
                         .padding([.vertical, .leading], 8)
 
                         WheelPicker(
-                            value: scoringElementBindings().red,
+                            value: scoringElementBindings().blue,
                             max: scoringElement == .motifs ? 9 : 60
                         )
                         .padding(.trailing, 8)
@@ -882,10 +983,10 @@ struct GameScoreView: View {
                 .background(Color.secondary.opacity(0.5))
                 .background(
                     LinearGradient(
-                        colors: [.firstRed, .clear, .clear],
+                        colors: [.firstBlue, .clear, .clear],
                         startPoint: .bottomLeading,
                         endPoint: .trailing
-                    )
+                    ).opacity(0.8)
                 )
                 .radius(16)
                 .useDeviceCornerRadius(
@@ -896,8 +997,8 @@ struct GameScoreView: View {
             }
             .frame(width: fd.divs(4))
         }
-        .animation(.smooth, value: scores.blue.total)
         .animation(.smooth, value: scores.red.total)
+        .animation(.smooth, value: scores.blue.total)
     }
 
     func scoringElementBindings() -> (blue: Binding<Int>, red: Binding<Int>) {
@@ -1050,7 +1151,7 @@ struct SelectorItem: View {
 struct WheelPicker: View {
     @Binding var value: Int
     let max: Int
-    
+
     var body: some View {
         Picker(selection: $value) {
             ForEach(0..<(max + 1), id: \.self) { i in
@@ -1359,4 +1460,3 @@ struct FoulButtons: View {
 #Preview {
     GameScoreView()
 }
-

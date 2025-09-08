@@ -8,7 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		E41FE8F22E31C462004C69F6 /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41FE8F12E31C462004C69F6 /* TimerView.swift */; };
-		E44333052E2C461A009019CD /* GameScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E44333042E2C461A009019CD /* GameScoreView.swift */; };
+		E4720D382E6E429F009B2D7C /* TeamAssignmentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4720D372E6E429F009B2D7C /* TeamAssignmentsView.swift */; };
+		E4720D3A2E6E50F4009B2D7C /* teams.json in Resources */ = {isa = PBXBuildFile; fileRef = E4720D392E6E50F4009B2D7C /* teams.json */; };
+		E4720D3C2E6E54A7009B2D7C /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4720D3B2E6E54A7009B2D7C /* HistoryView.swift */; };
+		E47E3CE52E6E96BE00342BFB /* GameScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47E3CE42E6E96BE00342BFB /* GameScoreView.swift */; };
+		E47E3CE72E6E98BE00342BFB /* SwiFTC in Frameworks */ = {isa = PBXBuildFile; productRef = E47E3CE62E6E98BE00342BFB /* SwiFTC */; };
+		E4AE1ED62E6E0E71008A46D8 /* ScoreDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4AE1ED52E6E0E71008A46D8 /* ScoreDetailsView.swift */; };
 		E4DD88942DB5512A009E5758 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DD88902DB5512A009E5758 /* ContentView.swift */; };
 		E4DD88952DB5512A009E5758 /* DECODEApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DD88912DB5512A009E5758 /* DECODEApp.swift */; };
 		E4DD88972DB5512A009E5758 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4DD888F2DB5512A009E5758 /* Assets.xcassets */; };
@@ -18,7 +23,6 @@
 		E4DD88A72DB554A9009E5758 /* NumPy-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = E4DD88A62DB554A9009E5758 /* NumPy-iOS */; };
 		E4DD88A92DB554A9009E5758 /* PythonKit in Frameworks */ = {isa = PBXBuildFile; productRef = E4DD88A82DB554A9009E5758 /* PythonKit */; };
 		E4DD88AB2DB554A9009E5758 /* Aptabase in Frameworks */ = {isa = PBXBuildFile; productRef = E4DD88AA2DB554A9009E5758 /* Aptabase */; };
-		E4E6254C2E41E1AD00238D39 /* SwiFTC in Frameworks */ = {isa = PBXBuildFile; productRef = E4E6254B2E41E1AD00238D39 /* SwiFTC */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -41,8 +45,12 @@
 /* Begin PBXFileReference section */
 		E41FE8F12E31C462004C69F6 /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
 		E42224DC2DB56E9B0014F0E9 /* DECODE.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DECODE.entitlements; sourceTree = "<group>"; };
-		E44333042E2C461A009019CD /* GameScoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScoreView.swift; sourceTree = "<group>"; };
+		E4720D372E6E429F009B2D7C /* TeamAssignmentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamAssignmentsView.swift; sourceTree = "<group>"; };
+		E4720D392E6E50F4009B2D7C /* teams.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = teams.json; sourceTree = "<group>"; };
+		E4720D3B2E6E54A7009B2D7C /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
+		E47E3CE42E6E96BE00342BFB /* GameScoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScoreView.swift; sourceTree = "<group>"; };
 		E4950D4A2DB556A800D0B123 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		E4AE1ED52E6E0E71008A46D8 /* ScoreDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreDetailsView.swift; sourceTree = "<group>"; };
 		E4DD88632DB55123009E5758 /* DECODE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DECODE.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4DD88722DB55124009E5758 /* DECODETests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DECODETests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4DD887C2DB55124009E5758 /* DECODEUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DECODEUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -75,7 +83,7 @@
 			files = (
 				E4DD88A72DB554A9009E5758 /* NumPy-iOS in Frameworks */,
 				E4DD88A92DB554A9009E5758 /* PythonKit in Frameworks */,
-				E4E6254C2E41E1AD00238D39 /* SwiFTC in Frameworks */,
+				E47E3CE72E6E98BE00342BFB /* SwiFTC in Frameworks */,
 				E4DD88AB2DB554A9009E5758 /* Aptabase in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -133,9 +141,13 @@
 			children = (
 				E4DD88912DB5512A009E5758 /* DECODEApp.swift */,
 				E4DD88902DB5512A009E5758 /* ContentView.swift */,
-				E44333042E2C461A009019CD /* GameScoreView.swift */,
+				E47E3CE42E6E96BE00342BFB /* GameScoreView.swift */,
+				E4720D3B2E6E54A7009B2D7C /* HistoryView.swift */,
+				E4720D372E6E429F009B2D7C /* TeamAssignmentsView.swift */,
+				E4AE1ED52E6E0E71008A46D8 /* ScoreDetailsView.swift */,
 				E41FE8F12E31C462004C69F6 /* TimerView.swift */,
 				E42224DD2DB57B270014F0E9 /* Helpers */,
+				E4720D392E6E50F4009B2D7C /* teams.json */,
 				E4DD888F2DB5512A009E5758 /* Assets.xcassets */,
 				E4DD88A02DB551B1009E5758 /* Info.plist */,
 				E42224DC2DB56E9B0014F0E9 /* DECODE.entitlements */,
@@ -191,7 +203,7 @@
 				E4DD88A62DB554A9009E5758 /* NumPy-iOS */,
 				E4DD88A82DB554A9009E5758 /* PythonKit */,
 				E4DD88AA2DB554A9009E5758 /* Aptabase */,
-				E4E6254B2E41E1AD00238D39 /* SwiFTC */,
+				E47E3CE62E6E98BE00342BFB /* SwiFTC */,
 			);
 			productName = DECODE;
 			productReference = E4DD88632DB55123009E5758 /* DECODE.app */;
@@ -273,7 +285,7 @@
 				E4DD88A12DB5538F009E5758 /* XCRemoteSwiftPackageReference "NumPy-iOS" */,
 				E4DD88A22DB553B7009E5758 /* XCRemoteSwiftPackageReference "PythonKit" */,
 				E4DD88A32DB55463009E5758 /* XCRemoteSwiftPackageReference "aptabase-swift" */,
-				E4E6254A2E41E19800238D39 /* XCRemoteSwiftPackageReference "swiftc" */,
+				E4F7126D2E6E961C00646E84 /* XCRemoteSwiftPackageReference "swiftc" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = E4DD88642DB55123009E5758 /* Products */;
@@ -292,6 +304,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E4720D3A2E6E50F4009B2D7C /* teams.json in Resources */,
 				E4DD88972DB5512A009E5758 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -317,9 +330,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E44333052E2C461A009019CD /* GameScoreView.swift in Sources */,
+				E47E3CE52E6E96BE00342BFB /* GameScoreView.swift in Sources */,
+				E4AE1ED62E6E0E71008A46D8 /* ScoreDetailsView.swift in Sources */,
+				E4720D3C2E6E54A7009B2D7C /* HistoryView.swift in Sources */,
 				E41FE8F22E31C462004C69F6 /* TimerView.swift in Sources */,
 				E4DD88942DB5512A009E5758 /* ContentView.swift in Sources */,
+				E4720D382E6E429F009B2D7C /* TeamAssignmentsView.swift in Sources */,
 				E4DD88952DB5512A009E5758 /* DECODEApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -494,7 +510,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = DECODE/DECODE.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DECODE/Info.plist;
@@ -511,7 +527,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.2.0;
+				MARKETING_VERSION = 0.3.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -529,7 +545,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = DECODE/DECODE.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DECODE/Info.plist;
@@ -546,7 +562,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.2.0;
+				MARKETING_VERSION = 0.3.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -694,18 +710,23 @@
 				minimumVersion = 0.3.11;
 			};
 		};
-		E4E6254A2E41E19800238D39 /* XCRemoteSwiftPackageReference "swiftc" */ = {
+		E4F7126D2E6E961C00646E84 /* XCRemoteSwiftPackageReference "swiftc" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/Slingshot-20240/swiftc";
 			requirement = {
 				kind = versionRange;
 				maximumVersion = 2.0.0;
-				minimumVersion = 0.9.0;
+				minimumVersion = 0.9.7;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		E47E3CE62E6E98BE00342BFB /* SwiFTC */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E4F7126D2E6E961C00646E84 /* XCRemoteSwiftPackageReference "swiftc" */;
+			productName = SwiFTC;
+		};
 		E4DD88A62DB554A9009E5758 /* NumPy-iOS */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = E4DD88A12DB5538F009E5758 /* XCRemoteSwiftPackageReference "NumPy-iOS" */;
@@ -720,11 +741,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E4DD88A32DB55463009E5758 /* XCRemoteSwiftPackageReference "aptabase-swift" */;
 			productName = Aptabase;
-		};
-		E4E6254B2E41E1AD00238D39 /* SwiFTC */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = E4E6254A2E41E19800238D39 /* XCRemoteSwiftPackageReference "swiftc" */;
-			productName = SwiFTC;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

@@ -11,17 +11,18 @@ import SwiftUI
 
 struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
-    @Query private var wrappedGames: [IntoTheDeepGameModel]
 
-    @State private var showTimerView: Bool = false
     @State private var showGameScoreView: Bool = false
+    @State private var showHistoryView: Bool = false
+    @State private var showTimerView: Bool = false
 
     var body: some View {
         HStack(spacing: 8) {
             FractionalStack(.vertical, divisions: 15, elements: 4, spacing: 8) {
                 fd in
                 Button {
-
+                    Haptics.play(.light)
+                    showHistoryView = true
                 } label: {
                     HStack {
                         VStack(spacing: -2) {
@@ -227,19 +228,24 @@ struct ContentView: View {
             }
         }
         .fullScreenPadding()
-        .fullScreenCover(isPresented: $showTimerView) {
-            TimerView()
-                .background(Color.primary.colorInvert().ignoresSafeArea())
-        }
         .fullScreenCover(isPresented: $showGameScoreView) {
             GameScoreView()
                 .background(Color.primary.colorInvert().ignoresSafeArea())
                 .modelContext(modelContext)
+        }
+        .fullScreenCover(isPresented: $showHistoryView) {
+            HistoryView()
+                .background(Color.primary.colorInvert().ignoresSafeArea())
+                .modelContext(modelContext)
+        }
+        .fullScreenCover(isPresented: $showTimerView) {
+            TimerView()
+                .background(Color.primary.colorInvert().ignoresSafeArea())
         }
     }
 }
 
 #Preview {
     ContentView()
-        .modelContainer(for: IntoTheDeepGameModel.self, inMemory: true)
+        .modelContainer(for: DecodeGameModel.self, inMemory: true)
 }

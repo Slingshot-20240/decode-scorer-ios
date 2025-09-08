@@ -13,12 +13,12 @@ presented by **20240 Slingshot**
 
 ### Prerequisites
 
-In order to develop the DECODE™ Scorer for iOS and iPadOS, you must have the following:
+In order to develop the DECODE™ Scorer for iOS, you must have the following:
 
-- A Mac computer running macOS Sequoia (version 15) or later
-- Xcode 16 or later
-- The latest iOS 18 platform support and simulator runtimes
-  - (Optional) iOS 17.5 platform support simulator runtimes
+- A Mac computer running macOS Sequoia 15.5 or later
+- Xcode 26 or later
+- The latest iOS 26 and iOS 18 platform support and simulator runtimes
+  - (Optional) iOS 17.5 platform support and simulator runtimes
 
 Here's a [guide](https://gist.github.com/JiningLiu/59ce150600c781533736b41ca0615805) to install Xcode and platform support components.
 
@@ -46,7 +46,7 @@ You're done! Head to the `Signing & Capabilities` section on the DECODE target p
 
 ### Disclaimer
 
-***FIRST®, FIRST® Tech Challenge, FTC®, FIRST® DIVE℠, INTO THE DEEP℠, FIRST® AGE™, DECODE™, and all accompanying logos as they are created, are trademarks of For Inspiration and Recognition of Science and Technology (FIRST®) (www.firstinspires.org). These trademarks are used by special permission of FIRST which is not overseeing, involved with, or responsible for this activity, product, or service. © 2025 FIRST®. Used by special permission. All rights reserved.***
+*FIRST*®, *FIRST*® Tech Challenge, FTC®, *FIRST*® AGE™, DECODE™, and all accompanying logos as they are created, are trademarks of For Inspiration and Recognition of Science and Technology (*FIRST*®) (www.firstinspires.org). These trademarks are used by special permission of *FIRST* which is not overseeing, involved with, or responsible for this activity, product, or service. © 2025 *FIRST*®. Used by special permission. All rights reserved.
 
 ### Licenses
 
@@ -68,4 +68,4 @@ You're done! Head to the `Signing & Capabilities` section on the DECODE target p
 
 Open source information to come. Planned release under the MIT License in Q3 2025.
 
-© 2025 FTC Team 20240 Slingshot and contributors. All rights reserved until further notice.
+© 2025 FTC Team 20240 Slingshot and contributors. All rights reserved.

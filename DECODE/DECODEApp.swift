@@ -13,7 +13,7 @@ import SwiftUI
 struct DECODEApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            IntoTheDeepGameModel.self
+            DecodeGameModel.self
         ])
         let modelConfiguration = ModelConfiguration(
             schema: schema,
