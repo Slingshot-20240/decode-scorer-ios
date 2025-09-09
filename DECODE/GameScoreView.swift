@@ -12,9 +12,9 @@ struct GameScoreView: View {
     @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) private var dismiss
 
-    @StateObject private var timer: GameTimerV1
+    @StateObject private var timer: GameTimerV1 = .shared
     @State private var scoringStage: GameScoringStageV1 = .auto
-    @State private var scores: DecodeGameScores
+    @State private var scores: DecodeGameScores = .init()
 
     @State private var assignTeamFor: AssignTeamFor? = nil
     @State private var redTeam1: String? = nil
@@ -22,15 +22,14 @@ struct GameScoreView: View {
     @State private var blueTeam1: String? = nil
     @State private var blueTeam2: String? = nil
 
+    @State private var timestamp: Date = .now
+
     @State private var batteryPercent: Float
     @State private var batteryIsCharging: Bool
 
     @State private var showDetails: Bool = false
 
     init() {
-        _timer = StateObject(wrappedValue: .shared)
-        self.scores = .init()
-
         UIDevice.current.isBatteryMonitoringEnabled = true
         self.batteryPercent = UIDevice.current.batteryLevel * 100
         self.batteryIsCharging = UIDevice.current.batteryState == .charging
@@ -85,21 +84,102 @@ struct GameScoreView: View {
         }
         .sheet(isPresented: $showDetails) {
             NavigationStack {
-                ScrollView {
-                    ScoreDetailsView(scores: scores)
-                }
-                .navigationTitle("Details")
-                .toolbar {
-                    ToolbarItem(placement: .topBarLeading) {
-                        Button {
-                            showDetails = false
-                        } label: {
-                            if #available(iOS 26.0, *) {
-                                Image(systemName: "xmark")
-                            } else {
-                                Image(systemName: "xmark.circle.fill")
-                                    .font(.title3)
-                                    .foregroundStyle(Color.secondary)
+                GeometryReader { proxy in
+                    ScrollView {
+                        VStack(spacing: 8) {
+                            Text(
+                                timestamp.formatted(
+                                    date: .complete,
+                                    time: .complete
+                                )
+                            )
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
+
+                            var label: GameLabel {
+                                let red1 = redTeam1
+                                let red2 = redTeam2
+
+                                let redLabel: String
+                                if let r1 = red1, let r2 = red2 {
+                                    redLabel = "\(r1) & \(r2)"
+                                } else if let r1 = red1 {
+                                    redLabel = "\(r1) & Team"
+                                } else if let r2 = red2 {
+                                    redLabel = "Team & \(r2)"
+                                } else {
+                                    redLabel = "Red Alliance"
+                                }
+
+                                let blue1 = blueTeam1
+                                let blue2 = blueTeam2
+
+                                let blueLabel: String
+                                if let b1 = blue1, let b2 = blue2 {
+                                    blueLabel = "\(b1) & \(b2)"
+                                } else if let b1 = blue1 {
+                                    blueLabel = "\(b1) & Team"
+                                } else if let b2 = blue2 {
+                                    blueLabel = "Team & \(b2)"
+                                } else {
+                                    blueLabel = "Blue Alliance"
+                                }
+
+                                if red1 == nil && red2 == nil && blue1 == nil
+                                    && blue2 == nil
+                                {
+                                    return .init()
+                                }
+
+                                return .init(
+                                    red: redLabel,
+                                    middle: " v.s. ",
+                                    blue: blueLabel
+                                )
+                            }
+
+                            if label.middle != "Game" {
+                                let redWon =
+                                    scores.red.total >= scores.blue.total
+                                let blueWon =
+                                    scores.blue.total >= scores.red.total
+
+                                HStack(spacing: 8) {
+                                    Text(label.red)
+                                        .foregroundStyle(
+                                            redWon ? .firstRed : .primary
+                                        )
+                                        .frame(
+                                            maxWidth: .infinity,
+                                            alignment: .trailing
+                                        )
+
+                                    Text(label.middle)
+                                        .fontWeight(.regular)
+
+                                    Text(label.blue)
+                                        .foregroundStyle(
+                                            blueWon ? .firstBlue : .primary
+                                        )
+                                        .frame(
+                                            maxWidth: .infinity,
+                                            alignment: .leading
+                                        )
+                                }
+                                .font(.title2)
+                                .fontWeight(.semibold)
+                            }
+
+                            ScoreDetailsView(scores: scores)
+                        }
+                        .padding(proxy.safeAreaInsets.bottom == 0 ? 16 : 0)
+                    }
+                    .frame(width: proxy.size.width, height: proxy.size.height)
+                    .navigationTitle("Details")
+                    .toolbar {
+                        ToolbarItem(placement: .topBarLeading) {
+                            DismissButton {
+                                showDetails = false
                             }
                         }
                     }
@@ -147,8 +227,7 @@ struct GameScoreView: View {
                     .disabled(!timer.inProgress)
 
                     Button("Reset", systemImage: "arrow.2.circlepath") {
-                        timer.reset()
-                        scores = .init()
+                        reset()
                     }
                 }
 
@@ -334,9 +413,7 @@ struct GameScoreView: View {
             .padding(12)
             .frame(width: fd.divs(1))
             .frame(maxHeight: .infinity)
-            .background(Color.secondary.opacity(0.1))
-            .background(Color.primary.opacity(0.9).colorInvert())
-            .background(Color.secondary.opacity(0.5))
+            .background(.ultraThinMaterial)
             .radius(12)
             .onTapGesture {
                 Haptics.play(.light)
@@ -422,11 +499,7 @@ struct GameScoreView: View {
                             .colorInvert(
                                 team1Selected && scoringElement == .location
                             )
-                            .background(Color.secondary.opacity(0.1))
-                            .background(
-                                Color.primary.opacity(0.9).colorInvert()
-                            )
-                            .background(Color.secondary.opacity(0.5))
+                            .background(.ultraThinMaterial)
                             .clipShape(Capsule())
                     }
                     .disabled(scoringElement != .location)
@@ -461,11 +534,7 @@ struct GameScoreView: View {
                             .colorInvert(
                                 !team1Selected && scoringElement == .location
                             )
-                            .background(Color.secondary.opacity(0.1))
-                            .background(
-                                Color.primary.opacity(0.9).colorInvert()
-                            )
-                            .background(Color.secondary.opacity(0.5))
+                            .background(.ultraThinMaterial)
                             .clipShape(Capsule())
                     }
                     .disabled(scoringElement != .location)
@@ -572,15 +641,13 @@ struct GameScoreView: View {
                     }
                 }
                 .maxArea()
-                .background(Color.secondary.opacity(0.1))
-                .background(Color.primary.opacity(0.9).colorInvert())
-                .background(Color.secondary.opacity(0.5))
+                .background(.ultraThinMaterial)
                 .background(
                     LinearGradient(
                         colors: [.firstRed, .clear, .clear],
                         startPoint: .bottomTrailing,
                         endPoint: .leading
-                    ).opacity(0.7)
+                    ).opacity(0.2)
                 )
                 .radius(16)
                 .useDeviceCornerRadius(
@@ -675,21 +742,26 @@ struct GameScoreView: View {
                             teams.blue.two = blueTeam2
 
                             modelContext.insert(
-                                DecodeGameModel(scores: scores, teams: teams)
+                                DecodeGameModel(
+                                    scores: scores,
+                                    teams: teams,
+                                    timestamp: timestamp
+                                )
                             )
-                            
+
                             do {
                                 try modelContext.save()
                             } catch {
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                DispatchQueue.main.asyncAfter(
+                                    deadline: .now() + 1
+                                ) {
                                     try? modelContext.save()
                                 }
                             }
 
                             Haptics.notify(.success)
 
-                            timer.reset()
-                            scores = .init()
+                            reset()
                         } label: {
                             Label(
                                 "Save",
@@ -711,7 +783,8 @@ struct GameScoreView: View {
                             .radius(8)
                         }
                         .disabled(scores.total <= 0)
-                        .opacity(scores.total > 0 ? 1 : 0.6)
+                        .opacity(scores.total > 0 ? 1 : 0.4)
+                        .brightness(scores.total > 0 ? 0 : -0.2)
 
                         Button {
                             Haptics.play(.light)
@@ -734,7 +807,8 @@ struct GameScoreView: View {
                                 .radius(8)
                         }
                         .disabled(scores.total <= 0)
-                        .opacity(scores.total > 0 ? 1 : 0.6)
+                        .opacity(scores.total > 0 ? 1 : 0.4)
+                        .brightness(scores.total > 0 ? 0 : -0.2)
                     default:
                         Text(
                             "\(timer.countdown / 60):\(timer.countdown % 60, specifier: "%02d")"
@@ -828,11 +902,7 @@ struct GameScoreView: View {
                             .colorInvert(
                                 team1Selected && scoringElement == .location
                             )
-                            .background(Color.secondary.opacity(0.1))
-                            .background(
-                                Color.primary.opacity(0.9).colorInvert()
-                            )
-                            .background(Color.secondary.opacity(0.5))
+                            .background(.ultraThinMaterial)
                             .clipShape(Capsule())
                     }
                     .disabled(scoringElement != .location)
@@ -867,11 +937,7 @@ struct GameScoreView: View {
                             .colorInvert(
                                 !team1Selected && scoringElement == .location
                             )
-                            .background(Color.secondary.opacity(0.1))
-                            .background(
-                                Color.primary.opacity(0.9).colorInvert()
-                            )
-                            .background(Color.secondary.opacity(0.5))
+                            .background(.ultraThinMaterial)
                             .clipShape(Capsule())
                     }
                     .disabled(scoringElement != .location)
@@ -978,15 +1044,13 @@ struct GameScoreView: View {
                     }
                 }
                 .maxArea()
-                .background(Color.secondary.opacity(0.1))
-                .background(Color.primary.opacity(0.9).colorInvert())
-                .background(Color.secondary.opacity(0.5))
+                .background(.ultraThinMaterial)
                 .background(
                     LinearGradient(
                         colors: [.firstBlue, .clear, .clear],
                         startPoint: .bottomLeading,
                         endPoint: .trailing
-                    ).opacity(0.8)
+                    ).opacity(0.25)
                 )
                 .radius(16)
                 .useDeviceCornerRadius(
@@ -1097,6 +1161,12 @@ struct GameScoreView: View {
             return $scores.red.teleop.team2Location
         }
     }
+
+    func reset() {
+        timer.reset()
+        scores = .init()
+        timestamp = .now
+    }
 }
 
 enum ScoringElement {
@@ -1136,9 +1206,7 @@ struct SelectorItem: View {
             Rectangle().fill((selected ? Color.primary : .clear).gradient)
                 .colorInvert()
         )
-        .background(Color.secondary.opacity(0.1))
-        .background(Color.primary.opacity(0.9).colorInvert())
-        .background(Color.secondary.opacity(0.5))
+        .background(.ultraThinMaterial)
         .colorInvert(selected)
         .radius(12)
         .onTapGesture {
@@ -1447,7 +1515,7 @@ struct FoulButtons: View {
                 Image(systemName: "minus")
                     .padding(12)
                     .frame(maxWidth: .infinity)
-                    .background(Color.secondary.opacity(0.1))
+                    .background(.ultraThinMaterial)
                     .radius(8)
             }
             .tint(.primary)

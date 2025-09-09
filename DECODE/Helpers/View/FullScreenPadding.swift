@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct FullScreenPadding: ViewModifier {
-
     let rectangular: Bool
 
     func body(content: Content) -> some View {

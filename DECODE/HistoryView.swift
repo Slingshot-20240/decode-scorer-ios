@@ -99,85 +99,81 @@ struct HistoryView: View {
                 }
             }
             .navigationDestination(for: DecodeGameModel.self) { game in
-                let redWon =
-                    game.scores.red.total >= game.scores.blue.total
-                let blueWon =
-                    game.scores.blue.total >= game.scores.red.total
-
-                ScrollView {
-                    VStack(spacing: 8) {
-                        Text(
-                            game.timestamp.formatted(
-                                date: .complete,
-                                time: .complete
+                GeometryReader { proxy in
+                    ScrollView {
+                        VStack(spacing: 8) {
+                            Text(
+                                game.timestamp.formatted(
+                                    date: .complete,
+                                    time: .complete
+                                )
                             )
-                        )
-                        .font(.footnote)
-                        .foregroundStyle(.secondary)
-
-                        if game.label.middle != "Game" {
-                            HStack(spacing: 8) {
-                                Text(game.label.red)
-                                    .foregroundStyle(
-                                        redWon ? .firstRed : .primary
-                                    )
-                                    .frame(
-                                        maxWidth: .infinity,
-                                        alignment: .trailing
-                                    )
-
-                                Text(game.label.middle)
-                                    .fontWeight(.regular)
-
-                                Text(game.label.blue)
-                                    .foregroundStyle(
-                                        blueWon ? .firstBlue : .primary
-                                    )
-                                    .frame(
-                                        maxWidth: .infinity,
-                                        alignment: .leading
-                                    )
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
+                            
+                            if game.label.middle != "Game" {
+                                let redWon =
+                                game.scores.red.total >= game.scores.blue.total
+                                let blueWon =
+                                game.scores.blue.total >= game.scores.red.total
+                                
+                                HStack(spacing: 8) {
+                                    Text(game.label.red)
+                                        .foregroundStyle(
+                                            redWon ? .firstRed : .primary
+                                        )
+                                        .frame(
+                                            maxWidth: .infinity,
+                                            alignment: .trailing
+                                        )
+                                    
+                                    Text(game.label.middle)
+                                        .fontWeight(.regular)
+                                    
+                                    Text(game.label.blue)
+                                        .foregroundStyle(
+                                            blueWon ? .firstBlue : .primary
+                                        )
+                                        .frame(
+                                            maxWidth: .infinity,
+                                            alignment: .leading
+                                        )
+                                }
+                                .font(.title2)
+                                .fontWeight(.semibold)
                             }
-                            .font(.title2)
-                            .fontWeight(.semibold)
+                            
+                            ScoreDetailsView(
+                                scores: game.scores,
+                                largeSeparator: game.label.middle != "Game"
+                            )
                         }
-
-                        ScoreDetailsView(
-                            scores: game.scores,
-                            largeSeparator: game.label.middle != "Game"
-                        )
+                        .padding(proxy.safeAreaInsets.bottom == 0 ? 16: 0)
                     }
-                }
-                .navigationTitle("Details")
-                .toolbar {
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Menu("", systemImage: "ellipsis") {
-                            Button("Edit Teams", systemImage: "person.3.fill") {
-                                assignTeamForGame = game
-                                redTeam1 = game.teams.red.one
-                                redTeam2 = game.teams.red.two
-                                blueTeam1 = game.teams.blue.one
-                                blueTeam2 = game.teams.blue.two
-                                assignTeamFor = .red1
+                    .frame(width: proxy.size.width, height: proxy.size.height)
+                    .navigationTitle("Details")
+                    .toolbar {
+                        ToolbarItem(placement: .topBarTrailing) {
+                            Menu("", systemImage: "ellipsis") {
+                                Button("Edit Teams", systemImage: "person.3.fill") {
+                                    assignTeamForGame = game
+                                    redTeam1 = game.teams.red.one
+                                    redTeam2 = game.teams.red.two
+                                    blueTeam1 = game.teams.blue.one
+                                    blueTeam2 = game.teams.blue.two
+                                    assignTeamFor = .red1
+                                }
                             }
+                            .labelStyle(.iconOnly)
                         }
-                        .labelStyle(.iconOnly)
                     }
                 }
             }
             .navigationTitle("History & Analysis")
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button {
+                    DismissButton {
                         dismiss()
-                    } label: {
-                        if #available(iOS 26.0, *) {
-                            Image(systemName: "xmark")
-                        } else {
-                            Image(systemName: "xmark.circle.fill")
-                                .font(.title3)
-                                .foregroundStyle(Color.secondary)
-                        }
                     }
                 }
             }

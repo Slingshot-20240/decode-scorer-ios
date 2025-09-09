@@ -42,8 +42,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Slingshot-20240/swiftc",
       "state" : {
-        "revision" : "728650a84cd690dc8360e8b3e42e637103d1ce64",
-        "version" : "0.9.7"
+        "revision" : "8d771211b3eca9bbab1415a9105b4e935a29f6d8",
+        "version" : "0.9.8"
       }
     }
   ],

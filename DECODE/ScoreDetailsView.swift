@@ -100,23 +100,21 @@ struct ScoreDetailsView: View {
                 }
                 .frame(height: 16)
                 .padding(8)
-                .background(Color.secondary.opacity(0.1))
-                .background(Color.primary.opacity(0.9).colorInvert())
-                .background(Color.secondary.opacity(0.5))
-                .clipShape(Capsule())
+                .glassBackground()
             }
         }
     }
 
     @State var autoLabelSize: CGSize = .init()
+    @State var autoRedScoreLabelSize: CGSize = .init()
+    @State var autoBlueScoreLabelSize: CGSize = .init()
 
     var auto: some View {
         HStack(spacing: 8) {
             Text("Auto")
                 .font(.subheadline)
                 .fontWeight(.semibold)
-                .foregroundStyle(.primary)
-                .colorInvert()
+                .padding(8)
                 .background {
                     GeometryReader { proxy in
                         Color.clear
@@ -134,12 +132,15 @@ struct ScoreDetailsView: View {
                     width: autoLabelSize.width,
                     height: autoLabelSize.height
                 )
-                .padding(8)
                 .frame(maxHeight: .infinity)
-                .background(Color.primary)
-                .colorInvert()
-                .radius(8)
-                .radius(16, corners: [.topLeading, .bottomLeading])
+                .glassBackground(
+                    shape: UnevenRoundedRectangle(
+                        topLeadingRadius: 16,
+                        bottomLeadingRadius: 16,
+                        bottomTrailingRadius: 8,
+                        topTrailingRadius: 8
+                    )
+                )
 
             VStack(spacing: 8) {
                 HStack(spacing: 8) {
@@ -177,24 +178,100 @@ struct ScoreDetailsView: View {
                     blue2Icon: scores.blue.auto.team2Location.icon
                 )
             }
+
+            let redWon = scores.red.auto.total >= scores.blue.auto.total
+            let blueWon = scores.blue.auto.total >= scores.red.auto.total
+
+            let redScoreLabel = Text("\(scores.red.auto.total)")
+                .font(.subheadline)
+                .fontWeight(.semibold)
+                .foregroundStyle(redWon ? .white : .firstRed)
+                .padding(.horizontal, 8)
+                .padding(.vertical, 4)
+                .background(
+                    redWon ? Color.firstRed.gradient : Color.clear.gradient
+                )
+                .radius(4)
+                .radius(12, corners: [.topLeading])
+                .background {
+                    GeometryReader { proxy in
+                        Color.clear
+                            .onAppear {
+                                autoRedScoreLabelSize = .init(
+                                    width: proxy.size.height,
+                                    height: proxy.size.width
+                                )
+                            }
+                    }
+                }
+                .rotationEffect(.degrees(90))
+                .fixedSize()
+                .frame(
+                    width: autoRedScoreLabelSize.width,
+                    height: autoRedScoreLabelSize.height
+                )
+
+            let blueScoreLabel = Text("\(scores.blue.auto.total)")
+                .font(.subheadline)
+                .fontWeight(.semibold)
+                .foregroundStyle(blueWon ? .white : .firstBlue)
+                .padding(.horizontal, 8)
+                .padding(.vertical, 4)
+                .background(
+                    blueWon
+                        ? Color.firstBlue.gradient : Color.clear.gradient
+                )
+                .radius(4)
+                .radius(12, corners: [.topTrailing])
+                .background {
+                    GeometryReader { proxy in
+                        Color.clear
+                            .onAppear {
+                                autoBlueScoreLabelSize = .init(
+                                    width: proxy.size.height,
+                                    height: proxy.size.width
+                                )
+                            }
+                    }
+                }
+                .rotationEffect(.degrees(90))
+                .fixedSize()
+                .frame(
+                    width: autoBlueScoreLabelSize.width,
+                    height: autoBlueScoreLabelSize.height
+                )
+
+            VStack {
+                redScoreLabel
+                Spacer()
+                blueScoreLabel
+            }
+            .padding(4)
+            .glassBackground(
+                shape: UnevenRoundedRectangle(
+                    topLeadingRadius: 8,
+                    bottomLeadingRadius: 8,
+                    bottomTrailingRadius: 16,
+                    topTrailingRadius: 16
+                )
+            )
         }
         .fixedSize(horizontal: false, vertical: true)
         .padding(8)
-        .background(Color.secondary.opacity(0.1))
-        .background(Color.primary.opacity(0.9).colorInvert())
-        .background(Color.secondary.opacity(0.5))
+        .background(.ultraThinMaterial)
         .radius(24)
     }
 
     @State var teleopLabelSize: CGSize = .init()
+    @State var teleopRedScoreLabelSize: CGSize = .init()
+    @State var teleopBlueScoreLabelSize: CGSize = .init()
 
     var teleop: some View {
         HStack(spacing: 8) {
             Text("Teleop")
                 .font(.subheadline)
                 .fontWeight(.semibold)
-                .foregroundStyle(.primary)
-                .colorInvert()
+                .padding(8)
                 .background {
                     GeometryReader { proxy in
                         Color.clear
@@ -212,12 +289,15 @@ struct ScoreDetailsView: View {
                     width: teleopLabelSize.width,
                     height: teleopLabelSize.height
                 )
-                .padding(8)
                 .frame(maxHeight: .infinity)
-                .background(Color.primary)
-                .colorInvert()
-                .radius(8)
-                .radius(16, corners: [.topLeading, .bottomLeading])
+                .glassBackground(
+                    shape: UnevenRoundedRectangle(
+                        topLeadingRadius: 16,
+                        bottomLeadingRadius: 16,
+                        bottomTrailingRadius: 8,
+                        topTrailingRadius: 8
+                    )
+                )
 
             VStack(spacing: 8) {
                 HStack(spacing: 8) {
@@ -262,12 +342,87 @@ struct ScoreDetailsView: View {
                     blue2Icon: scores.blue.teleop.team2Location.icon
                 )
             }
+
+            let redWon = scores.red.teleop.total >= scores.blue.teleop.total
+            let blueWon = scores.blue.teleop.total >= scores.red.teleop.total
+
+            let redScoreLabel = Text("\(scores.red.teleop.total)")
+                .font(.subheadline)
+                .fontWeight(.semibold)
+                .foregroundStyle(redWon ? .white : .firstRed)
+                .padding(.horizontal, 8)
+                .padding(.vertical, 4)
+                .background(
+                    redWon ? Color.firstRed.gradient : Color.clear.gradient
+                )
+                .radius(4)
+                .radius(12, corners: [.topLeading])
+                .background {
+                    GeometryReader { proxy in
+                        Color.clear
+                            .onAppear {
+                                teleopRedScoreLabelSize = .init(
+                                    width: proxy.size.height,
+                                    height: proxy.size.width
+                                )
+                            }
+                    }
+                }
+                .rotationEffect(.degrees(90))
+                .fixedSize()
+                .frame(
+                    width: teleopRedScoreLabelSize.width,
+                    height: teleopRedScoreLabelSize.height
+                )
+
+            let blueScoreLabel = Text("\(scores.blue.teleop.total)")
+                .font(.subheadline)
+                .fontWeight(.semibold)
+                .foregroundStyle(blueWon ? .white : .firstBlue)
+                .padding(.horizontal, 8)
+                .padding(.vertical, 4)
+                .background(
+                    blueWon
+                        ? Color.firstBlue.gradient : Color.clear.gradient
+                )
+                .radius(4)
+                .radius(12, corners: [.topTrailing])
+                .background {
+                    GeometryReader { proxy in
+                        Color.clear
+                            .onAppear {
+                                teleopBlueScoreLabelSize = .init(
+                                    width: proxy.size.height,
+                                    height: proxy.size.width
+                                )
+                            }
+                    }
+                }
+                .rotationEffect(.degrees(90))
+                .fixedSize()
+                .frame(
+                    width: teleopBlueScoreLabelSize.width,
+                    height: teleopBlueScoreLabelSize.height
+                )
+
+            VStack {
+                redScoreLabel
+                Spacer()
+                blueScoreLabel
+            }
+            .padding(4)
+            .glassBackground(
+                shape: UnevenRoundedRectangle(
+                    topLeadingRadius: 8,
+                    bottomLeadingRadius: 8,
+                    bottomTrailingRadius: 16,
+                    topTrailingRadius: 16
+                )
+            )
         }
         .fixedSize(horizontal: false, vertical: true)
         .padding(8)
-        .background(Color.secondary.opacity(0.1))
-        .background(Color.primary.opacity(0.9).colorInvert())
-        .background(Color.secondary.opacity(0.5))
+        .background(.ultraThinMaterial)
         .radius(24)
     }
 }
@@ -279,26 +434,22 @@ struct NumericCard: View {
     let blue: Int
 
     var body: some View {
-        VStack(spacing: 0) {
+        VStack(spacing: -8) {
             HStack(spacing: 4) {
                 Image(systemName: icon)
-                    .font(.headline)
+                    .font(.subheadline)
                     .rotationEffect(.degrees(icon == "righttriangle" ? 180 : 0))
 
                 Text(name)
                     .font(.caption)
                     .fontWeight(.semibold)
                     .minimumScaleFactor(0.8)
+                    .lineLimit(1)
             }
-            .foregroundStyle(.primary)
-            .colorInvert()
-            .padding(8)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            .background(Color.primary)
-            .colorInvert()
-            .radius(12)
-            .shadow(color: .secondary.opacity(0.2), radius: 8)
+            .padding(.horizontal, 10)
+            .padding(.vertical, 4)
             .zIndex(1)
+            .glassBackground()
 
             HStack(spacing: 16) {
                 Text("\(red)")
@@ -309,6 +460,7 @@ struct NumericCard: View {
             }
             .font(.title2)
             .fontWeight(.semibold)
+            .minimumScaleFactor(0.8)
             .foregroundStyle(.white)
             .padding(8)
             .background {
@@ -320,16 +472,13 @@ struct NumericCard: View {
                                 .gradient
                         )
                     Rectangle()
-                        .fill(.white)
-                        .frame(width: 0)
-                    Rectangle()
                         .fill(
                             (blue >= red
                                 ? Color.firstBlue : .secondary.opacity(0.8))
                                 .gradient
                         )
                 }
-                .padding(.top, -12)
+                .radius(16)
             }
             .zIndex(0)
         }
@@ -349,17 +498,21 @@ struct LocationCard: View {
 
     var body: some View {
         HStack(spacing: 0) {
-            HStack(spacing: 16) {
+            HStack(spacing: 24) {
                 Label(red1Label, systemImage: red1Icon)
                     .frame(maxWidth: .infinity)
+                    .offset(x: 8)
 
                 Label(red2Label, systemImage: red2Icon)
                     .frame(maxWidth: .infinity)
+                    .offset(x: 24)
             }
             .font(.subheadline)
             .fontWeight(.semibold)
+            .minimumScaleFactor(0.8)
+            .lineLimit(1)
             .foregroundStyle(.white)
-            .padding(8)
+            .padding(12)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background {
                 HStack(spacing: 0) {
@@ -370,53 +523,72 @@ struct LocationCard: View {
                                 .gradient
                         )
                         .brightness(-0.1)
-                    Rectangle()
-                        .fill(.white)
-                        .frame(width: 0)
+                        .padding(.trailing, -16)
                     Rectangle()
                         .fill(
                             (red2Label == "None"
                                 ? Color.secondary.opacity(0.8) : .firstRed)
                                 .gradient
                         )
-                        .padding(
-                            .trailing,
-                            -12
-                        )
+                        .padding(.leading, 16)
                 }
             }
             .zIndex(0)
 
             HStack(spacing: 4) {
                 Image(systemName: "location.fill.viewfinder")
-                    .font(.headline)
+                    .font(.subheadline)
 
                 Text("Location")
                     .font(.caption)
                     .fontWeight(.semibold)
                     .minimumScaleFactor(0.8)
+                    .lineLimit(1)
             }
-            .foregroundStyle(.primary)
-            .colorInvert()
-            .padding(.vertical, 12)
-            .padding(.horizontal, 16)
-            .frame(maxHeight: .infinity)
-            .background(Color.primary)
-            .colorInvert()
-            .radius(12)
-            .shadow(radius: 4)
+            .padding(.horizontal, 10)
+            .padding(.vertical, 4)
             .zIndex(1)
+            .glassBackground()
+            .frame(maxHeight: .infinity)
+            .padding(.horizontal, 32)
+            .background {
+                HStack(spacing: 0) {
+                    Rectangle()
+                        .fill(
+                            (red2Label == "None"
+                                ? Color.secondary.opacity(0.8) : .firstRed)
+                                .gradient
+                        )
+                    Rectangle()
+                        .fill(
+                            (blue1Label == "None"
+                                ? Color.secondary.opacity(0.8) : .firstBlue)
+                                .gradient
+                        )
+                }
+                .overlay(
+                    LinearGradient(
+                        colors: [.clear, .gray, .clear],
+                        startPoint: .leading,
+                        endPoint: .trailing
+                    )
+                )
+            }
 
-            HStack(spacing: 16) {
+            HStack(spacing: 24) {
                 Label(blue1Label, systemImage: blue1Icon)
                     .frame(maxWidth: .infinity)
+                    .offset(x: -24)
                 Label(blue2Label, systemImage: blue2Icon)
                     .frame(maxWidth: .infinity)
+                    .offset(x: -8)
             }
             .font(.subheadline)
             .fontWeight(.semibold)
+            .minimumScaleFactor(0.8)
+            .lineLimit(1)
             .foregroundStyle(.white)
-            .padding(8)
+            .padding(12)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background {
                 HStack(spacing: 0) {
@@ -426,13 +598,7 @@ struct LocationCard: View {
                                 ? Color.secondary.opacity(0.8) : .firstBlue)
                                 .gradient
                         )
-                        .padding(
-                            .leading,
-                            -12
-                        )
-                    Rectangle()
-                        .fill(.white)
-                        .frame(width: 0)
+                        .padding(.trailing, 16)
                     Rectangle()
                         .fill(
                             (blue2Label == "None"
@@ -440,6 +606,7 @@ struct LocationCard: View {
                                 .gradient
                         )
                         .brightness(-0.1)
+                        .padding(.leading, -16)
                 }
             }
             .zIndex(0)
@@ -456,6 +623,9 @@ struct LocationCard: View {
         temp.blue.auto.classfied = 100
         temp.red.auto.overflown = 100
         temp.red.majorFoulsFromOtherAllianceAwarded = 1
+        temp.red.auto.team1Location = .left
+        temp.red.teleop.team1Location = .full
+        temp.blue.teleop.team1Location = .partial
         return temp
     }
 

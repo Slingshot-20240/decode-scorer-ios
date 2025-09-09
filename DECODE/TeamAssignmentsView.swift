@@ -136,16 +136,8 @@ struct TeamAssignmentsView: View {
             .navigationTitle("Team Assignments")
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
-                    Button {
+                    DismissButton {
                         assignFor = nil
-                    } label: {
-                        if #available(iOS 26.0, *) {
-                            Image(systemName: "xmark")
-                        } else {
-                            Image(systemName: "xmark.circle.fill")
-                                .font(.title3)
-                                .foregroundStyle(Color.secondary)
-                        }
                     }
                 }
             }
