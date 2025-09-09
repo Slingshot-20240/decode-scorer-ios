@@ -110,13 +110,15 @@ struct HistoryView: View {
                             )
                             .font(.footnote)
                             .foregroundStyle(.secondary)
-                            
+
                             if game.label.middle != "Game" {
                                 let redWon =
-                                game.scores.red.total >= game.scores.blue.total
+                                    game.scores.red.total
+                                    >= game.scores.blue.total
                                 let blueWon =
-                                game.scores.blue.total >= game.scores.red.total
-                                
+                                    game.scores.blue.total
+                                    >= game.scores.red.total
+
                                 HStack(spacing: 8) {
                                     Text(game.label.red)
                                         .foregroundStyle(
@@ -126,10 +128,10 @@ struct HistoryView: View {
                                             maxWidth: .infinity,
                                             alignment: .trailing
                                         )
-                                    
+
                                     Text(game.label.middle)
                                         .fontWeight(.regular)
-                                    
+
                                     Text(game.label.blue)
                                         .foregroundStyle(
                                             blueWon ? .firstBlue : .primary
@@ -142,20 +144,23 @@ struct HistoryView: View {
                                 .font(.title2)
                                 .fontWeight(.semibold)
                             }
-                            
+
                             ScoreDetailsView(
                                 scores: game.scores,
                                 largeSeparator: game.label.middle != "Game"
                             )
                         }
-                        .padding(proxy.safeAreaInsets.bottom == 0 ? 16: 0)
+                        .padding(proxy.safeAreaInsets.bottom == 0 ? 16 : 0)
                     }
                     .frame(width: proxy.size.width, height: proxy.size.height)
                     .navigationTitle("Details")
                     .toolbar {
                         ToolbarItem(placement: .topBarTrailing) {
                             Menu("", systemImage: "ellipsis") {
-                                Button("Edit Teams", systemImage: "person.3.fill") {
+                                Button(
+                                    "Edit Teams",
+                                    systemImage: "person.3.fill"
+                                ) {
                                     assignTeamForGame = game
                                     redTeam1 = game.teams.red.one
                                     redTeam2 = game.teams.red.two

@@ -17,30 +17,10 @@
 		E4DD88942DB5512A009E5758 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DD88902DB5512A009E5758 /* ContentView.swift */; };
 		E4DD88952DB5512A009E5758 /* DECODEApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DD88912DB5512A009E5758 /* DECODEApp.swift */; };
 		E4DD88972DB5512A009E5758 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4DD888F2DB5512A009E5758 /* Assets.xcassets */; };
-		E4DD889A2DB55133009E5758 /* DECODETests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DD88982DB55133009E5758 /* DECODETests.swift */; };
-		E4DD889E2DB55136009E5758 /* DECODEUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DD889B2DB55136009E5758 /* DECODEUITests.swift */; };
-		E4DD889F2DB55136009E5758 /* DECODEUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DD889C2DB55136009E5758 /* DECODEUITestsLaunchTests.swift */; };
 		E4DD88A72DB554A9009E5758 /* NumPy-iOS in Frameworks */ = {isa = PBXBuildFile; productRef = E4DD88A62DB554A9009E5758 /* NumPy-iOS */; };
 		E4DD88A92DB554A9009E5758 /* PythonKit in Frameworks */ = {isa = PBXBuildFile; productRef = E4DD88A82DB554A9009E5758 /* PythonKit */; };
 		E4DD88AB2DB554A9009E5758 /* Aptabase in Frameworks */ = {isa = PBXBuildFile; productRef = E4DD88AA2DB554A9009E5758 /* Aptabase */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXContainerItemProxy section */
-		E4DD88732DB55124009E5758 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E4DD885B2DB55123009E5758 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E4DD88622DB55123009E5758;
-			remoteInfo = DECODE;
-		};
-		E4DD887D2DB55124009E5758 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = E4DD885B2DB55123009E5758 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E4DD88622DB55123009E5758;
-			remoteInfo = DECODE;
-		};
-/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		E41FE8F12E31C462004C69F6 /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
@@ -52,14 +32,9 @@
 		E4950D4A2DB556A800D0B123 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
 		E4AE1ED52E6E0E71008A46D8 /* ScoreDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreDetailsView.swift; sourceTree = "<group>"; };
 		E4DD88632DB55123009E5758 /* DECODE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DECODE.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		E4DD88722DB55124009E5758 /* DECODETests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DECODETests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		E4DD887C2DB55124009E5758 /* DECODEUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DECODEUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4DD888F2DB5512A009E5758 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E4DD88902DB5512A009E5758 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E4DD88912DB5512A009E5758 /* DECODEApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DECODEApp.swift; sourceTree = "<group>"; };
-		E4DD88982DB55133009E5758 /* DECODETests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DECODETests.swift; sourceTree = "<group>"; };
-		E4DD889B2DB55136009E5758 /* DECODEUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DECODEUITests.swift; sourceTree = "<group>"; };
-		E4DD889C2DB55136009E5758 /* DECODEUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DECODEUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		E4DD88A02DB551B1009E5758 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -88,20 +63,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E4DD886F2DB55124009E5758 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E4DD88792DB55124009E5758 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -119,8 +80,6 @@
 			children = (
 				E4950D4A2DB556A800D0B123 /* Config.xcconfig */,
 				E4DD88932DB5512A009E5758 /* DECODE */,
-				E4DD88992DB55133009E5758 /* DECODETests */,
-				E4DD889D2DB55136009E5758 /* DECODEUITests */,
 				E4DD88A52DB554A9009E5758 /* Frameworks */,
 				E4DD88642DB55123009E5758 /* Products */,
 			);
@@ -130,8 +89,6 @@
 			isa = PBXGroup;
 			children = (
 				E4DD88632DB55123009E5758 /* DECODE.app */,
-				E4DD88722DB55124009E5758 /* DECODETests.xctest */,
-				E4DD887C2DB55124009E5758 /* DECODEUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -153,23 +110,6 @@
 				E42224DC2DB56E9B0014F0E9 /* DECODE.entitlements */,
 			);
 			path = DECODE;
-			sourceTree = "<group>";
-		};
-		E4DD88992DB55133009E5758 /* DECODETests */ = {
-			isa = PBXGroup;
-			children = (
-				E4DD88982DB55133009E5758 /* DECODETests.swift */,
-			);
-			path = DECODETests;
-			sourceTree = "<group>";
-		};
-		E4DD889D2DB55136009E5758 /* DECODEUITests */ = {
-			isa = PBXGroup;
-			children = (
-				E4DD889B2DB55136009E5758 /* DECODEUITests.swift */,
-				E4DD889C2DB55136009E5758 /* DECODEUITestsLaunchTests.swift */,
-			);
-			path = DECODEUITests;
 			sourceTree = "<group>";
 		};
 		E4DD88A52DB554A9009E5758 /* Frameworks */ = {
@@ -209,46 +149,6 @@
 			productReference = E4DD88632DB55123009E5758 /* DECODE.app */;
 			productType = "com.apple.product-type.application";
 		};
-		E4DD88712DB55124009E5758 /* DECODETests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E4DD88892DB55124009E5758 /* Build configuration list for PBXNativeTarget "DECODETests" */;
-			buildPhases = (
-				E4DD886E2DB55124009E5758 /* Sources */,
-				E4DD886F2DB55124009E5758 /* Frameworks */,
-				E4DD88702DB55124009E5758 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				E4DD88742DB55124009E5758 /* PBXTargetDependency */,
-			);
-			name = DECODETests;
-			packageProductDependencies = (
-			);
-			productName = DECODETests;
-			productReference = E4DD88722DB55124009E5758 /* DECODETests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		E4DD887B2DB55124009E5758 /* DECODEUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E4DD888C2DB55124009E5758 /* Build configuration list for PBXNativeTarget "DECODEUITests" */;
-			buildPhases = (
-				E4DD88782DB55124009E5758 /* Sources */,
-				E4DD88792DB55124009E5758 /* Frameworks */,
-				E4DD887A2DB55124009E5758 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				E4DD887E2DB55124009E5758 /* PBXTargetDependency */,
-			);
-			name = DECODEUITests;
-			packageProductDependencies = (
-			);
-			productName = DECODEUITests;
-			productReference = E4DD887C2DB55124009E5758 /* DECODEUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -261,14 +161,6 @@
 				TargetAttributes = {
 					E4DD88622DB55123009E5758 = {
 						CreatedOnToolsVersion = 16.3;
-					};
-					E4DD88712DB55124009E5758 = {
-						CreatedOnToolsVersion = 16.3;
-						TestTargetID = E4DD88622DB55123009E5758;
-					};
-					E4DD887B2DB55124009E5758 = {
-						CreatedOnToolsVersion = 16.3;
-						TestTargetID = E4DD88622DB55123009E5758;
 					};
 				};
 			};
@@ -293,8 +185,6 @@
 			projectRoot = "";
 			targets = (
 				E4DD88622DB55123009E5758 /* DECODE */,
-				E4DD88712DB55124009E5758 /* DECODETests */,
-				E4DD887B2DB55124009E5758 /* DECODEUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -306,20 +196,6 @@
 			files = (
 				E4720D3A2E6E50F4009B2D7C /* teams.json in Resources */,
 				E4DD88972DB5512A009E5758 /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E4DD88702DB55124009E5758 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E4DD887A2DB55124009E5758 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,37 +216,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E4DD886E2DB55124009E5758 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E4DD889A2DB55133009E5758 /* DECODETests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E4DD88782DB55124009E5758 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E4DD889E2DB55136009E5758 /* DECODEUITests.swift in Sources */,
-				E4DD889F2DB55136009E5758 /* DECODEUITestsLaunchTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		E4DD88742DB55124009E5758 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E4DD88622DB55123009E5758 /* DECODE */;
-			targetProxy = E4DD88732DB55124009E5758 /* PBXContainerItemProxy */;
-		};
-		E4DD887E2DB55124009E5758 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E4DD88622DB55123009E5758 /* DECODE */;
-			targetProxy = E4DD887D2DB55124009E5758 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		E4DD88842DB55124009E5758 /* Debug */ = {
@@ -510,7 +356,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = DECODE/DECODE.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DECODE/Info.plist;
@@ -527,7 +373,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.3.1;
+				MARKETING_VERSION = 0.4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
@@ -545,7 +391,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = DECODE/DECODE.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DECODE/Info.plist;
@@ -562,85 +408,13 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.3.1;
+				MARKETING_VERSION = 0.4.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
-			};
-			name = Release;
-		};
-		E4DD888A2DB55124009E5758 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = P7MYA5Q926;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = app.ftcscoring.DECODETests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DECODE.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DECODE";
-			};
-			name = Debug;
-		};
-		E4DD888B2DB55124009E5758 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = P7MYA5Q926;
-				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = app.ftcscoring.DECODETests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DECODE.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DECODE";
-			};
-			name = Release;
-		};
-		E4DD888D2DB55124009E5758 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = P7MYA5Q926;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = app.ftcscoring.DECODEUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = DECODE;
-			};
-			name = Debug;
-		};
-		E4DD888E2DB55124009E5758 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = P7MYA5Q926;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = app.ftcscoring.DECODEUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = DECODE;
 			};
 			name = Release;
 		};
@@ -661,24 +435,6 @@
 			buildConfigurations = (
 				E4DD88872DB55124009E5758 /* Debug */,
 				E4DD88882DB55124009E5758 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		E4DD88892DB55124009E5758 /* Build configuration list for PBXNativeTarget "DECODETests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E4DD888A2DB55124009E5758 /* Debug */,
-				E4DD888B2DB55124009E5758 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		E4DD888C2DB55124009E5758 /* Build configuration list for PBXNativeTarget "DECODEUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E4DD888D2DB55124009E5758 /* Debug */,
-				E4DD888E2DB55124009E5758 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

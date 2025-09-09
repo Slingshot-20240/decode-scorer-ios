@@ -513,7 +513,6 @@ struct LocationCard: View {
             .lineLimit(1)
             .foregroundStyle(.white)
             .padding(12)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background {
                 HStack(spacing: 0) {
                     Rectangle()
@@ -589,7 +588,6 @@ struct LocationCard: View {
             .lineLimit(1)
             .foregroundStyle(.white)
             .padding(12)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background {
                 HStack(spacing: 0) {
                     Rectangle()

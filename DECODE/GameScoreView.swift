@@ -635,7 +635,8 @@ struct GameScoreView: View {
 
                         ScoreButtons(
                             value: scoringElementBindings().red,
-                            width: fd.divs(1)
+                            width: fd.divs(1),
+                            max: scoringElement == .motifs ? 9 : 60
                         )
                         .padding([.vertical, .trailing], 8)
                     }
@@ -697,10 +698,7 @@ struct GameScoreView: View {
                                 .fontWeight(.semibold)
                                 .minimumScaleFactor(0.6)
                                 .padding(8)
-                                .frame(
-                                    maxWidth: .infinity,
-                                    maxHeight: .infinity
-                                )
+                                .maxArea()
                                 .background(
                                     Rectangle().fill(Color.primary.gradient)
                                         .colorInvert().scaleEffect(y: -1)
@@ -771,10 +769,7 @@ struct GameScoreView: View {
                             .fontWeight(.semibold)
                             .minimumScaleFactor(0.6)
                             .padding(8)
-                            .frame(
-                                maxWidth: .infinity,
-                                maxHeight: .infinity
-                            )
+                            .maxArea()
                             .background(
                                 Rectangle().fill(Color.primary.gradient)
                                     .colorInvert().scaleEffect(y: -1)
@@ -795,10 +790,7 @@ struct GameScoreView: View {
                                 .fontWeight(.semibold)
                                 .minimumScaleFactor(0.6)
                                 .padding(8)
-                                .frame(
-                                    maxWidth: .infinity,
-                                    maxHeight: .infinity
-                                )
+                                .maxArea()
                                 .background(
                                     Rectangle().fill(Color.primary.gradient)
                                         .colorInvert().scaleEffect(y: -1)
@@ -1032,7 +1024,8 @@ struct GameScoreView: View {
                     default:
                         ScoreButtons(
                             value: scoringElementBindings().blue,
-                            width: fd.divs(1)
+                            width: fd.divs(1),
+                            max: scoringElement == .motifs ? 9 : 60
                         )
                         .padding([.vertical, .leading], 8)
 
@@ -1235,6 +1228,7 @@ struct WheelPicker: View {
 struct ScoreButtons: View {
     @Binding var value: Int
     let width: CGFloat
+    let max: Int
 
     var body: some View {
         VStack(spacing: 8) {
@@ -1261,7 +1255,7 @@ struct ScoreButtons: View {
                     .background(Color.secondary.opacity(0.1))
                     .radius(8)
             }
-            .disabled(value >= 40)
+            .disabled(value >= max)
 
             Button {
                 Haptics.play(.light)
@@ -1313,10 +1307,7 @@ struct AutoLocationButtons: View {
             .font(.caption)
             .minimumScaleFactor(0.6)
             .padding(4)
-            .frame(
-                maxWidth: .infinity,
-                maxHeight: .infinity
-            )
+            .maxArea()
             .background(
                 Rectangle().fill(
                     (locationSelected
@@ -1346,10 +1337,7 @@ struct AutoLocationButtons: View {
             .font(.caption)
             .minimumScaleFactor(0.6)
             .padding(4)
-            .frame(
-                maxWidth: .infinity,
-                maxHeight: .infinity
-            )
+            .maxArea()
             .background(
                 Rectangle().fill(
                     (locationSelected
@@ -1389,10 +1377,7 @@ struct TeleopLocationButtons: View {
             .font(.caption)
             .minimumScaleFactor(0.6)
             .padding(4)
-            .frame(
-                maxWidth: .infinity,
-                maxHeight: .infinity
-            )
+            .maxArea()
             .background(
                 Rectangle().fill(
                     (locationSelected
@@ -1423,10 +1408,7 @@ struct TeleopLocationButtons: View {
             .font(.caption)
             .minimumScaleFactor(0.6)
             .padding(4)
-            .frame(
-                maxWidth: .infinity,
-                maxHeight: .infinity
-            )
+            .maxArea()
             .background(
                 Rectangle().fill(
                     (locationSelected
@@ -1459,10 +1441,7 @@ struct TeleopLocationButtons: View {
             .font(.caption)
             .minimumScaleFactor(0.6)
             .padding(4)
-            .frame(
-                maxWidth: .infinity,
-                maxHeight: .infinity
-            )
+            .maxArea()
             .background(
                 Rectangle().fill(
                     (locationSelected

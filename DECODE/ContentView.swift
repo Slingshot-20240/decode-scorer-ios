@@ -96,16 +96,18 @@ struct ContentView: View {
 
                 HStack {
                     (Text("🏜️ ")
-                        + Text("DECODE").fontWeight(.bold).fontDesign(
-                            .monospaced
-                        ) + Text(" Scorer"))
+                        + Text("DECODE")
+                        .fontWeight(.bold)
+                        .fontDesign(.monospaced)
+                        + Text(" Scorer"))
                         .font(.title)
                         .minimumScaleFactor(0.6)
                         .padding(.horizontal, fd.divs(1) / 3 * 2)
                         .padding(.vertical, fd.divs(1) / 3)
                         .maxArea(alignment: .leading)
-                        .background(.secondary.opacity(0.15))
-                        .radius(16)
+                        .glassBackground(
+                            shape: RoundedRectangle(cornerRadius: 16)
+                        )
 
                     GeometryReader { proxy in
                         Link(
@@ -122,8 +124,9 @@ struct ContentView: View {
                                     width: proxy.size.height,
                                     height: proxy.size.height
                                 )
-                                .background(Color.secondary.opacity(0.15))
-                                .radius(16)
+                                .glassBackground(
+                                    shape: RoundedRectangle(cornerRadius: 16)
+                                )
                         }
                         .tint(.clear)
                     }
