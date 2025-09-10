@@ -13,7 +13,7 @@ presented by **20240 Slingshot**
 
 ### Prerequisites
 
-In order to develop the DECODE™ Scorer for iOS, you must have the following:
+In order to develop the DECODE Scorer for iOS, you must have the following:
 
 - A Mac computer running macOS Sequoia 15.5 or later
 - Xcode 26 or later
@@ -33,14 +33,24 @@ Using a text editor or IDE that is **NOT Xcode**, open [`ExampleConfig.xcconfig`
 - `DEVELOPMENT_TEAM` refers to your Apple Developer Program Team ID, which you can find [here](https://developer.apple.com/account#MembershipDetailsCard).
 - `PRODUCT_BUNDLE_IDENTIFIER` is a unique identifier used by the system for the application. Replace with the standard convention of a reversed domain (e.g. `decode.scorer.slingshot.example.com` ➡️ `com.example.slingshot.scorer.decode`). This should be unique to your project, avoid using `app.ftcscoring.decode` unless you know what you are doing.
 
-Rename [`ExampleConfig.xcconfig`](./ExampleConfig.xcconfig) to `Config.xcconfig`, and open Xcode.
+Make a copy of [`ExampleConfig.xcconfig`](./ExampleConfig.xcconfig) and rename it to `Config.xcconfig`, and open Xcode.
 
 In the left sidebar, navigate to `DECODE (top-level .xcodeproj) > Targets > DECODE > Build Settings > All > Development Team`, single click (select) the line, and press `delete` (`backspace`) on your keyboard. Repeat for key `Product Bundle Identifier`
 
 > [!CAUTION]
 > **NEVER** update your development team or bundle identifier in the Xcode GUI, **only** use the `Config.xcconfig` file to avoid pushing your project-specific configuration to GitHub. 
 
-You're done! Head to the `Signing & Capabilities` section on the DECODE target page to make sure your development team and bundle identifier have been set correctly.
+Head to the `Signing & Capabilities` section on the DECODE target page to make sure your development team and bundle identifier have been set correctly.
+
+After configuring code signing, make a copy of [`ExampleEnv.swift`](./ExampleEnv.swift) and rename it to `Env.swift`.
+
+If you would like to setup Aptabase analytics, fill in your Aptabase App Key. For more information, visit https://aptabase.com/.
+
+If you would not like to use analytics, simply leave the value blank. 
+
+In Xcode, go to `File > Add Files to "DECODE"...` and select the `Env.swift` file. Make sure to select the "Move files to destination" action and confirm that the "DECODE" target is selected.
+
+That's it! You are now good to go.
 
 ## Legal
 
@@ -64,7 +74,7 @@ You're done! Head to the `Signing & Capabilities` section on the DECODE target p
 
 [Slingshot-20240/swiftc](https://github.com/Slingshot-20240/swiftc) ([MIT License](https://github.com/Slingshot-20240/swiftc/blob/dev/LICENSE))
 
-#### DECODE™ Scorer presented by 20240 Slingshot
+#### DECODE Scorer presented by 20240 Slingshot
 
 Open source information to come. Planned release under the MIT License in Q3 2025.
 

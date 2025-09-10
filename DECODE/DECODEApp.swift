@@ -5,6 +5,7 @@
 //  Created by Jining Liu on 4/20/25.
 //
 
+import Aptabase
 import SwiFTC
 import SwiftData
 import SwiftUI
@@ -29,6 +30,10 @@ struct DECODEApp: App {
             fatalError("Could not create ModelContainer: \(error)")
         }
     }()
+    
+    init() {
+        Aptabase.shared.launch()
+    }
 
     var body: some Scene {
         WindowGroup {

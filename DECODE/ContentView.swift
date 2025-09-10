@@ -5,6 +5,7 @@
 //  Created by Jining Liu on 4/20/25.
 //
 
+import Aptabase
 import SwiFTC
 import SwiftData
 import SwiftUI
@@ -15,6 +16,7 @@ struct ContentView: View {
     @State private var showGameScoreView: Bool = false
     @State private var showHistoryView: Bool = false
     @State private var showTimerView: Bool = false
+    @State private var showSettings: Bool = false
 
     var body: some View {
         HStack(spacing: 8) {
@@ -23,6 +25,7 @@ struct ContentView: View {
                 Button {
                     Haptics.play(.light)
                     showHistoryView = true
+                    Aptabase.shared.trackFeature(.hna)
                 } label: {
                     HStack {
                         VStack(spacing: -2) {
@@ -55,6 +58,7 @@ struct ContentView: View {
                     Button {
                         Haptics.play(.light)
                         showTimerView = true
+                        Aptabase.shared.trackFeature(.timer)
                     } label: {
                         HStack {
                             Image(systemName: "timer")
@@ -73,7 +77,7 @@ struct ContentView: View {
                     .tint(.white)
 
                     Button {
-
+                        //                        Aptabase.shared.trackFeature(.calc)
                     } label: {
                         HStack {
                             Image(systemName: "plus.slash.minus")
@@ -136,7 +140,8 @@ struct ContentView: View {
 
                 HStack(spacing: 8) {
                     Button {
-
+                        Haptics.play(.light)
+                        showSettings = true
                     } label: {
                         HStack {
                             Image(systemName: "gear")
@@ -176,6 +181,7 @@ struct ContentView: View {
                 Button {
                     Haptics.play(.light)
                     showGameScoreView = true
+                    Aptabase.shared.trackFeature(.game)
                 } label: {
                     VStack(spacing: 8) {
                         Image(systemName: "gamecontroller.fill")
@@ -200,7 +206,9 @@ struct ContentView: View {
                 .frame(height: fd.divs(3))
 
                 Button {
-
+                    //                    Aptabase.shared.trackFeature(.auto)
+                    //                    Aptabase.shared.trackFeature(.dp)
+                    //                    Aptabase.shared.trackFeature(.ep)
                 } label: {
                     HStack {
                         VStack(spacing: -2) {
@@ -243,6 +251,10 @@ struct ContentView: View {
         }
         .fullScreenCover(isPresented: $showTimerView) {
             TimerView()
+                .background(Color.primary.colorInvert().ignoresSafeArea())
+        }
+        .sheet(isPresented: $showSettings) {
+            SettingsView()
                 .background(Color.primary.colorInvert().ignoresSafeArea())
         }
     }

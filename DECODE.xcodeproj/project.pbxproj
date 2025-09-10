@@ -8,12 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		E41FE8F22E31C462004C69F6 /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41FE8F12E31C462004C69F6 /* TimerView.swift */; };
-		E4720D382E6E429F009B2D7C /* TeamAssignmentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4720D372E6E429F009B2D7C /* TeamAssignmentsView.swift */; };
 		E4720D3A2E6E50F4009B2D7C /* teams.json in Resources */ = {isa = PBXBuildFile; fileRef = E4720D392E6E50F4009B2D7C /* teams.json */; };
 		E4720D3C2E6E54A7009B2D7C /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4720D3B2E6E54A7009B2D7C /* HistoryView.swift */; };
 		E47E3CE52E6E96BE00342BFB /* GameScoreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E47E3CE42E6E96BE00342BFB /* GameScoreView.swift */; };
 		E47E3CE72E6E98BE00342BFB /* SwiFTC in Frameworks */ = {isa = PBXBuildFile; productRef = E47E3CE62E6E98BE00342BFB /* SwiFTC */; };
-		E4AE1ED62E6E0E71008A46D8 /* ScoreDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4AE1ED52E6E0E71008A46D8 /* ScoreDetailsView.swift */; };
+		E493CEAB2E714F7E009EFD9E /* Env.swift in Sources */ = {isa = PBXBuildFile; fileRef = E493CEAA2E714F7E009EFD9E /* Env.swift */; };
+		E493CEAE2E7159A9009EFD9E /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E493CEAD2E7159A6009EFD9E /* SettingsView.swift */; };
 		E4DD88942DB5512A009E5758 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DD88902DB5512A009E5758 /* ContentView.swift */; };
 		E4DD88952DB5512A009E5758 /* DECODEApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DD88912DB5512A009E5758 /* DECODEApp.swift */; };
 		E4DD88972DB5512A009E5758 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4DD888F2DB5512A009E5758 /* Assets.xcassets */; };
@@ -25,12 +25,12 @@
 /* Begin PBXFileReference section */
 		E41FE8F12E31C462004C69F6 /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
 		E42224DC2DB56E9B0014F0E9 /* DECODE.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DECODE.entitlements; sourceTree = "<group>"; };
-		E4720D372E6E429F009B2D7C /* TeamAssignmentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamAssignmentsView.swift; sourceTree = "<group>"; };
 		E4720D392E6E50F4009B2D7C /* teams.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = teams.json; sourceTree = "<group>"; };
 		E4720D3B2E6E54A7009B2D7C /* HistoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryView.swift; sourceTree = "<group>"; };
 		E47E3CE42E6E96BE00342BFB /* GameScoreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScoreView.swift; sourceTree = "<group>"; };
+		E493CEAA2E714F7E009EFD9E /* Env.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Env.swift; sourceTree = "<group>"; };
+		E493CEAD2E7159A6009EFD9E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		E4950D4A2DB556A800D0B123 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
-		E4AE1ED52E6E0E71008A46D8 /* ScoreDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreDetailsView.swift; sourceTree = "<group>"; };
 		E4DD88632DB55123009E5758 /* DECODE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DECODE.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4DD888F2DB5512A009E5758 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E4DD88902DB5512A009E5758 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -47,6 +47,11 @@
 		E443331D2E2EF7EA009019CD /* Misc */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Misc;
+			sourceTree = "<group>";
+		};
+		E493CEAC2E71598C009EFD9E /* Secondary */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Secondary;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -79,6 +84,7 @@
 			isa = PBXGroup;
 			children = (
 				E4950D4A2DB556A800D0B123 /* Config.xcconfig */,
+				E493CEAA2E714F7E009EFD9E /* Env.swift */,
 				E4DD88932DB5512A009E5758 /* DECODE */,
 				E4DD88A52DB554A9009E5758 /* Frameworks */,
 				E4DD88642DB55123009E5758 /* Products */,
@@ -100,9 +106,9 @@
 				E4DD88902DB5512A009E5758 /* ContentView.swift */,
 				E47E3CE42E6E96BE00342BFB /* GameScoreView.swift */,
 				E4720D3B2E6E54A7009B2D7C /* HistoryView.swift */,
-				E4720D372E6E429F009B2D7C /* TeamAssignmentsView.swift */,
-				E4AE1ED52E6E0E71008A46D8 /* ScoreDetailsView.swift */,
 				E41FE8F12E31C462004C69F6 /* TimerView.swift */,
+				E493CEAD2E7159A6009EFD9E /* SettingsView.swift */,
+				E493CEAC2E71598C009EFD9E /* Secondary */,
 				E42224DD2DB57B270014F0E9 /* Helpers */,
 				E4720D392E6E50F4009B2D7C /* teams.json */,
 				E4DD888F2DB5512A009E5758 /* Assets.xcassets */,
@@ -137,6 +143,7 @@
 			fileSystemSynchronizedGroups = (
 				E44333132E2EF7E2009019CD /* View */,
 				E443331D2E2EF7EA009019CD /* Misc */,
+				E493CEAC2E71598C009EFD9E /* Secondary */,
 			);
 			name = DECODE;
 			packageProductDependencies = (
@@ -207,12 +214,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				E47E3CE52E6E96BE00342BFB /* GameScoreView.swift in Sources */,
-				E4AE1ED62E6E0E71008A46D8 /* ScoreDetailsView.swift in Sources */,
+				E493CEAE2E7159A9009EFD9E /* SettingsView.swift in Sources */,
 				E4720D3C2E6E54A7009B2D7C /* HistoryView.swift in Sources */,
 				E41FE8F22E31C462004C69F6 /* TimerView.swift in Sources */,
 				E4DD88942DB5512A009E5758 /* ContentView.swift in Sources */,
-				E4720D382E6E429F009B2D7C /* TeamAssignmentsView.swift in Sources */,
 				E4DD88952DB5512A009E5758 /* DECODEApp.swift in Sources */,
+				E493CEAB2E714F7E009EFD9E /* Env.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
