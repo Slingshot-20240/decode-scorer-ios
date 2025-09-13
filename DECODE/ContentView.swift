@@ -25,7 +25,7 @@ struct ContentView: View {
                 Button {
                     Haptics.play(.light)
                     showHistoryView = true
-                    Aptabase.shared.trackFeature(.hna)
+                    Analytics.shared.trackFeature(.hna)
                 } label: {
                     HStack {
                         VStack(spacing: -2) {
@@ -58,7 +58,7 @@ struct ContentView: View {
                     Button {
                         Haptics.play(.light)
                         showTimerView = true
-                        Aptabase.shared.trackFeature(.timer)
+                        Analytics.shared.trackFeature(.timer)
                     } label: {
                         HStack {
                             Image(systemName: "timer")
@@ -77,7 +77,7 @@ struct ContentView: View {
                     .tint(.white)
 
                     Button {
-                        //                        Aptabase.shared.trackFeature(.calc)
+                        //                        Analytics.shared.trackFeature(.calc)
                     } label: {
                         HStack {
                             Image(systemName: "plus.slash.minus")
@@ -181,7 +181,7 @@ struct ContentView: View {
                 Button {
                     Haptics.play(.light)
                     showGameScoreView = true
-                    Aptabase.shared.trackFeature(.game)
+                    Analytics.shared.trackFeature(.game)
                 } label: {
                     VStack(spacing: 8) {
                         Image(systemName: "gamecontroller.fill")
@@ -206,9 +206,9 @@ struct ContentView: View {
                 .frame(height: fd.divs(3))
 
                 Button {
-                    //                    Aptabase.shared.trackFeature(.auto)
-                    //                    Aptabase.shared.trackFeature(.dp)
-                    //                    Aptabase.shared.trackFeature(.ep)
+                    //                    Analytics.shared.trackFeature(.auto)
+                    //                    Analytics.shared.trackFeature(.dp)
+                    //                    Analytics.shared.trackFeature(.ep)
                 } label: {
                     HStack {
                         VStack(spacing: -2) {

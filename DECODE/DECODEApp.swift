@@ -10,6 +10,45 @@ import SwiFTC
 import SwiftData
 import SwiftUI
 
+let version: String =
+    Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String
+    ?? "Unknown Version"
+let build: String =
+    Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown Build"
+let environment: AppEnvironment = .alpha
+
+enum AppEnvironment {
+    case production
+    case beta
+    case alpha
+    case development
+
+    var warningLabel: (some View)? {
+        switch self {
+        case .beta:
+            Label(
+                "Beta software. Features may be unstable. Use with caution.",
+                systemImage: "testtube.2"
+            )
+            .foregroundStyle(.orange)
+        case .alpha:
+            Label(
+                "Alpha software. For internal testing only. \nDistribution without permission is prohibited.",
+                systemImage: "hand.raised.fill"
+            )
+            .foregroundStyle(.red)
+        case .development:
+            Label(
+                "Development build. For development purposes only. \nDistribution without permission is prohibited.",
+                systemImage: "hammer.fill"
+            )
+            .foregroundStyle(.indigo)
+        default:
+            nil
+        }
+    }
+}
+
 @main
 struct DECODEApp: App {
     var sharedModelContainer: ModelContainer = {
@@ -30,9 +69,9 @@ struct DECODEApp: App {
             fatalError("Could not create ModelContainer: \(error)")
         }
     }()
-    
+
     init() {
-        Aptabase.shared.launch()
+        Analytics.shared.launch()
     }
 
     var body: some Scene {

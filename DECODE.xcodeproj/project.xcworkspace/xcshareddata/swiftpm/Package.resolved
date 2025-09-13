@@ -34,7 +34,7 @@
       "location" : "https://github.com/pvieito/PythonKit.git",
       "state" : {
         "branch" : "master",
-        "revision" : "d5ba1b3b4834e8c47e0cdf0989f458bc59ab0b45"
+        "revision" : "2728bfb247e9662f492c43be01c7f1976bca5c1b"
       }
     },
     {
@@ -42,8 +42,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/Slingshot-20240/swiftc",
       "state" : {
-        "revision" : "8d771211b3eca9bbab1415a9105b4e935a29f6d8",
-        "version" : "0.9.8"
+        "revision" : "f453fe45ac58d571de816d7d3fc04529bfb7b23a",
+        "version" : "0.9.13"
       }
     }
   ],

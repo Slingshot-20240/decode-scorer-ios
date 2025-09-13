@@ -17,10 +17,7 @@ struct GameScoreView: View {
     @State private var scores: DecodeGameScores = .init()
 
     @State private var assignTeamFor: AssignTeamFor? = nil
-    @State private var redTeam1: String? = nil
-    @State private var redTeam2: String? = nil
-    @State private var blueTeam1: String? = nil
-    @State private var blueTeam2: String? = nil
+    @AppStorage("scoringTeams") var scoringTeams: GameTeamsV1 = .init()
 
     @State private var timestamp: Date = .now
 
@@ -28,6 +25,12 @@ struct GameScoreView: View {
     @State private var batteryIsCharging: Bool
 
     @State private var showDetails: Bool = false
+    
+    @State private var showSettings: Bool = false
+    
+    @AppStorage("nfMode") private var nfMode: Bool = false
+    @AppStorage("filpAlliances") private var filpAlliances: Bool = false
+    @AppStorage("preserveTeams") private var preserveTeams: Bool = false
 
     init() {
         UIDevice.current.isBatteryMonitoringEnabled = true
@@ -76,10 +79,10 @@ struct GameScoreView: View {
         } content: {
             TeamAssignmentsView(
                 assignFor: $assignTeamFor,
-                redTeam1: $redTeam1,
-                redTeam2: $redTeam2,
-                blueTeam1: $blueTeam1,
-                blueTeam2: $blueTeam2
+                redTeam1: $scoringTeams.red.one,
+                redTeam2: $scoringTeams.red.two,
+                blueTeam1: $scoringTeams.blue.one,
+                blueTeam2: $scoringTeams.blue.two
             )
         }
         .sheet(isPresented: $showDetails) {
@@ -97,8 +100,8 @@ struct GameScoreView: View {
                             .foregroundStyle(.secondary)
 
                             var label: GameLabel {
-                                let red1 = redTeam1
-                                let red2 = redTeam2
+                                let red1 = scoringTeams.red.one
+                                let red2 = scoringTeams.red.two
 
                                 let redLabel: String
                                 if let r1 = red1, let r2 = red2 {
@@ -111,8 +114,8 @@ struct GameScoreView: View {
                                     redLabel = "Red Alliance"
                                 }
 
-                                let blue1 = blueTeam1
-                                let blue2 = blueTeam2
+                                let blue1 = scoringTeams.blue.one
+                                let blue2 = scoringTeams.blue.two
 
                                 let blueLabel: String
                                 if let b1 = blue1, let b2 = blue2 {
@@ -140,9 +143,9 @@ struct GameScoreView: View {
 
                             if label.middle != "Game" {
                                 let redWon =
-                                    scores.red.total >= scores.blue.total
+                                    scores.red.total(excludeFouls: nfMode) >= scores.blue.total(excludeFouls: nfMode)
                                 let blueWon =
-                                    scores.blue.total >= scores.red.total
+                                    scores.blue.total(excludeFouls: nfMode) >= scores.red.total(excludeFouls: nfMode)
 
                                 HStack(spacing: 8) {
                                     Text(label.red)
@@ -184,6 +187,15 @@ struct GameScoreView: View {
                         }
                     }
                 }
+            }
+        }
+        .sheet(isPresented: $showSettings) {
+            SettingsView()
+                .background(Color.primary.colorInvert().ignoresSafeArea())
+        }
+        .onAppear {
+            if !preserveTeams {
+                scoringTeams = .init()
             }
         }
         .onChange(of: timer.scoringStage) { _, stage in
@@ -234,7 +246,7 @@ struct GameScoreView: View {
                 Divider()
 
                 Button("Settings", systemImage: "gear") {
-                    // TODO: settings
+                    showSettings = true
                 }
 
                 Divider()
@@ -482,7 +494,7 @@ struct GameScoreView: View {
                         Haptics.play(.light)
                         selectedRedTeam = .one
                     } label: {
-                        Text(redTeam1 ?? "Team 1")
+                        Text(scoringTeams.red.one ?? "Team 1")
                             .font(.subheadline)
                             .foregroundStyle(.primary)
                             .padding(.horizontal, 12)
@@ -505,7 +517,7 @@ struct GameScoreView: View {
                     .disabled(scoringElement != .location)
                     .contextMenu {
                         Button(
-                            "\(redTeam1 == nil ? "Assign" : "Change") Team",
+                            "\(scoringTeams.red.one == nil ? "Assign" : "Change") Team",
                             systemImage: "person.3.fill"
                         ) {
                             Haptics.play(.light)
@@ -517,7 +529,7 @@ struct GameScoreView: View {
                         Haptics.play(.light)
                         selectedRedTeam = .two
                     } label: {
-                        Text(redTeam2 ?? "Team 2")
+                        Text(scoringTeams.red.two ?? "Team 2")
                             .font(.subheadline)
                             .foregroundStyle(.primary)
                             .padding(.horizontal, 12)
@@ -540,7 +552,7 @@ struct GameScoreView: View {
                     .disabled(scoringElement != .location)
                     .contextMenu {
                         Button(
-                            "\(redTeam2 == nil ? "Assign" : "Change") Team",
+                            "\(scoringTeams.red.two == nil ? "Assign" : "Change") Team",
                             systemImage: "person.3.fill"
                         ) {
                             Haptics.play(.light)
@@ -734,10 +746,10 @@ struct GameScoreView: View {
                     case .finished:
                         Button {
                             var teams = GameTeamsV1()
-                            teams.red.one = redTeam1
-                            teams.red.two = redTeam2
-                            teams.blue.one = blueTeam1
-                            teams.blue.two = blueTeam2
+                            teams.red.one = scoringTeams.red.one
+                            teams.red.two = scoringTeams.red.two
+                            teams.blue.one = scoringTeams.blue.one
+                            teams.blue.two = scoringTeams.blue.two
 
                             modelContext.insert(
                                 DecodeGameModel(
@@ -835,7 +847,7 @@ struct GameScoreView: View {
                         .minimumScaleFactor(0.6)
                         .foregroundStyle(.clear)
                         .overlay {
-                            Text(String(scores.red.total))
+                            Text(String(scores.red.total(excludeFouls: nfMode)))
                                 .font(.system(size: 60, weight: .bold))
                                 .minimumScaleFactor(0.6)
                                 .contentTransition(.numericText())
@@ -853,7 +865,7 @@ struct GameScoreView: View {
                         .minimumScaleFactor(0.6)
                         .foregroundStyle(.clear)
                         .overlay {
-                            Text(String(scores.blue.total))
+                            Text(String(scores.blue.total(excludeFouls: nfMode)))
                                 .font(.system(size: 60, weight: .bold))
                                 .minimumScaleFactor(0.6)
                                 .contentTransition(.numericText())
@@ -877,7 +889,7 @@ struct GameScoreView: View {
                         Haptics.play(.light)
                         selectedBlueTeam = .one
                     } label: {
-                        Text(blueTeam1 ?? "Team 1")
+                        Text(scoringTeams.blue.one ?? "Team 1")
                             .font(.subheadline)
                             .foregroundStyle(.primary)
                             .padding(.horizontal, 12)
@@ -900,7 +912,7 @@ struct GameScoreView: View {
                     .disabled(scoringElement != .location)
                     .contextMenu {
                         Button(
-                            "\(blueTeam1 == nil ? "Assign" : "Change") Team",
+                            "\(scoringTeams.blue.one == nil ? "Assign" : "Change") Team",
                             systemImage: "person.3.fill"
                         ) {
                             Haptics.play(.light)
@@ -912,7 +924,7 @@ struct GameScoreView: View {
                         Haptics.play(.light)
                         selectedBlueTeam = .two
                     } label: {
-                        Text(blueTeam2 ?? "Team 2")
+                        Text(scoringTeams.blue.two ?? "Team 2")
                             .font(.subheadline)
                             .foregroundStyle(.primary)
                             .padding(.horizontal, 12)
@@ -935,7 +947,7 @@ struct GameScoreView: View {
                     .disabled(scoringElement != .location)
                     .contextMenu {
                         Button(
-                            "\(blueTeam2 == nil ? "Assign" : "Change") Team",
+                            "\(scoringTeams.blue.two == nil ? "Assign" : "Change") Team",
                             systemImage: "person.3.fill"
                         ) {
                             Haptics.play(.light)
@@ -1054,8 +1066,8 @@ struct GameScoreView: View {
             }
             .frame(width: fd.divs(4))
         }
-        .animation(.smooth, value: scores.red.total)
-        .animation(.smooth, value: scores.blue.total)
+        .animation(.smooth, value: scores.red.total(excludeFouls: nfMode))
+        .animation(.smooth, value: scores.blue.total(excludeFouls: nfMode))
     }
 
     func scoringElementBindings() -> (blue: Binding<Int>, red: Binding<Int>) {
@@ -1159,6 +1171,10 @@ struct GameScoreView: View {
         timer.reset()
         scores = .init()
         timestamp = .now
+        
+        if !preserveTeams {
+            scoringTeams = .init()
+        }
     }
 }
 
@@ -1482,7 +1498,11 @@ struct FoulButtons: View {
                 .minimumScaleFactor(0.8)
                 .padding(8)
                 .maxArea()
-                .background(color.opacity(0.1))
+                .background {
+                    Rectangle()
+                        .fill(color.gradient)
+                        .opacity(0.2)
+                }
                 .radius(8)
             }
             .tint(.primary)

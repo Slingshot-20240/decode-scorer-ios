@@ -16,12 +16,14 @@ struct ScoreDetailsView: View {
         self.scores = scores
         self.largeSeparator = largeSeparator
     }
-
+    
+    @AppStorage("nfMode") private var nfMode: Bool = false
+    
     var body: some View {
         VStack(spacing: 8) {
             HStack(spacing: 8) {
-                let redWon = scores.red.total >= scores.blue.total
-                Text("\(scores.red.total)")
+                let redWon = scores.red.total(excludeFouls: nfMode) >= scores.blue.total(excludeFouls: nfMode)
+                Text("\(scores.red.total(excludeFouls: nfMode))")
                     .font(.largeTitle)
                     .fontWeight(redWon ? .bold : .semibold)
                     .foregroundStyle(redWon ? .white : .firstRed)
@@ -42,8 +44,8 @@ struct ScoreDetailsView: View {
                     Divider()
                 }
 
-                let blueWon = scores.blue.total >= scores.red.total
-                Text("\(scores.blue.total)")
+                let blueWon = scores.blue.total(excludeFouls: nfMode) >= scores.red.total(excludeFouls: nfMode)
+                Text("\(scores.blue.total(excludeFouls: nfMode))")
                     .font(.largeTitle)
                     .fontWeight(blueWon ? .bold : .semibold)
                     .foregroundStyle(blueWon ? .white : .firstBlue)

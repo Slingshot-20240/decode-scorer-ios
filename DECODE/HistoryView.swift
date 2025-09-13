@@ -22,7 +22,9 @@ struct HistoryView: View {
     @State private var redTeam2: String? = nil
     @State private var blueTeam1: String? = nil
     @State private var blueTeam2: String? = nil
-
+    
+    @AppStorage("nfMode") private var nfMode: Bool = false
+    
     var body: some View {
         NavigationStack {
             List {
@@ -37,9 +39,9 @@ struct HistoryView: View {
                     NavigationLink(value: game) {
                         HStack {
                             let redWon =
-                                game.scores.red.total >= game.scores.blue.total
+                                game.scores.red.total(excludeFouls: nfMode) >= game.scores.blue.total(excludeFouls: nfMode)
                             let blueWon =
-                                game.scores.blue.total >= game.scores.red.total
+                                game.scores.blue.total(excludeFouls: nfMode) >= game.scores.red.total(excludeFouls: nfMode)
 
                             VStack(alignment: .leading) {
                                 AnyView(
@@ -62,7 +64,7 @@ struct HistoryView: View {
 
                             Spacer()
 
-                            Text("\(game.scores.red.total)")
+                            Text("\(game.scores.red.total(excludeFouls: nfMode))")
                                 .font(.title3)
                                 .fontWeight(redWon ? .bold : .semibold)
                                 .foregroundStyle(redWon ? .white : .firstRed)
@@ -75,7 +77,7 @@ struct HistoryView: View {
                                 )
                                 .radius(12)
 
-                            Text("\(game.scores.blue.total)")
+                            Text("\(game.scores.blue.total(excludeFouls: nfMode))")
                                 .font(.title3)
                                 .fontWeight(blueWon ? .bold : .semibold)
                                 .foregroundStyle(blueWon ? .white : .firstBlue)
@@ -113,11 +115,11 @@ struct HistoryView: View {
 
                             if game.label.middle != "Game" {
                                 let redWon =
-                                    game.scores.red.total
-                                    >= game.scores.blue.total
+                                    game.scores.red.total(excludeFouls: nfMode)
+                                    >= game.scores.blue.total(excludeFouls: nfMode)
                                 let blueWon =
-                                    game.scores.blue.total
-                                    >= game.scores.red.total
+                                    game.scores.blue.total(excludeFouls: nfMode)
+                                    >= game.scores.red.total(excludeFouls: nfMode)
 
                                 HStack(spacing: 8) {
                                     Text(game.label.red)

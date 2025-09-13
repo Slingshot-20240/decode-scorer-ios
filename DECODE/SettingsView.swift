@@ -10,18 +10,85 @@ import SwiftUI
 struct SettingsView: View {
     @Environment(\.dismiss) var dismiss
 
+    @AppStorage("nfMode") private var nfMode: Bool = false
+    @AppStorage("filpAlliances") private var filpAlliances: Bool = false
+    @AppStorage("preserveTeams") private var preserveTeams: Bool = false
+
+    @AppStorage("dpColor") private var dpColor: DriverPracticeColor = .red
+
     var body: some View {
         NavigationStack {
             List {
                 Section {
-                    Text("Coming Soon...")
+                } header: {
+                    if let warningLabel = DECODE.environment.warningLabel {
+                        warningLabel
+                    }
+                }
+                .font(.subheadline)
+
+                Section {
+                    SettingsToggle(
+                        title: "NF (NP) Mode",
+                        description:
+                            "Exclude foul (penalty) points from the total score",
+                        icon: "flag.slash",
+                        isOn: $nfMode
+                    )
+
+                    //                    SettingsToggle(
+                    //                        title: "Flip Alliances",
+                    //                        description:
+                    //                            "Swap alliances to have blue on the left and red on the right",
+                    //                        icon: "arrobw.left.arrow.right",
+                    //                        isOn: $filpAlliances
+                    //                    )
+
+                    SettingsToggle(
+                        title: "Preserve Teams",
+                        description:
+                            "Keep team selections after resetting or exiting scoring mode",
+                        icon: "bookmark",
+                        isOn: $preserveTeams
+                    )
                 } header: {
                     Label("Behavior", systemImage: "rectangle.2.swap")
                 }
                 .headerProminence(.increased)
 
                 Section {
-                    Text("Coming Soon...")
+                    CustomSetting(
+                        title: "Driver Practice Mode Alliance Color",
+                        icon: "paintpalette"
+                    ) {
+                        ForEach(DriverPracticeColor.allCases, id: \.self) {
+                            color in
+                            Button {
+                                Haptics.play(.light)
+                                dpColor = color
+                            } label: {
+                                Circle()
+                                    .fill(color.color.gradient)
+                                    .frame(width: 24)
+                                    .overlay {
+                                        if dpColor == color {
+                                            Image(systemName: "checkmark")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .fontWeight(.semibold)
+                                                .foregroundStyle(.white)
+                                                .frame(width: 12)
+                                        }
+                                    }
+                            }
+                            .buttonStyle(.plain)
+                            .buttonBorderShape(.circle)
+                        }
+                    }
+
+                    //                    NavigationLink(destination: appIconView) {
+                    //                        SettingsLabel(title: "App Icon", icon: "app")
+                    //                    }
                 } header: {
                     Label("Appearance", systemImage: "paintbrush")
                 }
@@ -37,7 +104,11 @@ struct SettingsView: View {
                 } footer: {
                     Text(
                         """
-                        Version \(Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "Unknown Version") (\(Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown Build"))
+                        Version \(version) (\(build))
+
+                        https://ftcscoring.app
+
+                        [Privacy Policy](https://ftcscoring.app/privacy)
 
                         Team data provided by the [FTC API](https://ftc-events.firstinspires.org/services/API).
 
@@ -57,6 +128,100 @@ struct SettingsView: View {
                     DismissButton {
                         dismiss()
                     }
+                }
+            }
+        }
+    }
+
+    var appIconView: some View {
+        VStack {
+
+        }
+    }
+}
+
+struct SettingsToggle: View {
+    let title: String
+    let description: String
+    let icon: String?
+    @Binding var isOn: Bool
+
+    init(
+        title: String,
+        description: String,
+        icon: String? = nil,
+        isOn: Binding<Bool>
+    ) {
+        self.title = title
+        self.description = description
+        self.icon = icon
+        _isOn = isOn
+    }
+
+    var body: some View {
+        Toggle(isOn: $isOn) {
+            SettingsLabel(title: title, description: description, icon: icon)
+        }
+    }
+}
+
+struct CustomSetting<V: View>: View {
+    let title: String
+    let description: String?
+    let icon: String?
+    let viewBuilder: () -> V
+
+    init(
+        title: String,
+        description: String? = nil,
+        icon: String? = nil,
+        viewBuilder: @escaping () -> V
+    ) {
+        self.title = title
+        self.description = description
+        self.icon = icon
+        self.viewBuilder = viewBuilder
+    }
+
+    var body: some View {
+        HStack(spacing: 12) {
+            SettingsLabel(title: title, description: description, icon: icon)
+
+            Spacer()
+
+            viewBuilder()
+        }
+    }
+}
+
+struct SettingsLabel: View {
+    let title: String
+    let description: String?
+    let icon: String?
+
+    init(
+        title: String,
+        description: String? = nil,
+        icon: String? = nil
+    ) {
+        self.title = title
+        self.description = description
+        self.icon = icon
+    }
+
+    var body: some View {
+        HStack(spacing: 12) {
+            if let icon {
+                Image(systemName: icon)
+                    .font(.title3)
+            }
+
+            VStack(alignment: .leading) {
+                Text(title)
+                if let description {
+                    Text(description)
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
                 }
             }
         }

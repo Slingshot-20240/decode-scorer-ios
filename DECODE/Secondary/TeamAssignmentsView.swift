@@ -140,6 +140,18 @@ struct TeamAssignmentsView: View {
                         assignFor = nil
                     }
                 }
+
+                ToolbarItem(placement: .topBarTrailing) {
+                    Menu("", systemImage: "ellipsis") {
+                        Button("Clear Teams", systemImage: "clear") {
+                            redTeam1 = nil
+                            redTeam2 = nil
+                            blueTeam1 = nil
+                            blueTeam2 = nil
+                        }
+                    }
+                    .labelStyle(.iconOnly)
+                }
             }
         }
     }
