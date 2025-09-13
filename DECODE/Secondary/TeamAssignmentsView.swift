@@ -5,34 +5,25 @@
 //  Created by Jining Liu on 9/7/25.
 //
 
+import SwiFTC
 import SwiftUI
 
 struct TeamAssignmentsView: View {
     @Binding var assignFor: AssignTeamFor?
-
-    @Binding var redTeam1: String?
-    @Binding var redTeam2: String?
-    @Binding var blueTeam1: String?
-    @Binding var blueTeam2: String?
+    @Binding var teams: GameTeamsV1
 
     @State private var search: String
 
-    let teams: [StoredTeam]
+    let teamsStore: [StoredTeam]
 
     init(
         assignFor: Binding<AssignTeamFor?>,
-        redTeam1: Binding<String?>,
-        redTeam2: Binding<String?>,
-        blueTeam1: Binding<String?>,
-        blueTeam2: Binding<String?>
+        teams: Binding<GameTeamsV1>,
     ) {
         _assignFor = assignFor
-        _redTeam1 = redTeam1
-        _redTeam2 = redTeam2
-        _blueTeam1 = blueTeam1
-        _blueTeam2 = blueTeam2
+        _teams = teams
         self.search = ""
-        self.teams = try! JSONDecoder().decode(
+        self.teamsStore = try! JSONDecoder().decode(
             [StoredTeam].self,
             from: Data(
                 contentsOf: Bundle.main.url(
@@ -50,13 +41,13 @@ struct TeamAssignmentsView: View {
                     var selected: String? {
                         switch team {
                         case .red1:
-                            redTeam1
+                            teams.red.one
                         case .red2:
-                            redTeam2
+                            teams.red.two
                         case .blue1:
-                            blueTeam1
+                            teams.blue.one
                         case .blue2:
-                            blueTeam2
+                            teams.blue.two
                         }
                     }
 
@@ -83,13 +74,13 @@ struct TeamAssignmentsView: View {
                                 var selected: String? {
                                     switch team {
                                     case .red1:
-                                        redTeam1
+                                        teams.red.one
                                     case .red2:
-                                        redTeam2
+                                        teams.red.two
                                     case .blue1:
-                                        blueTeam1
+                                        teams.blue.one
                                     case .blue2:
-                                        blueTeam2
+                                        teams.blue.two
                                     }
                                 }
 
@@ -103,7 +94,7 @@ struct TeamAssignmentsView: View {
 
                     Section {
                         ForEach(
-                            teams.filter {
+                            teamsStore.filter {
                                 ($0.number + " " + $0.name).contains(search)
                                     || search.isEmpty
                             },
@@ -144,10 +135,7 @@ struct TeamAssignmentsView: View {
                 ToolbarItem(placement: .topBarTrailing) {
                     Menu("", systemImage: "ellipsis") {
                         Button("Clear Teams", systemImage: "clear") {
-                            redTeam1 = nil
-                            redTeam2 = nil
-                            blueTeam1 = nil
-                            blueTeam2 = nil
+                            teams = .init()
                         }
                     }
                     .labelStyle(.iconOnly)
@@ -160,13 +148,13 @@ struct TeamAssignmentsView: View {
         if let assignFor {
             switch assignFor {
             case .red1:
-                redTeam1 = team
+                teams.red.one = team
             case .red2:
-                redTeam2 = team
+                teams.red.two = team
             case .blue1:
-                blueTeam1 = team
+                teams.blue.one = team
             case .blue2:
-                blueTeam2 = team
+                teams.blue.two = team
             }
         }
     }
@@ -186,16 +174,10 @@ struct StoredTeam: Codable {
 
 #Preview {
     @Previewable @State var assignFor: AssignTeamFor? = .red1
-    @Previewable @State var redTeam1: String? = nil
-    @Previewable @State var redTeam2: String? = nil
-    @Previewable @State var blueTeam1: String? = nil
-    @Previewable @State var blueTeam2: String? = nil
+    @Previewable @State var teams: GameTeamsV1 = .init()
 
     TeamAssignmentsView(
         assignFor: $assignFor,
-        redTeam1: $redTeam1,
-        redTeam2: $redTeam2,
-        blueTeam1: $blueTeam1,
-        blueTeam2: $blueTeam2
+        teams: $teams
     )
 }

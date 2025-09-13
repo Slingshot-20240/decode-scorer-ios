@@ -16,14 +16,22 @@ struct Analytics {
     @AppStorage("epSessionsTracked") var epSessionsTracked: Int = 0
     @AppStorage("calcSessionsTracked") var calcSessionsTracked: Int = 0
 
+    var totalSessionsTracked: Int {
+        self.gamesTracked + self.autoSessionsTracked + self.dpSessionsTracked
+            + self.epSessionsTracked + self.calcSessionsTracked
+    }
+
     @AppStorage("classifiedArtifactsTracked") var classifiedArtifactsTracked:
         Int = 0
     @AppStorage("overflownArtifactsTracked") var overflownArtifactsTracked:
         Int = 0
     @AppStorage("depotArtifactsTracked") var depotArtifactsTracked: Int = 0
-    @AppStorage("totalArtifactsTracked") var totalArtifactsTracked: Int = 0
-
     @AppStorage("motifsTracked") var motifsTracked: Int = 0
+
+    var totalArtifactsTracked: Int {
+        self.classifiedArtifactsTracked + self.overflownArtifactsTracked
+            + self.depotArtifactsTracked
+    }
 
     @AppStorage("pointsTracked") var pointsTracked: Int = 0
 
@@ -76,7 +84,6 @@ struct Analytics {
             self.classifiedArtifactsTracked += classified
             self.overflownArtifactsTracked += overflown
             self.depotArtifactsTracked += depot
-            self.totalArtifactsTracked += artifacts
 
             self.motifsTracked += motifs
 

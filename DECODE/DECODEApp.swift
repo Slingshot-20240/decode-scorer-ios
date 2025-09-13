@@ -15,7 +15,7 @@ let version: String =
     ?? "Unknown Version"
 let build: String =
     Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown Build"
-let environment: AppEnvironment = .alpha
+let environment: AppEnvironment = .development
 
 enum AppEnvironment {
     case production
@@ -33,13 +33,13 @@ enum AppEnvironment {
             .foregroundStyle(.orange)
         case .alpha:
             Label(
-                "Alpha software. For internal testing only. \nDistribution without permission is prohibited.",
+                "Alpha software. For internal testing only.\nDistribution without permission is prohibited.",
                 systemImage: "hand.raised.fill"
             )
             .foregroundStyle(.red)
         case .development:
             Label(
-                "Development build. For development purposes only. \nDistribution without permission is prohibited.",
+                "Development build. Distribution without permission is prohibited.",
                 systemImage: "hammer.fill"
             )
             .foregroundStyle(.indigo)

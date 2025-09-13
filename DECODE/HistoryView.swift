@@ -16,55 +16,75 @@ struct HistoryView: View {
     @Query(sort: \DecodeGameModel.timestamp, order: .reverse) private var games:
         [DecodeGameModel]
 
+    @State private var gamesSectionExpanded: Bool = true
+
+    @State private var search: String = ""
+
     @State private var assignTeamForGame: DecodeGameModel? = nil
     @State private var assignTeamFor: AssignTeamFor? = nil
-    @State private var redTeam1: String? = nil
-    @State private var redTeam2: String? = nil
-    @State private var blueTeam1: String? = nil
-    @State private var blueTeam2: String? = nil
-    
+    @State private var teams: GameTeamsV1 = .init()
+
     @AppStorage("nfMode") private var nfMode: Bool = false
-    
+
     var body: some View {
         NavigationStack {
             List {
-                if games.isEmpty {
-                    Text("No History")
-                        .font(.headline)
-                        .foregroundStyle(.secondary)
-                        .frame(maxWidth: .infinity, alignment: .center)
+                if search.isEmpty {
+                    stats
                 }
 
-                ForEach(games) { game in
-                    NavigationLink(value: game) {
-                        HStack {
-                            let redWon =
-                                game.scores.red.total(excludeFouls: nfMode) >= game.scores.blue.total(excludeFouls: nfMode)
-                            let blueWon =
-                                game.scores.blue.total(excludeFouls: nfMode) >= game.scores.red.total(excludeFouls: nfMode)
+                Section(isExpanded: $gamesSectionExpanded) {
+                    if games.isEmpty {
+                        Text("No Saved Games")
+                            .font(.headline)
+                            .foregroundStyle(.secondary)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                    }
 
-                            VStack(alignment: .leading) {
-                                AnyView(
-                                    Text(game.label.red)
-                                        .foregroundStyle(
-                                            redWon ? .firstRed : .primary
-                                        )
-                                        + Text(game.label.middle)
-                                        + Text(game.label.blue)
-                                        .foregroundStyle(
-                                            blueWon ? .firstBlue : .primary
-                                        )
+                    ForEach(
+                        games.filter {
+                            "\($0.label.red) \($0.label.middle) \($0.label.blue) \($0.timestamp.formatted()) \($0.scores.red.total(excludeFouls: nfMode)) \($0.scores.red.total(excludeFouls: nfMode)) \($0.scores.blue.total(excludeFouls: nfMode))"
+                                .lowercased().contains(search.lowercased())
+                                || search.isEmpty
+                        }
+                    ) { game in
+                        NavigationLink(value: game) {
+                            HStack {
+                                let redWon =
+                                    game.scores.red.total(excludeFouls: nfMode)
+                                    >= game.scores.blue.total(
+                                        excludeFouls: nfMode
+                                    )
+                                let blueWon =
+                                    game.scores.blue.total(excludeFouls: nfMode)
+                                    >= game.scores.red.total(
+                                        excludeFouls: nfMode
+                                    )
+
+                                VStack(alignment: .leading) {
+                                    AnyView(
+                                        Text(game.label.red)
+                                            .foregroundStyle(
+                                                redWon ? .firstRed : .primary
+                                            )
+                                            + Text(game.label.middle)
+                                            + Text(game.label.blue)
+                                            .foregroundStyle(
+                                                blueWon ? .firstBlue : .primary
+                                            )
+                                    )
+                                    .font(.headline)
+
+                                    Text(game.timestamp.formatted())
+                                        .font(.caption)
+                                        .foregroundStyle(.secondary)
+                                }
+
+                                Spacer()
+
+                                Text(
+                                    "\(game.scores.red.total(excludeFouls: nfMode))"
                                 )
-                                .font(.headline)
-
-                                Text(game.timestamp.formatted())
-                                    .font(.caption)
-                                    .foregroundStyle(.secondary)
-                            }
-
-                            Spacer()
-
-                            Text("\(game.scores.red.total(excludeFouls: nfMode))")
                                 .font(.title3)
                                 .fontWeight(redWon ? .bold : .semibold)
                                 .foregroundStyle(redWon ? .white : .firstRed)
@@ -77,7 +97,9 @@ struct HistoryView: View {
                                 )
                                 .radius(12)
 
-                            Text("\(game.scores.blue.total(excludeFouls: nfMode))")
+                                Text(
+                                    "\(game.scores.blue.total(excludeFouls: nfMode))"
+                                )
                                 .font(.title3)
                                 .fontWeight(blueWon ? .bold : .semibold)
                                 .foregroundStyle(blueWon ? .white : .firstBlue)
@@ -89,17 +111,21 @@ struct HistoryView: View {
                                         : Color.clear.gradient
                                 )
                                 .radius(12)
+                            }
                         }
                     }
-                }
-                .onDelete { offsets in
-                    withAnimation {
-                        for index in offsets {
-                            modelContext.delete(games[index])
+                    .onDelete { offsets in
+                        withAnimation {
+                            for index in offsets {
+                                modelContext.delete(games[index])
+                            }
                         }
                     }
+                } header: {
+                    Label("Games", systemImage: "gamecontroller")
                 }
             }
+            .searchable(text: $search)
             .navigationDestination(for: DecodeGameModel.self) { game in
                 GeometryReader { proxy in
                     ScrollView {
@@ -116,10 +142,14 @@ struct HistoryView: View {
                             if game.label.middle != "Game" {
                                 let redWon =
                                     game.scores.red.total(excludeFouls: nfMode)
-                                    >= game.scores.blue.total(excludeFouls: nfMode)
+                                    >= game.scores.blue.total(
+                                        excludeFouls: nfMode
+                                    )
                                 let blueWon =
                                     game.scores.blue.total(excludeFouls: nfMode)
-                                    >= game.scores.red.total(excludeFouls: nfMode)
+                                    >= game.scores.red.total(
+                                        excludeFouls: nfMode
+                                    )
 
                                 HStack(spacing: 8) {
                                     Text(game.label.red)
@@ -164,10 +194,7 @@ struct HistoryView: View {
                                     systemImage: "person.3.fill"
                                 ) {
                                     assignTeamForGame = game
-                                    redTeam1 = game.teams.red.one
-                                    redTeam2 = game.teams.red.two
-                                    blueTeam1 = game.teams.blue.one
-                                    blueTeam2 = game.teams.blue.two
+                                    teams = game.teams
                                     assignTeamFor = .red1
                                 }
                             }
@@ -187,10 +214,7 @@ struct HistoryView: View {
         }
         .sheet(isPresented: .constant(assignTeamFor != nil)) {
             assignTeamFor = nil
-            assignTeamForGame?.teams.red.one = redTeam1
-            assignTeamForGame?.teams.red.two = redTeam2
-            assignTeamForGame?.teams.blue.one = blueTeam1
-            assignTeamForGame?.teams.blue.two = blueTeam2
+            assignTeamForGame?.teams = teams
 
             do {
                 try modelContext.save()
@@ -202,11 +226,161 @@ struct HistoryView: View {
         } content: {
             TeamAssignmentsView(
                 assignFor: $assignTeamFor,
-                redTeam1: $redTeam1,
-                redTeam2: $redTeam2,
-                blueTeam1: $blueTeam1,
-                blueTeam2: $blueTeam2
+                teams: $teams
             )
+        }
+    }
+
+    var stats: some View {
+        Section {
+        } header: {
+            HStack(spacing: 12) {
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text("Sessions")
+                            .font(.title3)
+                        Text("\(Analytics.shared.totalSessionsTracked)")
+                            .font(.largeTitle)
+                            .fontWeight(.semibold)
+
+                        Spacer()
+
+                        Text("\(games.count) Saved")
+                            .font(.subheadline)
+                            .foregroundStyle(.secondary)
+                    }
+
+                    Spacer()
+
+                    VStack(alignment: .trailing) {
+                        HStack {
+                            Image(systemName: "gamecontroller")
+                                .foregroundStyle(.secondary)
+                            Spacer()
+                            Text("\(Analytics.shared.gamesTracked)")
+                                .fontWeight(.semibold)
+                        }
+
+                        HStack {
+                            Image(systemName: "autostartstop")
+                                .foregroundStyle(.secondary)
+                            Spacer()
+                            Text(
+                                "\(Analytics.shared.autoSessionsTracked)"
+                            )
+                            .fontWeight(.semibold)
+                        }
+
+                        HStack {
+                            Image(systemName: "steeringwheel")
+                                .foregroundStyle(.secondary)
+                            Spacer()
+                            Text(
+                                "\(Analytics.shared.dpSessionsTracked)"
+                            )
+                            .fontWeight(.semibold)
+                        }
+
+                        HStack {
+                            Image(systemName: "timer")
+                                .foregroundStyle(.secondary)
+                            Spacer()
+                            Text(
+                                "\(Analytics.shared.epSessionsTracked)"
+                            )
+                            .fontWeight(.semibold)
+                        }
+
+                        HStack {
+                            Image(systemName: "plus.slash.minus")
+                                .foregroundStyle(.secondary)
+                            Spacer()
+                            Text(
+                                "\(Analytics.shared.calcSessionsTracked)"
+                            )
+                            .fontWeight(.semibold)
+                        }
+                    }
+                    .font(.caption)
+                    .fixedSize()
+                }
+                .foregroundStyle(.white)
+                .padding()
+                .background(.decodeGold.gradient)
+                .radius(24)
+
+                HStack {
+                    VStack(alignment: .leading) {
+                        Text("Artifacts")
+                            .font(.title3)
+                        Text(
+                            "\(Analytics.shared.totalArtifactsTracked)"
+                        )
+                        .font(.largeTitle)
+                        .fontWeight(.semibold)
+
+                        Spacer()
+
+                        Text(
+                            "\(Analytics.shared.pointsTracked) Points Tracked"
+                        )
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                    }
+
+                    Spacer()
+
+                    VStack(alignment: .trailing) {
+                        HStack {
+                            Image(systemName: "tray.full")
+                                .foregroundStyle(.secondary)
+                            Spacer()
+                            Text(
+                                "\(Analytics.shared.classifiedArtifactsTracked)"
+                            )
+                            .fontWeight(.semibold)
+                        }
+
+                        HStack {
+                            Image(
+                                systemName: "arrowshape.bounce.forward"
+                            )
+                            .foregroundStyle(.secondary)
+                            Spacer()
+                            Text(
+                                "\(Analytics.shared.overflownArtifactsTracked)"
+                            )
+                            .fontWeight(.semibold)
+                        }
+
+                        HStack {
+                            Image(systemName: "righttriangle")
+                                .foregroundStyle(.secondary)
+                                .rotationEffect(.degrees(180))
+                            Spacer()
+                            Text(
+                                "\(Analytics.shared.depotArtifactsTracked)"
+                            )
+                            .fontWeight(.semibold)
+                        }
+
+                        HStack {
+                            Image(systemName: "swatchpalette")
+                                .foregroundStyle(.secondary)
+                            Spacer()
+                            Text("\(Analytics.shared.motifsTracked)")
+                                .fontWeight(.semibold)
+                        }
+                    }
+                    .font(.caption)
+                    .fixedSize()
+                }
+                .foregroundStyle(.white)
+                .padding()
+                .background(.decodeGreen.gradient)
+                .radius(24)
+            }
+            .shadow(color: .secondary.opacity(0.2), radius: 16)
         }
     }
 }

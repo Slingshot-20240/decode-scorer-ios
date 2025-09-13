@@ -25,9 +25,9 @@ struct GameScoreView: View {
     @State private var batteryIsCharging: Bool
 
     @State private var showDetails: Bool = false
-    
+
     @State private var showSettings: Bool = false
-    
+
     @AppStorage("nfMode") private var nfMode: Bool = false
     @AppStorage("filpAlliances") private var filpAlliances: Bool = false
     @AppStorage("preserveTeams") private var preserveTeams: Bool = false
@@ -56,8 +56,7 @@ struct GameScoreView: View {
         }
         .overlay {
             RoundedRectangle(
-                cornerRadius: (UIScreen.main.displayCornerRadius(min: 0)
-                    ?? 26)
+                cornerRadius: (UIScreen.main.displayCornerRadius(min: 0) ?? 26)
                     - 2
             )
             .stroke(
@@ -79,10 +78,7 @@ struct GameScoreView: View {
         } content: {
             TeamAssignmentsView(
                 assignFor: $assignTeamFor,
-                redTeam1: $scoringTeams.red.one,
-                redTeam2: $scoringTeams.red.two,
-                blueTeam1: $scoringTeams.blue.one,
-                blueTeam2: $scoringTeams.blue.two
+                teams: $scoringTeams
             )
         }
         .sheet(isPresented: $showDetails) {
@@ -143,9 +139,11 @@ struct GameScoreView: View {
 
                             if label.middle != "Game" {
                                 let redWon =
-                                    scores.red.total(excludeFouls: nfMode) >= scores.blue.total(excludeFouls: nfMode)
+                                    scores.red.total(excludeFouls: nfMode)
+                                    >= scores.blue.total(excludeFouls: nfMode)
                                 let blueWon =
-                                    scores.blue.total(excludeFouls: nfMode) >= scores.red.total(excludeFouls: nfMode)
+                                    scores.blue.total(excludeFouls: nfMode)
+                                    >= scores.red.total(excludeFouls: nfMode)
 
                                 HStack(spacing: 8) {
                                     Text(label.red)
@@ -865,11 +863,13 @@ struct GameScoreView: View {
                         .minimumScaleFactor(0.6)
                         .foregroundStyle(.clear)
                         .overlay {
-                            Text(String(scores.blue.total(excludeFouls: nfMode)))
-                                .font(.system(size: 60, weight: .bold))
-                                .minimumScaleFactor(0.6)
-                                .contentTransition(.numericText())
-                                .foregroundStyle(.white)
+                            Text(
+                                String(scores.blue.total(excludeFouls: nfMode))
+                            )
+                            .font(.system(size: 60, weight: .bold))
+                            .minimumScaleFactor(0.6)
+                            .contentTransition(.numericText())
+                            .foregroundStyle(.white)
                         }
                         .padding(.horizontal, 12)
                         .padding(.vertical, 6)
@@ -1171,7 +1171,7 @@ struct GameScoreView: View {
         timer.reset()
         scores = .init()
         timestamp = .now
-        
+
         if !preserveTeams {
             scoringTeams = .init()
         }
