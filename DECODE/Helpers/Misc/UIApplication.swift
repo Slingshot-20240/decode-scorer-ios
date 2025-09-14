@@ -8,7 +8,6 @@
 import SwiftUI
 
 extension UIApplication {
-
     var currentWindowScene: UIWindowScene? {
         return self.connectedScenes
             .first(where: { $0 is UIWindowScene }) as? UIWindowScene
@@ -19,6 +18,8 @@ extension UIApplication {
             .windows
             .first(where: \.isKeyWindow)
     }
+    
+    static var orientation: OrientationManager = .init()
 
     var orientedLeft: Bool {
         return self.currentWindowScene?.interfaceOrientation == .landscapeRight
@@ -26,5 +27,17 @@ extension UIApplication {
 
     var orientedRight: Bool {
         return self.currentWindowScene?.interfaceOrientation == .landscapeLeft
+    }
+}
+
+class OrientationManager: ObservableObject {
+    @Published var direction: OrientationDirection = .left
+    
+    func update() {
+        self.direction = UIApplication.shared.orientedLeft ? .left : .right
+    }
+    
+    enum OrientationDirection {
+        case left, right
     }
 }

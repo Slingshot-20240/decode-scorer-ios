@@ -39,7 +39,14 @@ struct Analytics {
 
     func launch() {
         if !APTABASE_APP_KEY.isEmpty {
-            Aptabase.shared.initialize(appKey: APTABASE_APP_KEY)
+            Aptabase.shared.initialize(
+                appKey: APTABASE_APP_KEY,
+                with: .init(
+                    trackingMode: [AppEnvironment.development, .alpha].contains(
+                        DECODE.environment
+                    ) ? .asDebug : .asRelease
+                )
+            )
             Aptabase.shared.trackEvent("launch")
         }
     }

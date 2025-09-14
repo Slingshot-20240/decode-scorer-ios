@@ -15,7 +15,7 @@ let version: String =
     ?? "Unknown Version"
 let build: String =
     Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown Build"
-let environment: AppEnvironment = .development
+let environment: AppEnvironment = .alpha
 
 enum AppEnvironment {
     case production
@@ -72,6 +72,7 @@ struct DECODEApp: App {
 
     init() {
         Analytics.shared.launch()
+        UIDevice.current.isBatteryMonitoringEnabled = true
     }
 
     var body: some Scene {
@@ -89,6 +90,7 @@ struct DECODEApp: App {
                             height: proxy.size.height
                         )
                         .onAppear {
+                            UIApplication.orientation.update()
                             SafeArea.shared.update(proxy)
                         }
                         .onReceive(
@@ -97,6 +99,7 @@ struct DECODEApp: App {
                             )
                         ) { _ in
                             if UIDevice.current.orientation.isLandscape {
+                                UIApplication.orientation.update()
                                 SafeArea.shared.update(proxy)
                             }
                         }

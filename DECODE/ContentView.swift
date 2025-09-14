@@ -14,8 +14,12 @@ struct ContentView: View {
     @Environment(\.modelContext) private var modelContext
 
     @State private var showGameScoreView: Bool = false
+    @State private var showAutoTuningView: Bool = false
+    @State private var showDriverPracticeView: Bool = false
+    @State private var showEndgamePracticeView: Bool = false
     @State private var showHistoryView: Bool = false
     @State private var showTimerView: Bool = false
+    @State private var showCalculatorView: Bool = false
     @State private var showSettings: Bool = false
 
     var body: some View {
@@ -77,7 +81,9 @@ struct ContentView: View {
                     .tint(.white)
 
                     Button {
-                        //                        Analytics.shared.trackFeature(.calc)
+                        Haptics.play(.light)
+                        showCalculatorView = true
+                        Analytics.shared.trackFeature(.calc)
                     } label: {
                         HStack {
                             Image(systemName: "plus.slash.minus")
@@ -205,10 +211,27 @@ struct ContentView: View {
                 .tint(.white)
                 .frame(height: fd.divs(3))
 
-                Button {
-                    //                    Analytics.shared.trackFeature(.auto)
-                    //                    Analytics.shared.trackFeature(.dp)
-                    //                    Analytics.shared.trackFeature(.ep)
+                Menu {
+                    Button("Auto Tuning", systemImage: "autostartstop") {
+                        Haptics.play(.light)
+                        showAutoTuningView = true
+                        Analytics.shared.trackFeature(.auto)
+                    }
+                    .tint(.blue)
+
+                    Button("Driver Practice", systemImage: "steeringwheel") {
+                        Haptics.play(.light)
+                        showDriverPracticeView = true
+                        Analytics.shared.trackFeature(.dp)
+                    }
+                    .tint(.blue)
+
+                    Button("Endgame Practice", systemImage: "timer") {
+                        Haptics.play(.light)
+                        showEndgamePracticeView = true
+                        Analytics.shared.trackFeature(.ep)
+                    }
+                    .tint(.blue)
                 } label: {
                     HStack {
                         VStack(spacing: -2) {
@@ -234,6 +257,7 @@ struct ContentView: View {
                         subtract: 8
                     )
                 }
+                .menuOrder(.fixed)
                 .tint(.white)
                 .frame(height: fd.divs(1))
             }
@@ -244,13 +268,32 @@ struct ContentView: View {
                 .background(Color.primary.colorInvert().ignoresSafeArea())
                 .modelContext(modelContext)
         }
-        .fullScreenCover(isPresented: $showHistoryView) {
+        .fullScreenCover(isPresented: $showAutoTuningView) {
+            AutoTuningView()
+                .background(Color.primary.colorInvert().ignoresSafeArea())
+                .modelContext(modelContext)
+        }
+        .fullScreenCover(isPresented: $showDriverPracticeView) {
+            DriverPracticeView()
+                .background(Color.primary.colorInvert().ignoresSafeArea())
+                .modelContext(modelContext)
+        }
+        .fullScreenCover(isPresented: $showEndgamePracticeView) {
+            EndgamePracticeView()
+                .background(Color.primary.colorInvert().ignoresSafeArea())
+                .modelContext(modelContext)
+        }
+        .sheet(isPresented: $showHistoryView) {
             HistoryView()
                 .background(Color.primary.colorInvert().ignoresSafeArea())
                 .modelContext(modelContext)
         }
         .fullScreenCover(isPresented: $showTimerView) {
             TimerView()
+                .background(Color.primary.colorInvert().ignoresSafeArea())
+        }
+        .fullScreenCover(isPresented: $showCalculatorView) {
+            CalculatorView()
                 .background(Color.primary.colorInvert().ignoresSafeArea())
         }
         .sheet(isPresented: $showSettings) {

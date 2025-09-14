@@ -124,6 +124,7 @@ struct HistoryView: View {
                 } header: {
                     Label("Games", systemImage: "gamecontroller")
                 }
+                .headerProminence(.increased)
             }
             .searchable(text: $search)
             .navigationDestination(for: DecodeGameModel.self) { game in
@@ -382,6 +383,7 @@ struct HistoryView: View {
             }
             .shadow(color: .secondary.opacity(0.2), radius: 16)
         }
+        .headerProminence(.increased)
     }
 }
 

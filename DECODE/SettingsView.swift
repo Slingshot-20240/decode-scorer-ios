@@ -14,7 +14,7 @@ struct SettingsView: View {
     @AppStorage("filpAlliances") private var filpAlliances: Bool = false
     @AppStorage("preserveTeams") private var preserveTeams: Bool = false
 
-    @AppStorage("dpColor") private var dpColor: PracticeModeColor = .decodeGold
+    @AppStorage("practiceModeColor") private var practiceModeColor: PracticeModeColor = .decodeGold
 
     var body: some View {
         NavigationStack {
@@ -26,6 +26,7 @@ struct SettingsView: View {
                     }
                 }
                 .font(.subheadline)
+                .headerProminence(.increased)
 
                 Section {
                     SettingsToggle(
@@ -65,13 +66,13 @@ struct SettingsView: View {
                             color in
                             Button {
                                 Haptics.play(.light)
-                                dpColor = color
+                                practiceModeColor = color
                             } label: {
                                 Circle()
                                     .fill(color.color.gradient)
                                     .frame(width: 24)
                                     .overlay {
-                                        if dpColor == color {
+                                        if practiceModeColor == color {
                                             Image(systemName: "checkmark")
                                                 .resizable()
                                                 .scaledToFit()

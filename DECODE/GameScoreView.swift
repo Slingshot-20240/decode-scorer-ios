@@ -27,13 +27,15 @@ struct GameScoreView: View {
     @State private var showDetails: Bool = false
 
     @State private var showSettings: Bool = false
+    
+    @StateObject private var orientation: OrientationManager = UIApplication
+        .orientation
 
     @AppStorage("nfMode") private var nfMode: Bool = false
     @AppStorage("filpAlliances") private var filpAlliances: Bool = false
     @AppStorage("preserveTeams") private var preserveTeams: Bool = false
 
     init() {
-        UIDevice.current.isBatteryMonitoringEnabled = true
         self.batteryPercent = UIDevice.current.batteryLevel * 100
         self.batteryIsCharging = UIDevice.current.batteryState == .charging
     }
@@ -254,7 +256,7 @@ struct GameScoreView: View {
                     systemImage: "rectangle.portrait.and.arrow.right",
                     role: .destructive
                 ) {
-                    timer.reset()
+                    reset()
                     dismiss()
                 }
             }
@@ -349,6 +351,7 @@ struct GameScoreView: View {
             }
         }
         .padding(.horizontal, 12)
+        .padding(.leading, max(0, orientation.direction == .right ? SafeArea.shared.rectangularLeading - 8 : 0))
         .padding(.trailing, SafeArea.shared.rectangularTrailing - 8)
     }
 
@@ -639,14 +642,14 @@ struct GameScoreView: View {
                     default:
                         WheelPicker(
                             value: scoringElementBindings().red,
-                            max: scoringElement == .motifs ? 9 : 60
+                            max: scoringElement == .motifs ? 9 : 99
                         )
                         .padding(.leading, 8)
 
                         ScoreButtons(
                             value: scoringElementBindings().red,
                             width: fd.divs(1),
-                            max: scoringElement == .motifs ? 9 : 60
+                            max: scoringElement == .motifs ? 9 : 99
                         )
                         .padding([.vertical, .trailing], 8)
                     }
@@ -1037,13 +1040,13 @@ struct GameScoreView: View {
                         ScoreButtons(
                             value: scoringElementBindings().blue,
                             width: fd.divs(1),
-                            max: scoringElement == .motifs ? 9 : 60
+                            max: scoringElement == .motifs ? 9 : 99
                         )
                         .padding([.vertical, .leading], 8)
 
                         WheelPicker(
                             value: scoringElementBindings().blue,
-                            max: scoringElement == .motifs ? 9 : 60
+                            max: scoringElement == .motifs ? 9 : 99
                         )
                         .padding(.trailing, 8)
                     }

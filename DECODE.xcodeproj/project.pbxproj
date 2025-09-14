@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E40496512E75D5DC00280714 /* EndgamePracticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40496502E75D5DC00280714 /* EndgamePracticeView.swift */; };
+		E40496532E75D5E300280714 /* DriverPracticeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40496522E75D5E300280714 /* DriverPracticeView.swift */; };
+		E40496552E75D5EC00280714 /* AutoTuningView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40496542E75D5EC00280714 /* AutoTuningView.swift */; };
+		E40496572E75D60700280714 /* CalculatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E40496562E75D60700280714 /* CalculatorView.swift */; };
 		E41FE8F22E31C462004C69F6 /* TimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E41FE8F12E31C462004C69F6 /* TimerView.swift */; };
 		E4720D3A2E6E50F4009B2D7C /* teams.json in Resources */ = {isa = PBXBuildFile; fileRef = E4720D392E6E50F4009B2D7C /* teams.json */; };
 		E4720D3C2E6E54A7009B2D7C /* HistoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4720D3B2E6E54A7009B2D7C /* HistoryView.swift */; };
@@ -23,6 +27,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		E40496502E75D5DC00280714 /* EndgamePracticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EndgamePracticeView.swift; sourceTree = "<group>"; };
+		E40496522E75D5E300280714 /* DriverPracticeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DriverPracticeView.swift; sourceTree = "<group>"; };
+		E40496542E75D5EC00280714 /* AutoTuningView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AutoTuningView.swift; sourceTree = "<group>"; };
+		E40496562E75D60700280714 /* CalculatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalculatorView.swift; sourceTree = "<group>"; };
 		E41FE8F12E31C462004C69F6 /* TimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimerView.swift; sourceTree = "<group>"; };
 		E42224DC2DB56E9B0014F0E9 /* DECODE.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = DECODE.entitlements; sourceTree = "<group>"; };
 		E4720D392E6E50F4009B2D7C /* teams.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = teams.json; sourceTree = "<group>"; };
@@ -105,8 +113,12 @@
 				E4DD88912DB5512A009E5758 /* DECODEApp.swift */,
 				E4DD88902DB5512A009E5758 /* ContentView.swift */,
 				E47E3CE42E6E96BE00342BFB /* GameScoreView.swift */,
+				E40496542E75D5EC00280714 /* AutoTuningView.swift */,
+				E40496522E75D5E300280714 /* DriverPracticeView.swift */,
+				E40496502E75D5DC00280714 /* EndgamePracticeView.swift */,
 				E4720D3B2E6E54A7009B2D7C /* HistoryView.swift */,
 				E41FE8F12E31C462004C69F6 /* TimerView.swift */,
+				E40496562E75D60700280714 /* CalculatorView.swift */,
 				E493CEAD2E7159A6009EFD9E /* SettingsView.swift */,
 				E493CEAC2E71598C009EFD9E /* Secondary */,
 				E42224DD2DB57B270014F0E9 /* Helpers */,
@@ -213,13 +225,17 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E40496572E75D60700280714 /* CalculatorView.swift in Sources */,
 				E47E3CE52E6E96BE00342BFB /* GameScoreView.swift in Sources */,
 				E493CEAE2E7159A9009EFD9E /* SettingsView.swift in Sources */,
+				E40496552E75D5EC00280714 /* AutoTuningView.swift in Sources */,
 				E4720D3C2E6E54A7009B2D7C /* HistoryView.swift in Sources */,
 				E41FE8F22E31C462004C69F6 /* TimerView.swift in Sources */,
 				E4DD88942DB5512A009E5758 /* ContentView.swift in Sources */,
 				E4DD88952DB5512A009E5758 /* DECODEApp.swift in Sources */,
 				E493CEAB2E714F7E009EFD9E /* Env.swift in Sources */,
+				E40496532E75D5E300280714 /* DriverPracticeView.swift in Sources */,
+				E40496512E75D5DC00280714 /* EndgamePracticeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

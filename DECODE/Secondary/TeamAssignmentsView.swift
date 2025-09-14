@@ -91,11 +91,13 @@ struct TeamAssignmentsView: View {
                         }
                         .pickerStyle(.segmented)
                     }
+                    .headerProminence(.increased)
 
                     Section {
                         ForEach(
                             teamsStore.filter {
-                                ($0.number + " " + $0.name).contains(search)
+                                ($0.number + " " + $0.name).lowercased()
+                                    .contains(search.lowercased())
                                     || search.isEmpty
                             },
                             id: \.number

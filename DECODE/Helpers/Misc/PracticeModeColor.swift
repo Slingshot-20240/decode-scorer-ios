@@ -16,6 +16,7 @@ enum PracticeModeColor: String, Codable, Hashable, CaseIterable,
     case decodeBlue = "DECODE Blue"
     case firstRed = "FIRST Red"
     case firstBlue = "FIRST Blue"
+    case slingshotPurple = "Slingshot Purple"
 
     var color: Color {
         switch self {
@@ -31,6 +32,8 @@ enum PracticeModeColor: String, Codable, Hashable, CaseIterable,
             .firstRed
         case .firstBlue:
             .firstBlue
+        case .slingshotPurple:
+            .slingshotPurple
         }
     }
 }
