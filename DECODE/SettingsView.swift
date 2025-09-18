@@ -11,10 +11,11 @@ struct SettingsView: View {
     @Environment(\.dismiss) var dismiss
 
     @AppStorage("nfMode") private var nfMode: Bool = false
-    @AppStorage("filpAlliances") private var filpAlliances: Bool = false
+    @AppStorage("flipAlliances") private var flipAlliances: Bool = false
     @AppStorage("preserveTeams") private var preserveTeams: Bool = false
 
-    @AppStorage("practiceModeColor") private var practiceModeColor: PracticeModeColor = .decodeGold
+    @AppStorage("practiceModeColor") private var practiceModeColor:
+        PracticeModeColor = .decodeGold
 
     var body: some View {
         NavigationStack {
@@ -37,13 +38,13 @@ struct SettingsView: View {
                         isOn: $nfMode
                     )
 
-                    //                    SettingsToggle(
-                    //                        title: "Flip Alliances",
-                    //                        description:
-                    //                            "Swap alliances to have blue on the left and red on the right",
-                    //                        icon: "arrobw.left.arrow.right",
-                    //                        isOn: $filpAlliances
-                    //                    )
+                    SettingsToggle(
+                        title: "Flip Alliances",
+                        description:
+                            "Swap alliances to have blue on the left and red on the right",
+                        icon: "arrow.left.arrow.right",
+                        isOn: $flipAlliances
+                    )
 
                     SettingsToggle(
                         title: "Preserve Teams",
@@ -59,7 +60,7 @@ struct SettingsView: View {
 
                 Section {
                     CustomSetting(
-                        title: "Tuning & Practice Mode Color",
+                        title: "Calculator Theme Color",
                         icon: "paintpalette"
                     ) {
                         ForEach(PracticeModeColor.allCases, id: \.self) {
@@ -87,9 +88,9 @@ struct SettingsView: View {
                         }
                     }
 
-                    NavigationLink(destination: appIconView) {
-                        SettingsLabel(title: "App Icon", icon: "app")
-                    }
+//                    NavigationLink(destination: appIconView) {
+//                        SettingsLabel(title: "App Icon", icon: "app")
+//                    }
                 } header: {
                     Label("Appearance", systemImage: "paintbrush")
                 }
@@ -114,7 +115,7 @@ struct SettingsView: View {
                         Team data provided by the [FTC API](https://ftc-events.firstinspires.org/services/API).
 
                         *FIRST*®, *FIRST*® Tech Challenge, FTC®, *FIRST*® AGE™, DECODE™, and all accompanying logos as they are created, are trademarks of For Inspiration and Recognition of Science and Technology (*FIRST*®) (www.firstinspires.org). These trademarks are used by special permission of *FIRST* which is not overseeing, involved with, or responsible for this activity, product, or service. © 2025 *FIRST*®. Used by special permission. All rights reserved.
-                        
+
                         [Open Source Licenses](https://ftcscoring.app/foss)
 
                         © 2025 FTC Team 20240 Slingshot and contributors.

@@ -100,8 +100,27 @@ struct CalculatorView: View {
                             }
                             .padding(8)
                             .frame(maxHeight: .infinity)
+                            .background(
+                                Rectangle().fill(
+                                    (scoringElement == .classified
+                                        && scoringStage == .auto
+                                        ? Color.primary : .clear).gradient
+                                )
+                                .colorInvert()
+                            )
                             .background(.ultraThinMaterial)
+                            .colorInvert(
+                                scoringElement == .classified
+                                    && scoringStage == .auto
+                            )
                             .radius(12)
+                            .onTapGesture {
+                                if scoringStage == .auto {
+                                    Haptics.play(.light)
+                                }
+                                scoringStage = .auto
+                                scoringElement = .classified
+                            }
 
                         Text("00")
                             .fontWeight(.semibold)
@@ -112,8 +131,27 @@ struct CalculatorView: View {
                             }
                             .padding(8)
                             .frame(maxHeight: .infinity)
+                            .background(
+                                Rectangle().fill(
+                                    (scoringElement == .overflown
+                                        && scoringStage == .auto
+                                        ? Color.primary : .clear).gradient
+                                )
+                                .colorInvert()
+                            )
                             .background(.ultraThinMaterial)
+                            .colorInvert(
+                                scoringElement == .overflown
+                                    && scoringStage == .auto
+                            )
                             .radius(12)
+                            .onTapGesture {
+                                if scoringStage == .auto {
+                                    Haptics.play(.light)
+                                }
+                                scoringStage = .auto
+                                scoringElement = .overflown
+                            }
 
                         Text("00")
                             .fontWeight(.semibold)
@@ -142,8 +180,27 @@ struct CalculatorView: View {
                             }
                             .padding(8)
                             .frame(maxHeight: .infinity)
+                            .background(
+                                Rectangle().fill(
+                                    (scoringElement == .motifs
+                                        && scoringStage == .auto
+                                        ? Color.primary : .clear).gradient
+                                )
+                                .colorInvert()
+                            )
                             .background(.ultraThinMaterial)
+                            .colorInvert(
+                                scoringElement == .motifs
+                                    && scoringStage == .auto
+                            )
                             .radius(12)
+                            .onTapGesture {
+                                if scoringStage == .auto {
+                                    Haptics.play(.light)
+                                }
+                                scoringStage = .auto
+                                scoringElement = .motifs
+                            }
 
                         Text("00")
                             .fontWeight(.semibold)
@@ -156,8 +213,27 @@ struct CalculatorView: View {
                             }
                             .padding(8)
                             .frame(maxHeight: .infinity)
+                            .background(
+                                Rectangle().fill(
+                                    (scoringElement == .location
+                                        && scoringStage == .auto
+                                        ? Color.primary : .clear).gradient
+                                )
+                                .colorInvert()
+                            )
                             .background(.ultraThinMaterial)
+                            .colorInvert(
+                                scoringElement == .location
+                                    && scoringStage == .auto
+                            )
                             .radius(12)
+                            .onTapGesture {
+                                if scoringStage == .auto {
+                                    Haptics.play(.light)
+                                }
+                                scoringStage = .auto
+                                scoringElement = .location
+                            }
 
                         Text("00")
                             .fontWeight(.semibold)
@@ -174,15 +250,16 @@ struct CalculatorView: View {
                             .background(.ultraThinMaterial)
                             .background(.yellow.opacity(0.2))
                             .radius(12)
+                            .onTapGesture {
+                                Haptics.play(.light)
+                                scoringElement = .fouls
+                            }
                     }
                     .font(.title2)
                     .fontWeight(scoringStage == .auto ? .semibold : .regular)
                     .foregroundStyle(
                         scoringStage == .auto ? .primary : .secondary
                     )
-                    .onTapGesture {
-                        scoringStage = .auto
-                    }
 
                     VStack(spacing: 8) {
                         Text("00")
@@ -194,8 +271,27 @@ struct CalculatorView: View {
                             }
                             .padding(8)
                             .frame(maxHeight: .infinity)
+                            .background(
+                                Rectangle().fill(
+                                    (scoringElement == .classified
+                                        && scoringStage == .teleop
+                                        ? Color.primary : .clear).gradient
+                                )
+                                .colorInvert()
+                            )
                             .background(.ultraThinMaterial)
+                            .colorInvert(
+                                scoringElement == .classified
+                                    && scoringStage == .teleop
+                            )
                             .radius(12)
+                            .onTapGesture {
+                                if scoringStage == .teleop {
+                                    Haptics.play(.light)
+                                }
+                                scoringStage = .teleop
+                                scoringElement = .classified
+                            }
 
                         Text("00")
                             .fontWeight(.semibold)
@@ -206,8 +302,27 @@ struct CalculatorView: View {
                             }
                             .padding(8)
                             .frame(maxHeight: .infinity)
+                            .background(
+                                Rectangle().fill(
+                                    (scoringElement == .overflown
+                                        && scoringStage == .teleop
+                                        ? Color.primary : .clear).gradient
+                                )
+                                .colorInvert()
+                            )
                             .background(.ultraThinMaterial)
+                            .colorInvert(
+                                scoringElement == .overflown
+                                    && scoringStage == .teleop
+                            )
                             .radius(12)
+                            .onTapGesture {
+                                if scoringStage == .teleop {
+                                    Haptics.play(.light)
+                                }
+                                scoringStage = .teleop
+                                scoringElement = .overflown
+                            }
 
                         Text("00")
                             .fontWeight(.semibold)
@@ -218,13 +333,32 @@ struct CalculatorView: View {
                             }
                             .padding(8)
                             .frame(maxHeight: .infinity)
+                            .background(
+                                Rectangle().fill(
+                                    (scoringElement == .depot
+                                        && scoringStage == .teleop
+                                        ? Color.primary : .clear).gradient
+                                )
+                                .colorInvert()
+                            )
                             .background(.ultraThinMaterial)
+                            .colorInvert(
+                                scoringElement == .depot
+                                    && scoringStage == .teleop
+                            )
                             .radius(12)
                             .foregroundStyle(
                                 scoringStage == .auto ? .secondary : .primary
                             )
                             .opacity(scoringStage == .auto ? 0.4 : 1)
                             .disabled(scoringStage == .auto)
+                            .onTapGesture {
+                                if scoringStage == .teleop {
+                                    Haptics.play(.light)
+                                }
+                                scoringStage = .teleop
+                                scoringElement = .depot
+                            }
 
                         Text("00")
                             .fontWeight(.semibold)
@@ -235,8 +369,27 @@ struct CalculatorView: View {
                             }
                             .padding(8)
                             .frame(maxHeight: .infinity)
+                            .background(
+                                Rectangle().fill(
+                                    (scoringElement == .motifs
+                                        && scoringStage == .teleop
+                                        ? Color.primary : .clear).gradient
+                                )
+                                .colorInvert()
+                            )
                             .background(.ultraThinMaterial)
+                            .colorInvert(
+                                scoringElement == .motifs
+                                    && scoringStage == .teleop
+                            )
                             .radius(12)
+                            .onTapGesture {
+                                if scoringStage == .teleop {
+                                    Haptics.play(.light)
+                                }
+                                scoringStage = .teleop
+                                scoringElement = .motifs
+                            }
 
                         Text("00")
                             .fontWeight(.semibold)
@@ -249,8 +402,27 @@ struct CalculatorView: View {
                             }
                             .padding(8)
                             .frame(maxHeight: .infinity)
+                            .background(
+                                Rectangle().fill(
+                                    (scoringElement == .location
+                                        && scoringStage == .teleop
+                                        ? Color.primary : .clear).gradient
+                                )
+                                .colorInvert()
+                            )
                             .background(.ultraThinMaterial)
+                            .colorInvert(
+                                scoringElement == .location
+                                    && scoringStage == .teleop
+                            )
                             .radius(12)
+                            .onTapGesture {
+                                if scoringStage == .teleop {
+                                    Haptics.play(.light)
+                                }
+                                scoringStage = .teleop
+                                scoringElement = .location
+                            }
 
                         Text("00")
                             .fontWeight(.semibold)
@@ -267,15 +439,16 @@ struct CalculatorView: View {
                             .background(.ultraThinMaterial)
                             .background(.red.opacity(0.2))
                             .radius(12)
+                            .onTapGesture {
+                                Haptics.play(.light)
+                                scoringElement = .fouls
+                            }
                     }
                     .font(.title2)
                     .fontWeight(scoringStage == .teleop ? .semibold : .regular)
                     .foregroundStyle(
                         scoringStage == .teleop ? .primary : .secondary
                     )
-                    .onTapGesture {
-                        scoringStage = .teleop
-                    }
                 }
 
                 FractionalStack(
@@ -486,6 +659,14 @@ struct CalculatorView: View {
     var topBar: some View {
         HStack(spacing: 16) {
             Menu("", systemImage: "line.3.horizontal") {
+                ControlGroup {
+                    Button("Reset", systemImage: "arrow.2.circlepath") {
+                        scores = .init()
+                        scoringStage = .auto
+                        scoringElement = .classified
+                    }
+                }
+
                 Button("Settings", systemImage: "gear") {
                     showSettings = true
                 }
@@ -564,7 +745,14 @@ struct CalculatorView: View {
             }
         }
         .padding(.horizontal, 12)
-        .padding(.leading, max(0, orientation.direction == .right ? SafeArea.shared.rectangularLeading - 8 : 0))
+        .padding(
+            .leading,
+            max(
+                0,
+                orientation.direction == .right
+                    ? SafeArea.shared.rectangularLeading - 8 : 0
+            )
+        )
         .padding(.trailing, SafeArea.shared.rectangularTrailing - 8)
     }
 }

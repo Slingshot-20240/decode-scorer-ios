@@ -27,12 +27,12 @@ struct GameScoreView: View {
     @State private var showDetails: Bool = false
 
     @State private var showSettings: Bool = false
-    
+
     @StateObject private var orientation: OrientationManager = UIApplication
         .orientation
 
     @AppStorage("nfMode") private var nfMode: Bool = false
-    @AppStorage("filpAlliances") private var filpAlliances: Bool = false
+    @AppStorage("flipAlliances") private var flipAlliances: Bool = false
     @AppStorage("preserveTeams") private var preserveTeams: Bool = false
 
     init() {
@@ -351,7 +351,14 @@ struct GameScoreView: View {
             }
         }
         .padding(.horizontal, 12)
-        .padding(.leading, max(0, orientation.direction == .right ? SafeArea.shared.rectangularLeading - 8 : 0))
+        .padding(
+            .leading,
+            max(
+                0,
+                orientation.direction == .right
+                    ? SafeArea.shared.rectangularLeading - 8 : 0
+            )
+        )
         .padding(.trailing, SafeArea.shared.rectangularTrailing - 8)
     }
 
@@ -562,6 +569,7 @@ struct GameScoreView: View {
                     }
                 }
                 .tint(.primary)
+                .scaleEffect(x: flipAlliances ? -1 : 1)
 
                 HStack(spacing: 8) {
                     switch scoringElement {
@@ -580,6 +588,7 @@ struct GameScoreView: View {
                                 )
 
                                 locationButtons.none
+                                    .scaleEffect(x: flipAlliances ? -1 : 1)
                                     .frame(width: fd.divs(1))
                                     .useDeviceCornerRadius(
                                         [.bottomLeading],
@@ -589,6 +598,7 @@ struct GameScoreView: View {
                                     )
 
                                 locationButtons.left
+                                    .scaleEffect(x: flipAlliances ? -1 : 1)
                                     .frame(width: fd.divs(2))
                             case .teleop:
                                 let locationButtons = TeleopLocationButtons(
@@ -597,6 +607,7 @@ struct GameScoreView: View {
                                 )
 
                                 locationButtons.none
+                                    .scaleEffect(x: flipAlliances ? -1 : 1)
                                     .frame(width: fd.divs(1))
                                     .useDeviceCornerRadius(
                                         [.bottomLeading],
@@ -611,6 +622,7 @@ struct GameScoreView: View {
                                         locationButtons.full
                                     }
                                 }
+                                .scaleEffect(x: flipAlliances ? -1 : 1)
                                 .frame(width: fd.divs(2))
                             }
                         }
@@ -625,6 +637,7 @@ struct GameScoreView: View {
                             fouls: $scores.blue
                                 .majorFoulsFromOtherAllianceAwarded
                         )
+                        .scaleEffect(x: flipAlliances ? -1 : 1)
                         .padding([.vertical, .leading], 8)
 
                         Spacer()
@@ -636,6 +649,7 @@ struct GameScoreView: View {
                             fouls: $scores.blue
                                 .minorFoulsFromOtherAllianceAwarded
                         )
+                        .scaleEffect(x: flipAlliances ? -1 : 1)
                         .padding([.vertical, .trailing], 8)
 
                         Spacer()
@@ -644,6 +658,7 @@ struct GameScoreView: View {
                             value: scoringElementBindings().red,
                             max: scoringElement == .motifs ? 9 : 99
                         )
+                        .scaleEffect(x: flipAlliances ? -1 : 1)
                         .padding(.leading, 8)
 
                         ScoreButtons(
@@ -651,6 +666,7 @@ struct GameScoreView: View {
                             width: fd.divs(1),
                             max: scoringElement == .motifs ? 9 : 99
                         )
+                        .scaleEffect(x: flipAlliances ? -1 : 1)
                         .padding([.vertical, .trailing], 8)
                     }
                 }
@@ -826,6 +842,7 @@ struct GameScoreView: View {
                     }
                 }
                 .foregroundStyle(Color.primary)
+                .scaleEffect(x: flipAlliances ? -1 : 1)
                 .padding(8)
                 .maxArea()
                 .background(
@@ -854,6 +871,7 @@ struct GameScoreView: View {
                                 .contentTransition(.numericText())
                                 .foregroundStyle(.white)
                         }
+                        .scaleEffect(x: flipAlliances ? -1 : 1)
                         .padding(.horizontal, 12)
                         .padding(.vertical, 6)
                         .maxArea()
@@ -874,6 +892,7 @@ struct GameScoreView: View {
                             .contentTransition(.numericText())
                             .foregroundStyle(.white)
                         }
+                        .scaleEffect(x: flipAlliances ? -1 : 1)
                         .padding(.horizontal, 12)
                         .padding(.vertical, 6)
                         .maxArea()
@@ -959,6 +978,7 @@ struct GameScoreView: View {
                     }
                 }
                 .tint(.primary)
+                .scaleEffect(x: flipAlliances ? -1 : 1)
 
                 HStack(spacing: 8) {
                     switch scoringElement {
@@ -977,9 +997,11 @@ struct GameScoreView: View {
                                 )
 
                                 locationButtons.left
+                                    .scaleEffect(x: flipAlliances ? -1 : 1)
                                     .frame(width: fd.divs(2))
 
                                 locationButtons.none
+                                    .scaleEffect(x: flipAlliances ? -1 : 1)
                                     .frame(width: fd.divs(1))
                                     .useDeviceCornerRadius(
                                         [.bottomTrailing],
@@ -999,9 +1021,11 @@ struct GameScoreView: View {
                                         locationButtons.full
                                     }
                                 }
+                                .scaleEffect(x: flipAlliances ? -1 : 1)
                                 .frame(width: fd.divs(2))
 
                                 locationButtons.none
+                                    .scaleEffect(x: flipAlliances ? -1 : 1)
                                     .frame(width: fd.divs(1))
                                     .useDeviceCornerRadius(
                                         [.bottomTrailing],
@@ -1022,6 +1046,7 @@ struct GameScoreView: View {
                             fouls: $scores.red
                                 .minorFoulsFromOtherAllianceAwarded
                         )
+                        .scaleEffect(x: flipAlliances ? -1 : 1)
                         .padding([.vertical, .leading], 8)
 
                         Spacer()
@@ -1033,6 +1058,7 @@ struct GameScoreView: View {
                             fouls: $scores.red
                                 .majorFoulsFromOtherAllianceAwarded
                         )
+                        .scaleEffect(x: flipAlliances ? -1 : 1)
                         .padding([.vertical, .trailing], 8)
 
                         Spacer()
@@ -1042,12 +1068,14 @@ struct GameScoreView: View {
                             width: fd.divs(1),
                             max: scoringElement == .motifs ? 9 : 99
                         )
+                        .scaleEffect(x: flipAlliances ? -1 : 1)
                         .padding([.vertical, .leading], 8)
 
                         WheelPicker(
                             value: scoringElementBindings().blue,
                             max: scoringElement == .motifs ? 9 : 99
                         )
+                        .scaleEffect(x: flipAlliances ? -1 : 1)
                         .padding(.trailing, 8)
                     }
                 }
@@ -1069,6 +1097,7 @@ struct GameScoreView: View {
             }
             .frame(width: fd.divs(4))
         }
+        .scaleEffect(x: flipAlliances ? -1 : 1)
         .animation(.smooth, value: scores.red.total(excludeFouls: nfMode))
         .animation(.smooth, value: scores.blue.total(excludeFouls: nfMode))
     }
@@ -1173,6 +1202,8 @@ struct GameScoreView: View {
     func reset() {
         timer.reset()
         scores = .init()
+        scoringStage = .auto
+        scoringElement = .classified
         timestamp = .now
 
         if !preserveTeams {

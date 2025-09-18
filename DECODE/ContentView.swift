@@ -203,63 +203,68 @@ struct ContentView: View {
                     .background(.firstRed.gradient)
                     .radius(16)
                     .useDeviceCornerRadius(
-                        [.topTrailing],
+                        [.topTrailing, .bottomTrailing],
                         fallback: 24,
                         subtract: 8
                     )
+                    //                    .useDeviceCornerRadius(
+                    //                        [.topTrailing],
+                    //                        fallback: 24,
+                    //                        subtract: 8
+                    //                    )
                 }
                 .tint(.white)
-                .frame(height: fd.divs(3))
-
-                Menu {
-                    Button("Auto Tuning", systemImage: "autostartstop") {
-                        Haptics.play(.light)
-                        showAutoTuningView = true
-                        Analytics.shared.trackFeature(.auto)
-                    }
-                    .tint(.blue)
-
-                    Button("Driver Practice", systemImage: "steeringwheel") {
-                        Haptics.play(.light)
-                        showDriverPracticeView = true
-                        Analytics.shared.trackFeature(.dp)
-                    }
-                    .tint(.blue)
-
-                    Button("Endgame Practice", systemImage: "timer") {
-                        Haptics.play(.light)
-                        showEndgamePracticeView = true
-                        Analytics.shared.trackFeature(.ep)
-                    }
-                    .tint(.blue)
-                } label: {
-                    HStack {
-                        VStack(spacing: -2) {
-                            Image(systemName: "apple.terminal.fill")
-                                .padding(.trailing, 28)
-                            Image(systemName: "steeringwheel")
-                                .padding(.leading, 28)
-                        }
-                        .font(.title2)
-
-                        Text("Tuning & Practice")
-                            .font(.title)
-                            .fontWeight(.semibold)
-                    }
-                    .minimumScaleFactor(0.6)
-                    .padding()
-                    .maxArea()
-                    .background(.firstBlue.gradient)
-                    .radius(16)
-                    .useDeviceCornerRadius(
-                        [.bottomTrailing],
-                        fallback: 24,
-                        subtract: 8
-                    )
-                }
-                .menuOrder(.fixed)
-                .tint(.white)
-                .frame(height: fd.divs(1))
+                //                .frame(height: fd.divs(3))
+                //
+                //                Menu {
+                //                    Button("Auto Tuning", systemImage: "autostartstop") {
+                //                        Haptics.play(.light)
+                //                        showAutoTuningView = true
+                //                        Analytics.shared.trackFeature(.auto)
+                //                    }
+                //                    .tint(.blue)
+                //
+                //                    Button("Driver Practice", systemImage: "steeringwheel") {
+                //                        Haptics.play(.light)
+                //                        showDriverPracticeView = true
+                //                        Analytics.shared.trackFeature(.dp)
+                //                    }
+                //                    .tint(.blue)
+                //
+                //                    Button("Endgame Practice", systemImage: "timer") {
+                //                        Haptics.play(.light)
+                //                        showEndgamePracticeView = true
+                //                        Analytics.shared.trackFeature(.ep)
+                //                    }
+                //                    .tint(.blue)
+                //                } label: {
+                //                    HStack {
+                //                        VStack(spacing: -2) {
+                //                            Image(systemName: "apple.terminal.fill")
+                //                                .padding(.trailing, 28)
+                //                            Image(systemName: "steeringwheel")
+                //                                .padding(.leading, 28)
+                //                        }
+                //                        .font(.title2)
+                //
+                //                        Text("Tuning & Practice")
+                //                            .font(.title)
+                //                            .fontWeight(.semibold)
+                //                    }
+                //                    .minimumScaleFactor(0.6)
+                //                    .padding()
+                //                    .maxArea()
+                //                    .background(.firstBlue.gradient)
+                //                    .radius(16)
+                //                    .useDeviceCornerRadius(
+                //                        [.bottomTrailing],
+                //                        fallback: 24,
+                //                        subtract: 8
+                //                    )
+                //                }
+                //                .menuOrder(.fixed)
+                //                .tint(.white)
+                //                .frame(height: fd.divs(1))
             }
         }
         .fullScreenPadding()

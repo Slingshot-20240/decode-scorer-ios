@@ -15,7 +15,7 @@ let version: String =
     ?? "Unknown Version"
 let build: String =
     Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown Build"
-let environment: AppEnvironment = .alpha
+let environment: AppEnvironment = .beta
 
 enum AppEnvironment {
     case production
