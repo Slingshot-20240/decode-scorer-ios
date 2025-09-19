@@ -123,8 +123,8 @@ struct Analytics {
                 Aptabase.shared.trackEvent(
                     "points",
                     with: [
-                        "red": scores.red.total,
-                        "blue": scores.blue.total,
+                        "red": type == .calc ? 0 : scores.red.total,
+                        "blue": type == .calc ? 0 : scores.blue.total,
                         "combined": scores.total,
                         "type": type.rawValue,
                     ]

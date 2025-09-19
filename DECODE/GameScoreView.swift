@@ -1200,6 +1200,8 @@ struct GameScoreView: View {
     }
 
     func reset() {
+        Analytics.shared.trackCompletion(scores, from: .game)
+
         timer.reset()
         scores = .init()
         scoringStage = .auto

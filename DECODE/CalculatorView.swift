@@ -661,6 +661,10 @@ struct CalculatorView: View {
             Menu("", systemImage: "line.3.horizontal") {
                 ControlGroup {
                     Button("Reset", systemImage: "arrow.2.circlepath") {
+                        var scores = DecodeGameScores()
+                        scores.red = self.scores
+                        Analytics.shared.trackCompletion(scores, from: .calc)
+                        
                         scores = .init()
                         scoringStage = .auto
                         scoringElement = .classified
@@ -678,6 +682,9 @@ struct CalculatorView: View {
                     systemImage: "rectangle.portrait.and.arrow.right",
                     role: .destructive
                 ) {
+                    var scores = DecodeGameScores()
+                    scores.red = self.scores
+                    Analytics.shared.trackCompletion(scores, from: .calc)
                     dismiss()
                 }
             }
