@@ -9,35 +9,32 @@ import Aptabase
 import SwiFTC
 import SwiftUI
 
-struct Analytics {
+class Analytics: ObservableObject {
+    static var shared = Analytics()
+
     @AppStorage("gamesTracked") var gamesTracked: Int = 0
     @AppStorage("autoSessionsTracked") var autoSessionsTracked: Int = 0
     @AppStorage("dpSessionsTracked") var dpSessionsTracked: Int = 0
     @AppStorage("epSessionsTracked") var epSessionsTracked: Int = 0
     @AppStorage("calcSessionsTracked") var calcSessionsTracked: Int = 0
 
-    var totalSessionsTracked: Int {
-        self.gamesTracked + self.autoSessionsTracked + self.dpSessionsTracked
-            + self.epSessionsTracked + self.calcSessionsTracked
-    }
+    @Published var totalSessionsTracked: Int = 0
 
     @AppStorage("classifiedArtifactsTracked") var classifiedArtifactsTracked:
         Int = 0
     @AppStorage("overflownArtifactsTracked") var overflownArtifactsTracked:
         Int = 0
     @AppStorage("depotArtifactsTracked") var depotArtifactsTracked: Int = 0
-    @AppStorage("motifsTracked") var motifsTracked: Int = 0
 
-    var totalArtifactsTracked: Int {
-        self.classifiedArtifactsTracked + self.overflownArtifactsTracked
-            + self.depotArtifactsTracked
-    }
+    @Published var totalArtifactsTracked: Int = 0
+
+    @AppStorage("motifsTracked") var motifsTracked: Int = 0
 
     @AppStorage("pointsTracked") var pointsTracked: Int = 0
 
-    static var shared = Analytics()
-
     func launch() {
+        self.updateTotals()
+
         if !APTABASE_APP_KEY.isEmpty {
             Aptabase.shared.initialize(
                 appKey: APTABASE_APP_KEY,
@@ -49,6 +46,17 @@ struct Analytics {
             )
             Aptabase.shared.trackEvent("launch")
         }
+    }
+
+    func updateTotals() {
+        self.totalSessionsTracked =
+            self.gamesTracked + self.autoSessionsTracked
+            + self.dpSessionsTracked + self.epSessionsTracked
+            + self.calcSessionsTracked
+
+        self.totalArtifactsTracked =
+            self.classifiedArtifactsTracked + self.overflownArtifactsTracked
+            + self.depotArtifactsTracked
     }
 
     func trackFeature(_ type: FeatureTrackingType) {
@@ -72,6 +80,8 @@ struct Analytics {
             self.calcSessionsTracked += 1
         }
 
+        self.updateTotals()
+
         let classified =
             scores.red.auto.classfied + scores.red.teleop.classfied
             + scores.blue.auto.classfied + scores.blue.teleop.classfied
@@ -91,6 +101,8 @@ struct Analytics {
             self.classifiedArtifactsTracked += classified
             self.overflownArtifactsTracked += overflown
             self.depotArtifactsTracked += depot
+
+            self.updateTotals()
 
             self.motifsTracked += motifs
 

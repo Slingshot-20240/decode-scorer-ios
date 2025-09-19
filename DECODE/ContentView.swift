@@ -28,6 +28,7 @@ struct ContentView: View {
                 fd in
                 Button {
                     Haptics.play(.light)
+                    Analytics.shared.updateTotals()
                     showHistoryView = true
                     Analytics.shared.trackFeature(.hna)
                 } label: {
