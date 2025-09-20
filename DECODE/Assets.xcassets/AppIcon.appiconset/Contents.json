@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "Development Icon.png",
+      "filename" : "Light.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -13,7 +13,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "Development Icon Dark.png",
+      "filename" : "Dark.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
@@ -25,7 +25,7 @@
           "value" : "tinted"
         }
       ],
-      "filename" : "Development Icon Tinted.png",
+      "filename" : "Clear.png",
       "idiom" : "universal",
       "platform" : "ios",
       "size" : "1024x1024"
