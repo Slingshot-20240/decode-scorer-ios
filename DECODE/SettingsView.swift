@@ -55,6 +55,8 @@ struct SettingsView: View {
                     )
                 } header: {
                     Label("Behavior", systemImage: "rectangle.2.swap")
+                } footer: {
+                    Text("To select a team, long press the team selection button in the full game scoring mode.")
                 }
                 .headerProminence(.increased)
 

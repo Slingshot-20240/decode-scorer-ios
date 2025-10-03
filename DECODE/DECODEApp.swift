@@ -15,7 +15,7 @@ let version: String =
     ?? "Unknown Version"
 let build: String =
     Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown Build"
-let environment: AppEnvironment = .beta
+let environment: AppEnvironment = .production
 
 enum AppEnvironment {
     case production
@@ -70,6 +70,8 @@ struct DECODEApp: App {
         }
     }()
 
+    @State private var eventSheet: EventSheet? = nil
+
     init() {
         Analytics.shared.launch()
         UIDevice.current.isBatteryMonitoringEnabled = true
@@ -103,6 +105,21 @@ struct DECODEApp: App {
                                 SafeArea.shared.update(proxy)
                             }
                         }
+                }
+            }
+            .sheet(isPresented: .constant(eventSheet == .kickoff)) {
+                eventSheet = nil
+            } content: {
+                KickoffEventView(eventSheet: $eventSheet)
+            }
+            .onOpenURL { url in
+                if url.scheme == "decode-scorer" {
+                    eventSheet = EventSheet(
+                        rawValue: url.absoluteString.replacing(
+                            "decode-scorer://",
+                            with: ""
+                        )
+                    )
                 }
             }
         }

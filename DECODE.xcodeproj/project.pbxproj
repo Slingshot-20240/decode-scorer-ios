@@ -18,6 +18,8 @@
 		E47E3CE72E6E98BE00342BFB /* SwiFTC in Frameworks */ = {isa = PBXBuildFile; productRef = E47E3CE62E6E98BE00342BFB /* SwiFTC */; };
 		E493CEAB2E714F7E009EFD9E /* Env.swift in Sources */ = {isa = PBXBuildFile; fileRef = E493CEAA2E714F7E009EFD9E /* Env.swift */; };
 		E493CEAE2E7159A9009EFD9E /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E493CEAD2E7159A6009EFD9E /* SettingsView.swift */; };
+		E4D25B0D2E902762000B5B11 /* Kickoff.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4D25B0C2E902760000B5B11 /* Kickoff.swift */; };
+		E4D25B0F2E902F1D000B5B11 /* EventSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4D25B0E2E902F18000B5B11 /* EventSheet.swift */; };
 		E4DD88942DB5512A009E5758 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DD88902DB5512A009E5758 /* ContentView.swift */; };
 		E4DD88952DB5512A009E5758 /* DECODEApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DD88912DB5512A009E5758 /* DECODEApp.swift */; };
 		E4DD88972DB5512A009E5758 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4DD888F2DB5512A009E5758 /* Assets.xcassets */; };
@@ -39,6 +41,8 @@
 		E493CEAA2E714F7E009EFD9E /* Env.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Env.swift; sourceTree = "<group>"; };
 		E493CEAD2E7159A6009EFD9E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		E4950D4A2DB556A800D0B123 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Config.xcconfig; sourceTree = "<group>"; };
+		E4D25B0C2E902760000B5B11 /* Kickoff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Kickoff.swift; sourceTree = "<group>"; };
+		E4D25B0E2E902F18000B5B11 /* EventSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventSheet.swift; sourceTree = "<group>"; };
 		E4DD88632DB55123009E5758 /* DECODE.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DECODE.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4DD888F2DB5512A009E5758 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E4DD88902DB5512A009E5758 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -88,6 +92,15 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		E4D25B0B2E902757000B5B11 /* Events */ = {
+			isa = PBXGroup;
+			children = (
+				E4D25B0E2E902F18000B5B11 /* EventSheet.swift */,
+				E4D25B0C2E902760000B5B11 /* Kickoff.swift */,
+			);
+			path = Events;
+			sourceTree = "<group>";
+		};
 		E4DD885A2DB55123009E5758 = {
 			isa = PBXGroup;
 			children = (
@@ -121,6 +134,7 @@
 				E40496562E75D60700280714 /* CalculatorView.swift */,
 				E493CEAD2E7159A6009EFD9E /* SettingsView.swift */,
 				E493CEAC2E71598C009EFD9E /* Secondary */,
+				E4D25B0B2E902757000B5B11 /* Events */,
 				E42224DD2DB57B270014F0E9 /* Helpers */,
 				E4720D392E6E50F4009B2D7C /* teams.json */,
 				E4DD888F2DB5512A009E5758 /* Assets.xcassets */,
@@ -228,6 +242,7 @@
 				E40496572E75D60700280714 /* CalculatorView.swift in Sources */,
 				E47E3CE52E6E96BE00342BFB /* GameScoreView.swift in Sources */,
 				E493CEAE2E7159A9009EFD9E /* SettingsView.swift in Sources */,
+				E4D25B0D2E902762000B5B11 /* Kickoff.swift in Sources */,
 				E40496552E75D5EC00280714 /* AutoTuningView.swift in Sources */,
 				E4720D3C2E6E54A7009B2D7C /* HistoryView.swift in Sources */,
 				E41FE8F22E31C462004C69F6 /* TimerView.swift in Sources */,
@@ -235,6 +250,7 @@
 				E4DD88952DB5512A009E5758 /* DECODEApp.swift in Sources */,
 				E493CEAB2E714F7E009EFD9E /* Env.swift in Sources */,
 				E40496532E75D5E300280714 /* DriverPracticeView.swift in Sources */,
+				E4D25B0F2E902F1D000B5B11 /* EventSheet.swift in Sources */,
 				E40496512E75D5DC00280714 /* EndgamePracticeView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -378,8 +394,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = DECODE/DECODE.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 13;
+				CURRENT_PROJECT_VERSION = 14;
+				DEVELOPMENT_TEAM = P7MYA5Q926;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DECODE/Info.plist;
@@ -398,6 +416,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -413,8 +432,10 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = DECODE/DECODE.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 13;
+				CURRENT_PROJECT_VERSION = 14;
+				DEVELOPMENT_TEAM = P7MYA5Q926;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = DECODE/Info.plist;
@@ -433,6 +454,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
