@@ -54,6 +54,8 @@ That's it! You are now good to go.
 
 ## Legal
 
+[Privacy Policy](https://ftcscoring.app/privacy) | [Terms & Conditions](https://ftcscoring.app/terms)
+
 ### Disclaimer
 
 *FIRST*®, *FIRST*® Tech Challenge, FTC®, *FIRST*® AGE™, DECODE™, and all accompanying logos as they are created, are trademarks of For Inspiration and Recognition of Science and Technology (*FIRST*®) (www.firstinspires.org). These trademarks are used by special permission of *FIRST* which is not overseeing, involved with, or responsible for this activity, product, or service. © 2025 *FIRST*®. Used by special permission. All rights reserved.
@@ -76,6 +78,4 @@ That's it! You are now good to go.
 
 #### DECODE Scorer presented by 20240 Slingshot
 
-Open source information to come. Planned release under the MIT License in Q3 2025.
-
-© 2025 FTC Team 20240 Slingshot and contributors. All rights reserved.
+© 2025 FTC Team 20240 Slingshot and contributors. [MIT License](https://github.com/Slingshot-20240/decode-scorer-ios/blob/release/LICENSE).
