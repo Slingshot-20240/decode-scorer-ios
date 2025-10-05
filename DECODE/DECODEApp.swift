@@ -15,7 +15,11 @@ let version: String =
     ?? "Unknown Version"
 let build: String =
     Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? "Unknown Build"
-let environment: AppEnvironment = .production
+#if targetEnvironment(simulator)
+    let environment: AppEnvironment = .development
+#else
+    let environment: AppEnvironment = .beta
+#endif
 
 enum AppEnvironment {
     case production
@@ -72,9 +76,29 @@ struct DECODEApp: App {
 
     @State private var eventSheet: EventSheet? = nil
 
+    @AppStorage("updatingFrom") private var updatingFrom: Int = 0
+
+    @AppStorage("preserveTeamsAfterResetting") private
+        var preserveTeamsAfterResetting: Bool = false
+    @AppStorage("preserveTeamsAfterExiting") private
+        var preserveTeamsAfterExiting: Bool = false
+
     init() {
         Analytics.shared.launch()
         UIDevice.current.isBatteryMonitoringEnabled = true
+
+        let build = Int(build) ?? 0
+        if updatingFrom < build {
+            if updatingFrom < 15 {
+                let preserve = UserDefaults.standard.bool(
+                    forKey: "preserveTeams"
+                )
+                preserveTeamsAfterResetting = preserve
+                preserveTeamsAfterExiting = preserve
+            }
+
+            updatingFrom = build
+        }
     }
 
     var body: some Scene {

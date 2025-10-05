@@ -262,35 +262,35 @@ struct HistoryView: View {
                                 .fontWeight(.semibold)
                         }
 
-                        HStack {
-                            Image(systemName: "autostartstop")
-                                .foregroundStyle(.secondary)
-                            Spacer()
-                            Text(
-                                "\(Analytics.shared.autoSessionsTracked)"
-                            )
-                            .fontWeight(.semibold)
-                        }
-
-                        HStack {
-                            Image(systemName: "steeringwheel")
-                                .foregroundStyle(.secondary)
-                            Spacer()
-                            Text(
-                                "\(Analytics.shared.dpSessionsTracked)"
-                            )
-                            .fontWeight(.semibold)
-                        }
-
-                        HStack {
-                            Image(systemName: "timer")
-                                .foregroundStyle(.secondary)
-                            Spacer()
-                            Text(
-                                "\(Analytics.shared.epSessionsTracked)"
-                            )
-                            .fontWeight(.semibold)
-                        }
+//                        HStack {
+//                            Image(systemName: "autostartstop")
+//                                .foregroundStyle(.secondary)
+//                            Spacer()
+//                            Text(
+//                                "\(Analytics.shared.autoSessionsTracked)"
+//                            )
+//                            .fontWeight(.semibold)
+//                        }
+//
+//                        HStack {
+//                            Image(systemName: "steeringwheel")
+//                                .foregroundStyle(.secondary)
+//                            Spacer()
+//                            Text(
+//                                "\(Analytics.shared.dpSessionsTracked)"
+//                            )
+//                            .fontWeight(.semibold)
+//                        }
+//
+//                        HStack {
+//                            Image(systemName: "timer")
+//                                .foregroundStyle(.secondary)
+//                            Spacer()
+//                            Text(
+//                                "\(Analytics.shared.epSessionsTracked)"
+//                            )
+//                            .fontWeight(.semibold)
+//                        }
 
                         HStack {
                             Image(systemName: "plus.slash.minus")

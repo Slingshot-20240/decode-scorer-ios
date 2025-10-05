@@ -122,6 +122,8 @@ struct TeamAssignmentsView: View {
                                 }
                             }
                         }
+                    } footer: {
+                        Text("Teams data provided by the [FTC API](https://ftc-events.firstinspires.org/services/API).\n")
                     }
                 }
             }
