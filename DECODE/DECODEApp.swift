@@ -18,7 +18,7 @@ let build: String =
 #if targetEnvironment(simulator)
     let environment: AppEnvironment = .development
 #else
-    let environment: AppEnvironment = .beta
+    let environment: AppEnvironment = .production
 #endif
 
 enum AppEnvironment {

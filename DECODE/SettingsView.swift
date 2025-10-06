@@ -165,7 +165,7 @@ struct SettingsView: View {
 
                         [Open Source Licenses](https://ftcscoring.app/foss)
 
-                        A free and open source Slingshot Outreachware project.
+                        A free and open-source Slingshot Outreachware project.
                         © 2025 FTC Team 20240 Slingshot and Contributors. MIT License.
                         """
                     )

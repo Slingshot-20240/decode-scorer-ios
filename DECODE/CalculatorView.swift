@@ -661,7 +661,7 @@ struct CalculatorView: View {
                         scores.red = self.scores
                         Analytics.shared.trackCompletion(scores, from: .calc)
 
-                        scores = .init()
+                        self.scores = .init()
                         scoringStage = .auto
                         scoringElement = .classified
                     }
