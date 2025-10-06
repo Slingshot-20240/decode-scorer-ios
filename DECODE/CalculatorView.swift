@@ -552,16 +552,12 @@ struct CalculatorView: View {
 
                             ScoreButtons(
                                 value: binding,
-                                width: fdh.divs(1),
-                                max: scoringElement == .motifs ? 9 : 99
+                                width: fdh.divs(1)
                             )
                             .padding([.vertical, .leading], 8)
 
-                            WheelPicker(
-                                value: binding,
-                                max: scoringElement == .motifs ? 9 : 99
-                            )
-                            .padding(.trailing, 8)
+                            WheelPicker(value: binding)
+                                .padding(.trailing, 8)
                         }
                     }
                     .frame(maxWidth: .infinity, maxHeight: fdv.divs(3))
@@ -664,8 +660,8 @@ struct CalculatorView: View {
                         var scores = DecodeGameScores()
                         scores.red = self.scores
                         Analytics.shared.trackCompletion(scores, from: .calc)
-                        
-                        scores = .init()
+
+                        self.scores = .init()
                         scoringStage = .auto
                         scoringElement = .classified
                     }

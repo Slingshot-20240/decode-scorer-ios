@@ -28,12 +28,20 @@ struct GameScoreView: View {
 
     @State private var showSettings: Bool = false
 
+    @State private var showSaveButtonWarning: Bool = false
+
     @StateObject private var orientation: OrientationManager = UIApplication
         .orientation
 
     @AppStorage("nfMode") private var nfMode: Bool = false
     @AppStorage("flipAlliances") private var flipAlliances: Bool = false
-    @AppStorage("preserveTeams") private var preserveTeams: Bool = false
+    @AppStorage("preserveTeamsAfterResetting") private
+        var preserveTeamsAfterResetting: Bool = false
+    @AppStorage("preserveTeamsAfterExiting") private
+        var preserveTeamsAfterExiting: Bool = false
+
+    @AppStorage("saveButtonWarningRead") private var saveButtonWarningRead:
+        Bool = false
 
     init() {
         self.batteryPercent = UIDevice.current.batteryLevel * 100
@@ -84,117 +92,30 @@ struct GameScoreView: View {
             )
         }
         .sheet(isPresented: $showDetails) {
-            NavigationStack {
-                GeometryReader { proxy in
-                    ScrollView {
-                        VStack(spacing: 8) {
-                            Text(
-                                timestamp.formatted(
-                                    date: .complete,
-                                    time: .complete
-                                )
-                            )
-                            .font(.footnote)
-                            .foregroundStyle(.secondary)
-
-                            var label: GameLabel {
-                                let red1 = scoringTeams.red.one
-                                let red2 = scoringTeams.red.two
-
-                                let redLabel: String
-                                if let r1 = red1, let r2 = red2 {
-                                    redLabel = "\(r1) & \(r2)"
-                                } else if let r1 = red1 {
-                                    redLabel = "\(r1) & Team"
-                                } else if let r2 = red2 {
-                                    redLabel = "Team & \(r2)"
-                                } else {
-                                    redLabel = "Red Alliance"
-                                }
-
-                                let blue1 = scoringTeams.blue.one
-                                let blue2 = scoringTeams.blue.two
-
-                                let blueLabel: String
-                                if let b1 = blue1, let b2 = blue2 {
-                                    blueLabel = "\(b1) & \(b2)"
-                                } else if let b1 = blue1 {
-                                    blueLabel = "\(b1) & Team"
-                                } else if let b2 = blue2 {
-                                    blueLabel = "Team & \(b2)"
-                                } else {
-                                    blueLabel = "Blue Alliance"
-                                }
-
-                                if red1 == nil && red2 == nil && blue1 == nil
-                                    && blue2 == nil
-                                {
-                                    return .init()
-                                }
-
-                                return .init(
-                                    red: redLabel,
-                                    middle: " v.s. ",
-                                    blue: blueLabel
-                                )
-                            }
-
-                            if label.middle != "Game" {
-                                let redWon =
-                                    scores.red.total(excludeFouls: nfMode)
-                                    >= scores.blue.total(excludeFouls: nfMode)
-                                let blueWon =
-                                    scores.blue.total(excludeFouls: nfMode)
-                                    >= scores.red.total(excludeFouls: nfMode)
-
-                                HStack(spacing: 8) {
-                                    Text(label.red)
-                                        .foregroundStyle(
-                                            redWon ? .firstRed : .primary
-                                        )
-                                        .frame(
-                                            maxWidth: .infinity,
-                                            alignment: .trailing
-                                        )
-
-                                    Text(label.middle)
-                                        .fontWeight(.regular)
-
-                                    Text(label.blue)
-                                        .foregroundStyle(
-                                            blueWon ? .firstBlue : .primary
-                                        )
-                                        .frame(
-                                            maxWidth: .infinity,
-                                            alignment: .leading
-                                        )
-                                }
-                                .font(.title2)
-                                .fontWeight(.semibold)
-                            }
-
-                            ScoreDetailsView(scores: scores)
-                        }
-                        .padding(proxy.safeAreaInsets.bottom == 0 ? 16 : 0)
-                    }
-                    .frame(width: proxy.size.width, height: proxy.size.height)
-                    .navigationTitle("Details")
-                    .toolbar {
-                        ToolbarItem(placement: .topBarLeading) {
-                            DismissButton {
-                                showDetails = false
-                            }
-                        }
-                    }
-                }
-            }
+            details
         }
         .sheet(isPresented: $showSettings) {
             SettingsView()
                 .background(Color.primary.colorInvert().ignoresSafeArea())
         }
+        .alert("Warning", isPresented: $showSaveButtonWarning) {
+            Button("Save and Reset") {
+                saveButtonWarningRead = true
+                save()
+            }
+
+            Button("Cancel", role: .cancel) {}
+        } message: {
+            Text(
+                """
+                Saving a game will also reset the scorer, even if the timer hasn't finished. Are you sure you want to continue?
+                
+                You will only be shown this warning once.
+                """
+            )
+        }
         .onAppear {
-            if !preserveTeams {
+            if !preserveTeamsAfterExiting {
                 scoringTeams = .init()
             }
         }
@@ -226,6 +147,15 @@ struct GameScoreView: View {
         HStack(spacing: 16) {
             Menu("", systemImage: "line.3.horizontal") {
                 ControlGroup {
+                    Button("Save", systemImage: "square.and.arrow.down") {
+                        if saveButtonWarningRead {
+                            save()
+                        } else {
+                            showSaveButtonWarning = true
+                        }
+                    }
+                    .disabled(scores.total <= 0)
+
                     Button(
                         timer.paused ? "Resume" : "Pause",
                         systemImage: "\(timer.paused ? "play" : "pause").fill"
@@ -238,7 +168,11 @@ struct GameScoreView: View {
                     }
                     .disabled(!timer.inProgress)
 
-                    Button("Reset", systemImage: "arrow.2.circlepath") {
+                    Button(
+                        "Reset",
+                        systemImage: "arrow.2.circlepath",
+                        role: .destructive
+                    ) {
                         reset()
                     }
                 }
@@ -654,17 +588,13 @@ struct GameScoreView: View {
 
                         Spacer()
                     default:
-                        WheelPicker(
-                            value: scoringElementBindings().red,
-                            max: scoringElement == .motifs ? 9 : 99
-                        )
-                        .scaleEffect(x: flipAlliances ? -1 : 1)
-                        .padding(.leading, 8)
+                        WheelPicker(value: scoringElementBindings().red)
+                            .scaleEffect(x: flipAlliances ? -1 : 1)
+                            .padding(.leading, 8)
 
                         ScoreButtons(
                             value: scoringElementBindings().red,
-                            width: fd.divs(1),
-                            max: scoringElement == .motifs ? 9 : 99
+                            width: fd.divs(1)
                         )
                         .scaleEffect(x: flipAlliances ? -1 : 1)
                         .padding([.vertical, .trailing], 8)
@@ -762,33 +692,7 @@ struct GameScoreView: View {
                         .aspectRatio(1, contentMode: .fit)
                     case .finished:
                         Button {
-                            var teams = GameTeamsV1()
-                            teams.red.one = scoringTeams.red.one
-                            teams.red.two = scoringTeams.red.two
-                            teams.blue.one = scoringTeams.blue.one
-                            teams.blue.two = scoringTeams.blue.two
-
-                            modelContext.insert(
-                                DecodeGameModel(
-                                    scores: scores,
-                                    teams: teams,
-                                    timestamp: timestamp
-                                )
-                            )
-
-                            do {
-                                try modelContext.save()
-                            } catch {
-                                DispatchQueue.main.asyncAfter(
-                                    deadline: .now() + 1
-                                ) {
-                                    try? modelContext.save()
-                                }
-                            }
-
-                            Haptics.notify(.success)
-
-                            reset()
+                            save()
                         } label: {
                             Label(
                                 "Save",
@@ -857,6 +761,19 @@ struct GameScoreView: View {
                 .colorInvert()
                 .radius(16)
                 .frame(height: fd.divs(4))
+                .contextMenu {
+                    if ![GameTimerV1.Stage.standby, .finished].contains(timer.timerStage) {
+                        Button(
+                            "Skip to Finished",
+                            systemImage: "arrow.turn.up.right"
+                        ) {
+                            Haptics.play(.light)
+
+                            timer.reset()
+                            timer.timerStage = .finished
+                        }
+                    }
+                }
 
                 HStack(spacing: 8) {
                     Text("000")
@@ -1065,18 +982,14 @@ struct GameScoreView: View {
                     default:
                         ScoreButtons(
                             value: scoringElementBindings().blue,
-                            width: fd.divs(1),
-                            max: scoringElement == .motifs ? 9 : 99
+                            width: fd.divs(1)
                         )
                         .scaleEffect(x: flipAlliances ? -1 : 1)
                         .padding([.vertical, .leading], 8)
 
-                        WheelPicker(
-                            value: scoringElementBindings().blue,
-                            max: scoringElement == .motifs ? 9 : 99
-                        )
-                        .scaleEffect(x: flipAlliances ? -1 : 1)
-                        .padding(.trailing, 8)
+                        WheelPicker(value: scoringElementBindings().blue)
+                            .scaleEffect(x: flipAlliances ? -1 : 1)
+                            .padding(.trailing, 8)
                     }
                 }
                 .maxArea()
@@ -1100,6 +1013,113 @@ struct GameScoreView: View {
         .scaleEffect(x: flipAlliances ? -1 : 1)
         .animation(.smooth, value: scores.red.total(excludeFouls: nfMode))
         .animation(.smooth, value: scores.blue.total(excludeFouls: nfMode))
+    }
+
+    var details: some View {
+        NavigationStack {
+            GeometryReader { proxy in
+                ScrollView {
+                    VStack(spacing: 8) {
+                        Text(
+                            timestamp.formatted(
+                                date: .complete,
+                                time: .complete
+                            )
+                        )
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+
+                        var label: GameLabel {
+                            let red1 = scoringTeams.red.one
+                            let red2 = scoringTeams.red.two
+
+                            let redLabel: String
+                            if let r1 = red1, let r2 = red2 {
+                                redLabel = "\(r1) & \(r2)"
+                            } else if let r1 = red1 {
+                                redLabel = "\(r1) & Team"
+                            } else if let r2 = red2 {
+                                redLabel = "Team & \(r2)"
+                            } else {
+                                redLabel = "Red Alliance"
+                            }
+
+                            let blue1 = scoringTeams.blue.one
+                            let blue2 = scoringTeams.blue.two
+
+                            let blueLabel: String
+                            if let b1 = blue1, let b2 = blue2 {
+                                blueLabel = "\(b1) & \(b2)"
+                            } else if let b1 = blue1 {
+                                blueLabel = "\(b1) & Team"
+                            } else if let b2 = blue2 {
+                                blueLabel = "Team & \(b2)"
+                            } else {
+                                blueLabel = "Blue Alliance"
+                            }
+
+                            if red1 == nil && red2 == nil && blue1 == nil
+                                && blue2 == nil
+                            {
+                                return .init()
+                            }
+
+                            return .init(
+                                red: redLabel,
+                                middle: " v.s. ",
+                                blue: blueLabel
+                            )
+                        }
+
+                        if label.middle != "Game" {
+                            let redWon =
+                                scores.red.total(excludeFouls: nfMode)
+                                >= scores.blue.total(excludeFouls: nfMode)
+                            let blueWon =
+                                scores.blue.total(excludeFouls: nfMode)
+                                >= scores.red.total(excludeFouls: nfMode)
+
+                            HStack(spacing: 8) {
+                                Text(label.red)
+                                    .foregroundStyle(
+                                        redWon ? .firstRed : .primary
+                                    )
+                                    .frame(
+                                        maxWidth: .infinity,
+                                        alignment: .trailing
+                                    )
+
+                                Text(label.middle)
+                                    .fontWeight(.regular)
+
+                                Text(label.blue)
+                                    .foregroundStyle(
+                                        blueWon ? .firstBlue : .primary
+                                    )
+                                    .frame(
+                                        maxWidth: .infinity,
+                                        alignment: .leading
+                                    )
+                            }
+                            .font(.title2)
+                            .fontWeight(.semibold)
+                        }
+
+                        ScoreDetailsView(scores: scores)
+                    }
+                    .padding(proxy.safeAreaInsets.bottom == 0 ? 16 : 0)
+                }
+                .frame(width: proxy.size.width, height: proxy.size.height)
+                .navigationTitle("Details")
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        DismissButton {
+                            showDetails = false
+                        }
+                    }
+                }
+            }
+        }
     }
 
     func scoringElementBindings() -> (blue: Binding<Int>, red: Binding<Int>) {
@@ -1199,6 +1219,36 @@ struct GameScoreView: View {
         }
     }
 
+    func save() {
+        var teams = GameTeamsV1()
+        teams.red.one = scoringTeams.red.one
+        teams.red.two = scoringTeams.red.two
+        teams.blue.one = scoringTeams.blue.one
+        teams.blue.two = scoringTeams.blue.two
+
+        modelContext.insert(
+            DecodeGameModel(
+                scores: scores,
+                teams: teams,
+                timestamp: timestamp
+            )
+        )
+
+        do {
+            try modelContext.save()
+        } catch {
+            DispatchQueue.main.asyncAfter(
+                deadline: .now() + 1
+            ) {
+                try? modelContext.save()
+            }
+        }
+
+        Haptics.notify(.success)
+
+        reset()
+    }
+
     func reset() {
         Analytics.shared.trackCompletion(scores, from: .game)
 
@@ -1208,7 +1258,7 @@ struct GameScoreView: View {
         scoringElement = .classified
         timestamp = .now
 
-        if !preserveTeams {
+        if !preserveTeamsAfterResetting {
             scoringTeams = .init()
         }
     }
@@ -1265,6 +1315,11 @@ struct WheelPicker: View {
     @Binding var value: Int
     let max: Int
 
+    init(value: Binding<Int>, max: Int = 99) {
+        _value = value
+        self.max = max
+    }
+
     var body: some View {
         Picker(selection: $value) {
             ForEach(0..<(max + 1), id: \.self) { i in
@@ -1281,6 +1336,12 @@ struct ScoreButtons: View {
     @Binding var value: Int
     let width: CGFloat
     let max: Int
+
+    init(value: Binding<Int>, width: CGFloat, max: Int = 99) {
+        _value = value
+        self.width = width
+        self.max = max
+    }
 
     var body: some View {
         VStack(spacing: 8) {
