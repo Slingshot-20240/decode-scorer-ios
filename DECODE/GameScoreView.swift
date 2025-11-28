@@ -109,7 +109,7 @@ struct GameScoreView: View {
             Text(
                 """
                 Saving a game will also reset the scorer, even if the timer hasn't finished. Are you sure you want to continue?
-                
+
                 You will only be shown this warning once.
                 """
             )
@@ -588,9 +588,12 @@ struct GameScoreView: View {
 
                         Spacer()
                     default:
-                        WheelPicker(value: scoringElementBindings().red)
-                            .scaleEffect(x: flipAlliances ? -1 : 1)
-                            .padding(.leading, 8)
+                        WheelPicker(
+                            value: scoringElementBindings().red,
+                            max: scoringElement == .motifs ? 9 : 99
+                        )
+                        .scaleEffect(x: flipAlliances ? -1 : 1)
+                        .padding(.leading, 8)
 
                         ScoreButtons(
                             value: scoringElementBindings().red,
@@ -762,7 +765,9 @@ struct GameScoreView: View {
                 .radius(16)
                 .frame(height: fd.divs(4))
                 .contextMenu {
-                    if ![GameTimerV1.Stage.standby, .finished].contains(timer.timerStage) {
+                    if ![GameTimerV1.Stage.standby, .finished].contains(
+                        timer.timerStage
+                    ) {
                         Button(
                             "Skip to Finished",
                             systemImage: "arrow.turn.up.right"
@@ -987,9 +992,12 @@ struct GameScoreView: View {
                         .scaleEffect(x: flipAlliances ? -1 : 1)
                         .padding([.vertical, .leading], 8)
 
-                        WheelPicker(value: scoringElementBindings().blue)
-                            .scaleEffect(x: flipAlliances ? -1 : 1)
-                            .padding(.trailing, 8)
+                        WheelPicker(
+                            value: scoringElementBindings().blue,
+                            max: scoringElement == .motifs ? 9 : 99
+                        )
+                        .scaleEffect(x: flipAlliances ? -1 : 1)
+                        .padding(.trailing, 8)
                     }
                 }
                 .maxArea()

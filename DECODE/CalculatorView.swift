@@ -556,8 +556,11 @@ struct CalculatorView: View {
                             )
                             .padding([.vertical, .leading], 8)
 
-                            WheelPicker(value: binding)
-                                .padding(.trailing, 8)
+                            WheelPicker(
+                                value: binding,
+                                max: scoringElement == .motifs ? 9 : 99
+                            )
+                            .padding(.trailing, 8)
                         }
                     }
                     .frame(maxWidth: .infinity, maxHeight: fdv.divs(3))
